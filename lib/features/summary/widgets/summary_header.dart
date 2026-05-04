@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../theme/app_colors.dart';
-
-/// MODULE: HEADER
-/// Back button · "Trip Summary" title · date subtitle · share icon.
 class SummaryHeader extends StatelessWidget {
   final String destination;
   final String date;

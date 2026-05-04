@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../theme/app_colors.dart';
+import '../common/widgets/app_bar.dart';
+import '../common/widgets/nav_bar.dart';
+import '../timeline/timeline_screen.dart';
 import 'models/trip_summary_model.dart';
 import 'widgets/summary_header.dart';
 import 'widgets/hero_trip_card.dart';
@@ -9,7 +12,6 @@ import 'widgets/key_stats_grid.dart';
 import 'widgets/fuel_stop_log.dart';
 import 'widgets/ai_insight_card.dart';
 import 'widgets/route_breakdown_chart.dart';
-import 'widgets/summary_bottom_nav.dart';
 import 'widgets/route_map_card.dart';
 
 TripSummary _buildMockSummary() => TripSummary(
@@ -91,22 +93,35 @@ class TripSummaryScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: SummaryColors.surface,
-      bottomNavigationBar: const SummaryBottomNavBar(activeIndex: 1),
+      appBar: CommonAppBar(
+        title: 'Trip Summary',
+        actions: [
+          TextButton.icon(
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => const TimelineScreen(),
+                ),
+              );
+            },
+            icon: const Icon(Icons.timeline_rounded, size: 18),
+            label: Text(
+              'Timeline',
+              style: GoogleFonts.inter(fontWeight: FontWeight.w600),
+            ),
+            style: TextButton.styleFrom(
+              foregroundColor: AppColors.primaryMain,
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+            ),
+          ),
+        ],
+      ),
       body: SafeArea(
         bottom: false,
         child: CustomScrollView(
           physics: const BouncingScrollPhysics(),
           slivers: [
-            // ── Sticky header ──────────────────────────────────────────────
-            SliverToBoxAdapter(
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
-                child: SummaryHeader(
-                  destination: summary.destination,
-                  date: summary.date,
-                ),
-              ),
-            ),
+            // Removed sticky header since we use CommonAppBar
 
             SliverPadding(
               padding: const EdgeInsets.fromLTRB(16, 20, 16, 100),
