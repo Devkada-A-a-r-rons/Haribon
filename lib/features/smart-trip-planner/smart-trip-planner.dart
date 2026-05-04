@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+
+import '../common/widgets/app_bar.dart';
 import 'widgets/insight_card.dart';
 import 'widgets/expandable_card.dart';
 import 'widgets/refueling_planner_content.dart';
@@ -24,26 +26,8 @@ class _SmartTripPlannerState extends State<SmartTripPlanner> {
 
     return Scaffold(
       backgroundColor: const Color(0xFFF8F9FA),
-      appBar: AppBar(
-        backgroundColor: const Color(0xFFF8F9FA),
-        elevation: 0,
-        toolbarHeight: 80,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Color(0xFF1B2430)),
-          onPressed: () {},
-        ),
-        title: Center(
-          child: Text(
-            'Smart Trip\nBudget\nPlanner',
-            textAlign: TextAlign.center,
-            style: textTheme.titleLarge?.copyWith(
-              color: const Color(0xFF1B2430),
-              fontWeight: FontWeight.w900,
-              fontSize: 20,
-              height: 1.1,
-            ),
-          ),
-        ),
+      appBar: CommonAppBar(
+        title: 'Smart Trip Planner',
         actions: [
           IconButton(
             icon: const Icon(Icons.account_circle_outlined, color: Color(0xFF1B2430)),
