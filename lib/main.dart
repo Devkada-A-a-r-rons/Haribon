@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import './theme/app_theme.dart';
+import './screens/vehicle_intelligence_screen.dart';
 
 // Replace this with your real first screen
 class AppRoot extends StatelessWidget {
@@ -7,11 +8,7 @@ class AppRoot extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: Text('Start building your UI here'),
-      ),
-    );
+    return const VehicleIntelligenceScreen();
   }
 }
 
