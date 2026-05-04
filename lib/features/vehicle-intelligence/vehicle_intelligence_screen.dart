@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../common/widgets/app_bar.dart';
 import './widgets/compact_dropdown.dart';
 import './widgets/compact_text_field.dart';
 import './widgets/info_card.dart';
@@ -12,7 +13,6 @@ class VehicleIntelligenceScreen extends StatefulWidget {
 }
 
 class _VehicleIntelligenceScreenState extends State<VehicleIntelligenceScreen> {
-  int _selectedIndex = 3; // Setting profile as selected based on image
   double _fuelLevel = 0.35; // 35% based on the image
 
   @override
@@ -22,30 +22,8 @@ class _VehicleIntelligenceScreenState extends State<VehicleIntelligenceScreen> {
 
     return Scaffold(
       backgroundColor: const Color(0xFFF8F9FA),
-      appBar: AppBar(
-        backgroundColor: const Color(0xFFF8F9FA),
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.menu, color: Colors.black87),
-          onPressed: () {},
-        ),
-        title: const Center(
-          child: Text(
-            'Haribon',
-            style: TextStyle(
-              color: Colors.black87,
-              fontWeight: FontWeight.w500,
-              fontSize: 16,
-              letterSpacing: 4.0,
-            ),
-          ),
-        ),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.account_circle_outlined, color: Colors.blue.shade300),
-            onPressed: () {},
-          ),
-        ],
+      appBar: const CommonAppBar(
+        title: 'Setup',
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -283,74 +261,11 @@ class _VehicleIntelligenceScreenState extends State<VehicleIntelligenceScreen> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 16),
               ],
             ),
           ),
         ),
       ),
-      bottomNavigationBar: Container(
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black12,
-              blurRadius: 5,
-              offset: Offset(0, -2),
-            ),
-          ],
-        ),
-        child: BottomNavigationBar(
-          currentIndex: _selectedIndex,
-          type: BottomNavigationBarType.fixed,
-          backgroundColor: Colors.white,
-          selectedItemColor: const Color(0xFF5B87FB),
-          unselectedItemColor: Colors.grey.shade400,
-          showUnselectedLabels: true,
-          elevation: 0,
-          selectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 8, letterSpacing: 0.5),
-          unselectedLabelStyle: const TextStyle(fontWeight: FontWeight.w600, fontSize: 8, letterSpacing: 0.5),
-          onTap: (index) {
-            setState(() {
-              _selectedIndex = index;
-            });
-          },
-          items: const [
-            BottomNavigationBarItem(
-              icon: Padding(
-                padding: EdgeInsets.only(bottom: 4.0, top: 4.0),
-                child: Icon(Icons.calendar_today_outlined, size: 20),
-              ),
-              label: 'PLANNER',
-            ),
-            BottomNavigationBarItem(
-              icon: Padding(
-                padding: EdgeInsets.only(bottom: 4.0, top: 4.0),
-                child: Icon(Icons.receipt_long_outlined, size: 20),
-              ),
-              label: 'EXPENSES',
-            ),
-            BottomNavigationBarItem(
-              icon: Padding(
-                padding: EdgeInsets.only(bottom: 4.0, top: 4.0),
-                child: Icon(Icons.map_outlined, size: 20),
-              ),
-              label: 'ROUTES',
-            ),
-            BottomNavigationBarItem(
-              icon: Padding(
-                padding: EdgeInsets.only(bottom: 4.0, top: 4.0),
-                child: Icon(Icons.person_outline, size: 20),
-              ),
-              label: 'PROFILE',
-            ),
-          ],
-        ),
-      ),
     );
   }
-
-
 }
-
-

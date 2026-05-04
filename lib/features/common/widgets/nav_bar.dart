@@ -1,24 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'summary_header.dart';
+import '../../../theme/app_colors.dart';
 
-/// MODULE: SUMMARY BOTTOM NAV BAR
-/// Frosted-glass bottom navigation with 4 tabs; "Summary" is the active tab.
-class SummaryBottomNavBar extends StatelessWidget {
+class CommonNavBar extends StatelessWidget {
   final int activeIndex;
   final ValueChanged<int>? onTabSelected;
 
-  const SummaryBottomNavBar({
+  const CommonNavBar({
     super.key,
-    this.activeIndex = 1,
+    required this.activeIndex,
     this.onTabSelected,
   });
 
   static const _tabs = [
     _NavTab(icon: Icons.home_rounded, label: 'Home'),
+    _NavTab(icon: Icons.map_rounded, label: 'Planner'),
     _NavTab(icon: Icons.flag_rounded, label: 'Summary'),
-    _NavTab(icon: Icons.bar_chart_rounded, label: 'Insights'),
-    _NavTab(icon: Icons.person_rounded, label: 'Profile'),
+    _NavTab(icon: Icons.history_rounded, label: 'History'),
+    _NavTab(icon: Icons.insights_rounded, label: 'Insights'),
   ];
 
   @override
@@ -27,9 +26,9 @@ class SummaryBottomNavBar extends StatelessWidget {
     return ClipRRect(
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.white.withValues(alpha: 0.85),
-          border: const Border(
-            top: BorderSide(color: Color(0xFFE5EEFF), width: 1),
+          color: AppColors.containerLowest.withValues(alpha: 0.85),
+          border: Border(
+            top: BorderSide(color: AppColors.surfaceDim, width: 1),
           ),
         ),
         child: SafeArea(
@@ -76,7 +75,7 @@ class _NavItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = isActive ? SummaryColors.primary : const Color(0xFF9EA3B5);
+    final color = isActive ? AppColors.primaryMain : AppColors.textTertiary;
 
     return GestureDetector(
       onTap: onTap,
@@ -95,6 +94,8 @@ class _NavItem extends StatelessWidget {
                 fontWeight: isActive ? FontWeight.w700 : FontWeight.w500,
                 color: color,
               ),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
             ),
             const SizedBox(height: 4),
             // Active dot indicator
@@ -103,7 +104,7 @@ class _NavItem extends StatelessWidget {
               width: isActive ? 4 : 0,
               height: isActive ? 4 : 0,
               decoration: BoxDecoration(
-                color: SummaryColors.primary,
+                color: AppColors.primaryMain,
                 shape: BoxShape.circle,
               ),
             ),
