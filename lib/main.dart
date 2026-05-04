@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import './theme/app_theme.dart';
-import './screens/vehicle_intelligence_screen.dart';
+import './features/vehicle-intelligence/vehicle_intelligence_screen.dart';
 
 // Replace this with your real first screen
 class AppRoot extends StatelessWidget {

@@ -45,3 +45,10 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# AI Models & Sandbox
+*.gguf
+rag_sandbox/venv/
+rag_sandbox/models_bin/
+.agents
+skills-lock.json

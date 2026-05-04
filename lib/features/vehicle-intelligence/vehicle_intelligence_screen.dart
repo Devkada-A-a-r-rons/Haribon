@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-
-import '../widgets/vehicle_intelligence/compact_dropdown.dart';
-import '../widgets/vehicle_intelligence/compact_text_field.dart';
-import '../widgets/vehicle_intelligence/info_card.dart';
-import '../widgets/vehicle_intelligence/efficiency_card.dart';
+import './widgets/compact_dropdown.dart';
+import './widgets/compact_text_field.dart';
+import './widgets/info_card.dart';
+import './widgets/efficiency_card.dart';
 
 class VehicleIntelligenceScreen extends StatefulWidget {
   const VehicleIntelligenceScreen({super.key});
@@ -160,7 +159,7 @@ class _VehicleIntelligenceScreenState extends State<VehicleIntelligenceScreen> {
                               height: 6,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(3),
-                                gradient: const LinearGradient(
+                                gradient: LinearGradient(
                                   colors: [Color(0xFFC62828), Color(0xFFF0E5D8), Color(0xFF4A6B5D)],
                                 ),
                               ),
