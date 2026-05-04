@@ -88,3 +88,4 @@ class VehicleEfficiencyModel {
           fuelEfficiencyCategory ?? this.fuelEfficiencyCategory,
     );
   }
+}

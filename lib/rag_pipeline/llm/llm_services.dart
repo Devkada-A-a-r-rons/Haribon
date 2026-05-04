@@ -1,6 +1,18 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'llm_interface.dart';
+import 'gemini_llm_service.dart';
+
+class LLMServiceFactory {
+  static LLMInterface getService({String? apiKey}) {
+    if (kIsWeb) {
+      return GeminiLLMService(apiKey: apiKey ?? const String.fromEnvironment('GEMINI_API_KEY'));
+    } else {
+      return LocalLLMService();
+    }
+  }
+}
 
 class LocalLLMService implements LLMInterface {
   final String baseUrl; // e.g., http://localhost:8000
@@ -30,17 +42,8 @@ class LocalLLMService implements LLMInterface {
         throw Exception('Failed to connect to local LLM server: ${response.statusCode}');
       }
     } catch (e) {
-      return 'Error connecting to Local LLM: $e. \nMake sure the local server is running at $baseUrl. \nRun: python3 rag_sandbox/scripts/run_server.py';
+      return 'Error connecting to Local LLM: $e. \nMake sure the local server is running at $baseUrl. \nRun: python3 rag_pipeline/scripts/run_server.py';
     }
-  }
-
-  String _formatPrompt(String prompt, String? context) {
-    // ChatML format recommended for Qwen2.5
-    String systemPart = context != null 
-      ? '<|im_start|>system\n$context<|im_end|>\n' 
-      : '<|im_start|>system\nYou are a helpful assistant.<|im_end|>\n';
-    
-    return '${systemPart}<|im_start|>user\n$prompt<|im_end|>\n<|im_start|>assistant\n';
   }
 }
 
@@ -53,6 +56,6 @@ class MockLLMService implements LLMInterface {
       return "Based on the provided context, I can tell you that the RAG pipeline is working. [MOCK RESPONSE]";
     }
     
-    return "This is a mock response from the RAG Sandbox. To get real answers, connect a local Qwen2.5 instance via llama.cpp.";
+    return "This is a mock response from the RAG Pipeline. To get real answers, connect a local Qwen2.5 instance via llama.cpp or use Gemini on Web.";
   }
 }
