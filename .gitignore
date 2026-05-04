@@ -50,3 +50,5 @@ app.*.map.json
 *.gguf
 rag_sandbox/venv/
 rag_sandbox/models_bin/
+.agents
+skills-lock.json
