@@ -1,6 +1,16 @@
 import 'package:flutter/material.dart';
 import './theme/app_theme.dart';
-import './features/summary/trip_summary_screen.dart';
+import './features/vehicle-intelligence/vehicle_intelligence_screen.dart';
+
+// Replace this with your real first screen
+class AppRoot extends StatelessWidget {
+  const AppRoot({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const VehicleIntelligenceScreen();
+  }
+}
 
 void main() {
   runApp(const MyApp());
@@ -15,7 +25,7 @@ class MyApp extends StatelessWidget {
       title: 'Haribon',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme,
-      home: TripSummaryScreen.mock(),
+      home: const AppRoot(),
     );
   }
-}
+}
