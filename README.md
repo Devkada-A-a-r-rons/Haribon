@@ -60,7 +60,7 @@ This project is maintained by **Devkada**:
 - **Arron Kian Parejas** – AI/ML Specialist and Full-Stack Engineer
 - **Aaron Matthew Francisco** – Frontend Engineer and UI/UX Designer
 - **Adrian Kyle Mariano** – Frontend & UI/UX Designer
-- **Laur Francisco** – UI/UX Designer and Video Editor
+- **Lauren Kailey Francisco** – UI/UX Designer and Video Editor
 
 ---
 
