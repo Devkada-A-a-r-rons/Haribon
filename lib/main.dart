@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import './theme/app_theme.dart';
 import './features/vehicle-intelligence/vehicle_intelligence_screen.dart';
+import './features/smart-trip-planner/smart-trip-planner.dart';
 
 // Replace this with your real first screen
 class AppRoot extends StatelessWidget {
@@ -8,7 +9,7 @@ class AppRoot extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const VehicleIntelligenceScreen();
+    return const SmartTripPlanner();
   }
 }
 
