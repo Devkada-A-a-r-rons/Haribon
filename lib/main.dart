@@ -4,6 +4,7 @@ import './features/summary/main_summary_screen.dart';
 import './features/summary/trip_summary_screen.dart';
 import './features/common/widgets/nav_bar.dart';
 import './features/vehicle-intelligence/vehicle_intelligence_screen.dart';
+import './features/smart-trip-planner/smart-trip-planner.dart';
 
 void main() {
   runApp(const MyApp());
@@ -19,6 +20,9 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme,
       home: const MainScreen(),
+      routes: {
+        '/smart-trip-planner': (context) => const SmartTripPlanner(),
+      },
     );
   }
 }
@@ -36,6 +40,7 @@ class _MainScreenState extends State<MainScreen> {
   final List<Widget> _screens = [
     const Scaffold(body: Center(child: Text('Home Screen'))),
     const VehicleIntelligenceScreen(),
+    const SmartTripPlanner(),
     MainSummaryScreen.mock(),
     const Scaffold(body: Center(child: Text('History Screen'))),
     const Scaffold(body: Center(child: Text('Insights Screen'))),
