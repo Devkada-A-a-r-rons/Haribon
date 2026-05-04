@@ -1,17 +1,10 @@
 import 'package:flutter/material.dart';
 import './theme/app_theme.dart';
+import './features/summary/main_summary_screen.dart';
+import './features/summary/trip_summary_screen.dart';
+import './features/common/widgets/nav_bar.dart';
 import './features/vehicle-intelligence/vehicle_intelligence_screen.dart';
 import './features/smart-trip-planner/smart-trip-planner.dart';
-
-// Replace this with your real first screen
-class AppRoot extends StatelessWidget {
-  const AppRoot({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const SmartTripPlanner();
-  }
-}
 
 void main() {
   runApp(const MyApp());
@@ -26,7 +19,48 @@ class MyApp extends StatelessWidget {
       title: 'Haribon',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme,
-      home: const AppRoot(),
+      home: const MainScreen(),
+      routes: {
+        '/smart-trip-planner': (context) => const SmartTripPlanner(),
+      },
+    );
+  }
+}
+
+class MainScreen extends StatefulWidget {
+  const MainScreen({super.key});
+
+  @override
+  State<MainScreen> createState() => _MainScreenState();
+}
+
+class _MainScreenState extends State<MainScreen> {
+  int _currentIndex = 2; // Default to Summary
+
+  final List<Widget> _screens = [
+    const Scaffold(body: Center(child: Text('Home Screen'))),
+    const VehicleIntelligenceScreen(),
+    const SmartTripPlanner(),
+    MainSummaryScreen.mock(),
+    const Scaffold(body: Center(child: Text('History Screen'))),
+    const Scaffold(body: Center(child: Text('Insights Screen'))),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: IndexedStack(
+        index: _currentIndex,
+        children: _screens,
+      ),
+      bottomNavigationBar: CommonNavBar(
+        activeIndex: _currentIndex,
+        onTabSelected: (index) {
+          setState(() {
+            _currentIndex = index;
+          });
+        },
+      ),
     );
   }
 }
