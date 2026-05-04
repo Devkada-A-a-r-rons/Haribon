@@ -161,10 +161,6 @@ class TripSummaryScreen extends StatelessWidget {
   }
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
-// MODULE: CTA FOOTER
-// ─────────────────────────────────────────────────────────────────────────────
-
 class _CtaFooter extends StatelessWidget {
   final TripSummary summary;
 
@@ -195,7 +191,6 @@ class _CtaFooter extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 10),
-
         // Secondary CTA
         SizedBox(
           width: double.infinity,
