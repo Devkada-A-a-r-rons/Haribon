@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:haribon/features/summary/widgets/summary_header.dart';
 import '../../theme/app_colors.dart';
-import '../common/widgets/app_bar.dart';
-import '../common/widgets/nav_bar.dart';
-import '../timeline/timeline_screen.dart';
 import 'models/trip_summary_model.dart';
-import 'widgets/summary_header.dart';
 import 'widgets/hero_trip_card.dart';
 import 'widgets/efficiency_score_gauge.dart';
 import 'widgets/key_stats_grid.dart';
@@ -79,55 +76,35 @@ TripSummary _buildMockSummary() => TripSummary(
   treesEquivalent: 4,
 );
 
-/// The Trip Summary screen — assembles all modular summary widgets.
 class TripSummaryScreen extends StatelessWidget {
   final TripSummary summary;
+  final VoidCallback? onSeeTimeline;
+  final ScrollController? scrollController;
 
-  const TripSummaryScreen({super.key, required this.summary});
+  const TripSummaryScreen({
+    super.key, 
+    required this.summary,
+    this.onSeeTimeline,
+    this.scrollController,
+  });
 
-  /// Convenience factory using built-in mock data (for quick preview).
   factory TripSummaryScreen.mock({Key? key}) =>
       TripSummaryScreen(key: key, summary: _buildMockSummary());
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: SummaryColors.surface,
-      appBar: CommonAppBar(
-        title: 'Trip Summary',
-        actions: [
-          TextButton.icon(
-            onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => const TimelineScreen(),
-                ),
-              );
-            },
-            icon: const Icon(Icons.timeline_rounded, size: 18),
-            label: Text(
-              'Timeline',
-              style: GoogleFonts.inter(fontWeight: FontWeight.w600),
-            ),
-            style: TextButton.styleFrom(
-              foregroundColor: AppColors.primaryMain,
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-            ),
-          ),
-        ],
-      ),
-      body: SafeArea(
+    return Container(
+      color: SummaryColors.surface,
+      child: SafeArea(
         bottom: false,
         child: CustomScrollView(
+          controller: scrollController,
           physics: const BouncingScrollPhysics(),
           slivers: [
-            // Removed sticky header since we use CommonAppBar
-
             SliverPadding(
-              padding: const EdgeInsets.fromLTRB(16, 20, 16, 100),
+              padding: const EdgeInsets.fromLTRB(16, 20, 16, 0),
               sliver: SliverList(
                 delegate: SliverChildListDelegate([
-                  // 1. Hero trip card
                   HeroTripCard(
                     origin: summary.origin,
                     destination: summary.destination,
@@ -135,36 +112,47 @@ class TripSummaryScreen extends StatelessWidget {
                     distanceKm: summary.distanceKm,
                   ),
                   const SizedBox(height: 16),
-
-                  // Map showing the route
                   const RouteMapCard(),
                   const SizedBox(height: 16),
-
-                  // 2. Efficiency score gauge
                   EfficiencyScoreGauge(
                     score: summary.efficiencyScore,
                     rating: summary.efficiencyRating,
                     percentileLabel: summary.efficiencyPercentile,
                   ),
                   const SizedBox(height: 16),
-
-                  // 3. Key stats 2×2 grid
                   KeyStatsGrid(stats: summary.stats),
                   const SizedBox(height: 16),
-
-                  // 4. Fuel stop log
                   FuelStopLog(stops: summary.fuelStops),
                   const SizedBox(height: 16),
-
-                  // 5. AI Pro insight
+                  
+                  SizedBox(
+                    width: double.infinity,
+                    child: OutlinedButton.icon(
+                      onPressed: onSeeTimeline,
+                      icon: const Icon(Icons.timeline_rounded, size: 18),
+                      label: Text(
+                        'SEE TRIP TIMELINE',
+                        style: GoogleFonts.inter(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w700,
+                          letterSpacing: 1.1,
+                        ),
+                      ),
+                      style: OutlinedButton.styleFrom(
+                        foregroundColor: AppColors.primaryMain,
+                        side: const BorderSide(color: AppColors.primaryMain, width: 1.5),
+                        padding: const EdgeInsets.symmetric(vertical: 12),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
                   AiInsightCard(insight: summary.aiInsight),
                   const SizedBox(height: 16),
-
-                  // 6. Route breakdown chart
                   RouteBreakdownChart(segments: summary.routeSegments),
                   const SizedBox(height: 16),
-
-                  // 7. CTA footer
                   _CtaFooter(summary: summary),
                 ]),
               ),
@@ -178,14 +166,12 @@ class TripSummaryScreen extends StatelessWidget {
 
 class _CtaFooter extends StatelessWidget {
   final TripSummary summary;
-
   const _CtaFooter({required this.summary});
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        // Primary CTA
         SizedBox(
           width: double.infinity,
           child: FilledButton.icon(
@@ -206,7 +192,6 @@ class _CtaFooter extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 10),
-        // Secondary CTA
         SizedBox(
           width: double.infinity,
           child: OutlinedButton.icon(
@@ -226,6 +211,7 @@ class _CtaFooter extends StatelessWidget {
             ),
           ),
         ),
+        const SizedBox(height: 10),
       ],
     );
   }

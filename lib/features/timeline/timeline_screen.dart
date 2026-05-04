@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
 import '../../theme/app_colors.dart';
-import '../common/widgets/app_bar.dart';
 import 'models/timeline_stop.dart';
 import 'widgets/timeline_header.dart';
 import 'widgets/timeline_item_card.dart';
 import 'widgets/timeline_insight_card.dart';
 
 class TimelineScreen extends StatelessWidget {
-  const TimelineScreen({super.key});
+  final VoidCallback? onBack;
+  final ScrollController? scrollController;
+
+  const TimelineScreen({
+    super.key,
+    this.onBack,
+    this.scrollController,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -41,10 +47,10 @@ class TimelineScreen extends StatelessWidget {
       ),
     ];
 
-    return Scaffold(
-      backgroundColor: AppColors.surfaceMain,
-      appBar: const CommonAppBar(title: 'Timeline'),
-      body: CustomScrollView(
+    return Container(
+      color: AppColors.surfaceMain,
+      child: CustomScrollView(
+        controller: scrollController,
         slivers: [
           const SliverToBoxAdapter(
             child: TimelineHeader(),
@@ -67,7 +73,7 @@ class TimelineScreen extends StatelessWidget {
               text: 'Based on current climb rates and ambient temperature of 24°C, your consumption will increase by 12% once you hit the Marcos Highway incline. Stopping at Shell Angeles is highly recommended to maintain a 20% safety reserve upon reaching the city center.',
             ),
           ),
-          const SliverPadding(padding: EdgeInsets.only(bottom: 100)),
+          const SliverPadding(padding: EdgeInsets.only(bottom: 10)),
         ],
       ),
     );

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import './theme/app_theme.dart';
+import './features/summary/main_summary_screen.dart';
 import './features/summary/trip_summary_screen.dart';
 import './features/common/widgets/nav_bar.dart';
 import './features/vehicle-intelligence/vehicle_intelligence_screen.dart';
@@ -34,10 +35,10 @@ class _MainScreenState extends State<MainScreen> {
 
   final List<Widget> _screens = [
     const Scaffold(body: Center(child: Text('Home Screen'))),
-    const Scaffold(body: Center(child: Text('Planner Screen'))),
-    TripSummaryScreen.mock(),
+    const VehicleIntelligenceScreen(),
+    MainSummaryScreen.mock(),
     const Scaffold(body: Center(child: Text('History Screen'))),
-    const VehicleIntelligenceScreen(), // Used for Insights
+    const Scaffold(body: Center(child: Text('Insights Screen'))),
   ];
 
   @override

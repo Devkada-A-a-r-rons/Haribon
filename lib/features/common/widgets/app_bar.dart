@@ -5,12 +5,14 @@ import '../../../theme/app_colors.dart';
 class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String? title;
   final List<Widget>? actions;
+  final Widget? leading;
   final bool centerTitle;
 
   const CommonAppBar({
     super.key,
     this.title,
     this.actions,
+    this.leading,
     this.centerTitle = false,
   });
 
@@ -20,6 +22,7 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
       backgroundColor: AppColors.surfaceMain,
       elevation: 0,
       centerTitle: centerTitle,
+      leading: leading,
       title: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
