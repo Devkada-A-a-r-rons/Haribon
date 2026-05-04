@@ -7,7 +7,6 @@ import './widgets/home_greeting.dart';
 import './widgets/home_latest_trip_card.dart';
 import './widgets/home_stat_grid.dart';
 import './widgets/efficiency_trend_chart.dart';
-import './widgets/activity_schedule_section.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -79,18 +78,10 @@ class _HomeScreenState extends State<HomeScreen> {
               HomeStatGrid(stats: _dashboardData.stats),
               const SizedBox(height: 24),
               EfficiencyTrendChart(data: _dashboardData.efficiencyTrend),
-              const SizedBox(height: 24),
-              ActivityScheduleSection(activities: _dashboardData.activities),
-              const SizedBox(height: 100), // Space for FAB and bottom nav
+              const SizedBox(height: 10),
             ],
           ),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // Action for adding new trip or activity
-        },
-        child: const Icon(Icons.add),
       ),
     );
   }

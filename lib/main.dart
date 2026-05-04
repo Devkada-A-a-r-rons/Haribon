@@ -6,6 +6,7 @@ import './features/common/widgets/nav_bar.dart';
 import './features/vehicle-intelligence/vehicle_intelligence_screen.dart';
 import './features/smart-trip-planner/smart-trip-planner.dart';
 import './features/home/home_screen.dart';
+import './features/chatbot/chatbot_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -45,6 +46,7 @@ class _MainScreenState extends State<MainScreen> {
     MainSummaryScreen.mock(),
     const Scaffold(body: Center(child: Text('History Screen'))),
     const Scaffold(body: Center(child: Text('Insights Screen'))),
+    const ChatbotScreen(),
   ];
 
   @override
@@ -62,6 +64,17 @@ class _MainScreenState extends State<MainScreen> {
           });
         },
       ),
+      floatingActionButton: _currentIndex == 6 
+        ? null 
+        : FloatingActionButton(
+            onPressed: () {
+              setState(() {
+                _currentIndex = 6; // Switch to Chatbot
+              });
+            },
+            backgroundColor: const Color(0xFF2B52C3),
+            child: const Icon(Icons.auto_awesome, color: Colors.white),
+          ),
     );
   }
 }

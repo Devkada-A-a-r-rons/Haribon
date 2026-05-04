@@ -15,7 +15,7 @@ class CommonNavBar extends StatelessWidget {
   static const _tabs = [
     _NavTab(icon: Icons.home_rounded, label: 'Home'),
     _NavTab(icon: Icons.map_rounded, label: 'Planner'),
-    _NavTab(icon: Icons.auto_awesome, label: 'Smart Trip'),
+    _NavTab(icon: Icons.alt_route_rounded, label: 'Smart Trip'),
     _NavTab(icon: Icons.flag_rounded, label: 'Summary'),
     _NavTab(icon: Icons.history_rounded, label: 'History'),
     _NavTab(icon: Icons.insights_rounded, label: 'Insights'),
