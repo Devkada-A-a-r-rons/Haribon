@@ -57,10 +57,10 @@ Haribon features a state-of-the-art hybrid RAG pipeline:
 
 This project is maintained by **Devkada**:
 
-- **Arron Kian Parejas** – Lead Developer & Architect
-- **Aaron Matthew Francisco** – Backend & Data Engineer
+- **Arron Kian Parejas** – AI/ML Specialist and Full-Stack Engineer
+- **Aaron Matthew Francisco** – Frontend Engineer and UI/UX Designer
 - **Adrian Kyle Mariano** – Frontend & UI/UX Designer
-- **RhonzKieee** – AI & RAG Specialist
+- **Laur Francisco** – UI/UX Designer and Video Editor
 
 ---
 
