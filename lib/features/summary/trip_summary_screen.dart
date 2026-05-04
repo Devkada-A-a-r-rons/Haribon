@@ -216,17 +216,6 @@ class _CtaFooter extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(height: 14),
-
-        // Log note
-        Text(
-          'Your logs have been saved to your Agila profile.',
-          textAlign: TextAlign.center,
-          style: GoogleFonts.inter(
-            fontSize: 12,
-            color: AppColors.textTertiary,
-          ),
-        ),
       ],
     );
   }
