@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../common/widgets/app_bar.dart';
 import 'widgets/insight_card.dart';
 import 'widgets/expandable_card.dart';
@@ -130,16 +129,7 @@ class _SmartTripPlannerState extends State<SmartTripPlanner> {
               ),
               const SizedBox(height: 16),
 
-              // EXPENSE PLANNER
-              const ExpandableCard(
-                icon: Icons.payments_outlined,
-                title: 'Expense\nPlanner',
-                subtitle: '₱2,680\nEstimated',
-                subtitleColor: Color(0xFF3B5B78),
-                content: ExpensePlannerContent(),
-                initiallyExpanded: true,
-              ),
-              const SizedBox(height: 16),
+           
 
               // VISUAL BREAKDOWN
               const VisualBreakdownCard(),
