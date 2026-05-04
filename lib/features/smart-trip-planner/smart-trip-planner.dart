@@ -168,60 +168,6 @@ class _SmartTripPlannerState extends State<SmartTripPlanner> {
           ),
         ),
       ),
-      bottomNavigationBar: _buildBottomNav(),
-    );
-  }
-
-  Widget _buildBottomNav() {
-    return Container(
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 5, offset: Offset(0, -2))],
-      ),
-      child: BottomNavigationBar(
-        currentIndex: _selectedIndex,
-        type: BottomNavigationBarType.fixed,
-        backgroundColor: Colors.white,
-        selectedItemColor: const Color(0xFF2962FF),
-        unselectedItemColor: Colors.grey.shade400,
-        showUnselectedLabels: true,
-        elevation: 0,
-        selectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 8, letterSpacing: 0.5),
-        unselectedLabelStyle: const TextStyle(fontWeight: FontWeight.w600, fontSize: 8, letterSpacing: 0.5),
-        onTap: (index) {
-          setState(() {
-            _selectedIndex = index;
-          });
-        },
-        items: [
-          const BottomNavigationBarItem(
-            icon: Padding(padding: EdgeInsets.only(bottom: 4.0, top: 4.0), child: Icon(Icons.explore_outlined, size: 20)),
-            label: 'EXPLORE',
-          ),
-          BottomNavigationBarItem(
-            icon: Padding(
-              padding: const EdgeInsets.only(bottom: 4.0, top: 4.0), 
-              child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-                decoration: BoxDecoration(
-                  color: const Color(0xFFE3F2FD),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: const Icon(Icons.payments_outlined, size: 20, color: Color(0xFF2962FF)),
-              )
-            ),
-            label: 'PLANNER',
-          ),
-          const BottomNavigationBarItem(
-            icon: Padding(padding: EdgeInsets.only(bottom: 4.0, top: 4.0), child: Icon(Icons.bar_chart_outlined, size: 20)),
-            label: 'INSIGHTS',
-          ),
-          const BottomNavigationBarItem(
-            icon: Padding(padding: EdgeInsets.only(bottom: 4.0, top: 4.0), child: Icon(Icons.person_outline, size: 20)),
-            label: 'PROFILE',
-          ),
-        ],
-      ),
     );
   }
 }
