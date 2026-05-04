@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'llm_interface.dart';
+import 'gemini_llm_service.dart';
 
 class LLMServiceFactory {
   static LLMInterface getService({String? apiKey}) {
@@ -10,33 +10,6 @@ class LLMServiceFactory {
       return GeminiLLMService(apiKey: apiKey ?? const String.fromEnvironment('GEMINI_API_KEY'));
     } else {
       return LocalLLMService();
-    }
-  }
-}
-
-class GeminiLLMService implements LLMInterface {
-  final String apiKey;
-  late final GenerativeModel model;
-
-  GeminiLLMService({required this.apiKey}) {
-    model = GenerativeModel(
-      model: 'gemini-1.5-flash',
-      apiKey: apiKey,
-    );
-  }
-
-  @override
-  Future<String> generateResponse(String prompt, {String? systemContext}) async {
-    try {
-      final content = [
-        if (systemContext != null) Content.text('System Context: $systemContext'),
-        Content.text(prompt),
-      ];
-      
-      final response = await model.generateContent(content);
-      return response.text ?? 'No response from Gemini';
-    } catch (e) {
-      return 'Error connecting to Gemini: $e';
     }
   }
 }
