@@ -1,29 +1,27 @@
 import 'dart:io';
 import 'package:path/path.dart' as p;
 import 'pipeline/rag_pipeline.dart';
-import 'llm/native_llm_service.dart';
+import 'llm/llm_services.dart';
 
-/// This is a simple example of how to use the RAG Sandbox with Native LLM.
+/// This is a simple example of how to use the RAG Pipeline with Factory switching.
 void main() async {
-  // 1. Path to the model downloaded via python script
-  // In a real app, you might bundle this or download it to app documents
-  final modelPath = p.join(Directory.current.path, 'lib', 'rag_sandbox', 'models', 'qwen2.5-3b-instruct-q4_k_m.gguf');
-  
-  print('📚 Loading Native Model from: $modelPath');
+  print('📚 Initializing RAG Pipeline...');
 
-  // 2. Initialize Native LLM
-  final llm = NativeLLMService(modelPath: modelPath);
+  // 1. Initialize LLM via Factory (automatically switches to Gemini on Web)
+  // On local, it defaults to LocalLLMService (expected at localhost:8000)
+  // You can pass an API key here or via --dart-define=GEMINI_API_KEY=xxx
+  final llm = LLMServiceFactory.getService();
   
-  // 3. Initialize Pipeline
+  // 2. Initialize Pipeline
   final rag = RAGPipeline(llm: llm);
 
-  // 4. Create a conversation
-  final conversationId = await rag.createNewConversation('Native RAG Test');
+  // 3. Create a conversation
+  final conversationId = await rag.createNewConversation('RAG Pipeline Test');
 
-  // 5. Send a query
+  // 4. Send a query
   print('\n--- User: Tell me about the Haribon project ---');
   final response1 = await rag.processQuery(conversationId, 'Tell me about the Haribon project');
   print('--- AI: $response1 ---');
 
-  print('\n✅ RAG Process completed natively!');
+  print('\n✅ RAG Process completed!');
 }
