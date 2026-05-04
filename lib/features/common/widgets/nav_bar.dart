@@ -18,7 +18,7 @@ class CommonNavBar extends StatelessWidget {
     _NavTab(icon: Icons.auto_awesome, label: 'Smart Trip'),
     _NavTab(icon: Icons.flag_rounded, label: 'Summary'),
     _NavTab(icon: Icons.history_rounded, label: 'History'),
-    _NavTab(icon: Icons.insights_rounded, label: 'Insights'),
+    _NavTab(icon: Icons.analytics_outlined, label: 'Analysis'),
   ];
 
   @override

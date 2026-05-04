@@ -5,6 +5,7 @@ import './features/summary/trip_summary_screen.dart';
 import './features/common/widgets/nav_bar.dart';
 import './features/vehicle-intelligence/vehicle_intelligence_screen.dart';
 import './features/smart-trip-planner/smart-trip-planner.dart';
+import './features/fuel-and-emissions/fuel-and-emissions.dart';
 
 void main() {
   runApp(const MyApp());
@@ -43,7 +44,7 @@ class _MainScreenState extends State<MainScreen> {
     const SmartTripPlanner(),
     MainSummaryScreen.mock(),
     const Scaffold(body: Center(child: Text('History Screen'))),
-    const Scaffold(body: Center(child: Text('Insights Screen'))),
+    const FuelAndEmissionsScreen(),
   ];
 
   @override
