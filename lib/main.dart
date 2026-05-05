@@ -10,7 +10,7 @@ import './features/home/home_screen.dart';
 import './features/chatbot/chatbot_screen.dart';
 import './features/settings/settings_screen.dart';
 import './features/onboarding/onboarding_screen.dart';
-import './features/history/history.dart';
+import './features/history/history_screen.dart';
 import 'package:haribon/theme/app_colors.dart';
 
 

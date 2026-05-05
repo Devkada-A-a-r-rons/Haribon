@@ -35,6 +35,7 @@ class AppColors {
   static const historyBlueGray = Color(0xFF3B5B72);
   
   static const brandHaribon = Color(0xFF82B1FF);
+  static const brandAgila = Color(0xFF72C6EF);
   static const brandAerovistaDark = Color(0xFF111827);
   static const brandAerovistaGreen = Color(0xFF065F46);
 

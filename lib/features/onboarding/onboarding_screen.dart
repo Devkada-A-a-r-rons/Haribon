@@ -64,8 +64,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   });
                 },
                 children: [
-                  Step1Welcome(onContinue: (name) {
+                  Step1Welcome(onContinue: (name, vehicle, frequency, cost) {
                     _userName = name;
+                    // You could store other data here if needed for future use
                     _nextPage();
                   }),
                   Step2Planning(onContinue: (style) {

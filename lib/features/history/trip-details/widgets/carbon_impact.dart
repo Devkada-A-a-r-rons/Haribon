@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:haribon/theme/app_colors.dart';
 
 class CarbonImpact extends StatelessWidget {
   const CarbonImpact({super.key});
