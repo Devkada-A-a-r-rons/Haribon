@@ -9,6 +9,7 @@ import './features/fuel-and-emissions/fuel-and-emissions.dart';
 import './features/home/home_screen.dart';
 import './features/chatbot/chatbot_screen.dart';
 import './features/settings/settings_screen.dart';
+import './features/onboarding/onboarding_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -23,8 +24,10 @@ class MyApp extends StatelessWidget {
       title: 'Haribon',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme,
-      home: const MainScreen(),
+      // home: const MainScreen(), // Uncomment this to bypass onboarding
+      home: const OnboardingScreen(), 
       routes: {
+        '/home': (context) => const MainScreen(),
         '/smart-trip-planner': (context) => const SmartTripPlanner(),
         '/settings': (context) => const SettingsScreen(),
       },
