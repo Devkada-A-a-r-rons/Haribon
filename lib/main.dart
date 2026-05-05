@@ -12,10 +12,12 @@ import './features/settings/settings_screen.dart';
 import './features/onboarding/onboarding_screen.dart';
 import './features/history/history_screen.dart';
 import 'package:haribon/theme/app_colors.dart';
+import 'package:flutter/foundation.dart';
+import 'package:device_preview/device_preview.dart';
 
 
 void main() {
-  runApp(const MyApp());
+  runApp(DevicePreview(enabled: !kReleaseMode, builder: (context) => const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -26,6 +28,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Haribon',
       debugShowCheckedModeBanner: false,
+      useInheritedMediaQuery: true,
+      locale: DevicePreview.locale(context),
+      builder: DevicePreview.appBuilder,
       theme: AppTheme.lightTheme,
       // home: const MainScreen(), // Uncomment this to bypass onboarding
       home: const OnboardingScreen(), 
