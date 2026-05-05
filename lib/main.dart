@@ -9,6 +9,7 @@ import './features/fuel-and-emissions/fuel-and-emissions.dart';
 import './features/home/home_screen.dart';
 import './features/chatbot/chatbot_screen.dart';
 import './features/settings/settings_screen.dart';
+import './features/history/history.dart';
 
 void main() {
   runApp(const MyApp());
@@ -47,7 +48,7 @@ class _MainScreenState extends State<MainScreen> {
     const VehicleIntelligenceScreen(),
     const SmartTripPlanner(),
     MainSummaryScreen.mock(),
-    const Scaffold(body: Center(child: Text('History Screen'))),
+    const HistoryScreen(),
     const FuelAndEmissionsScreen(),
     const ChatbotScreen(),
   ];
