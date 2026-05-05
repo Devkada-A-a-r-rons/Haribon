@@ -7,6 +7,7 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
   final List<Widget>? actions;
   final Widget? leading;
   final bool centerTitle;
+  final bool showSettings;
 
   const CommonAppBar({
     super.key,
@@ -14,6 +15,7 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.actions,
     this.leading,
     this.centerTitle = false,
+    this.showSettings = true,
   });
 
   @override
@@ -60,7 +62,16 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
           ],
         ],
       ),
-      actions: actions,
+      actions: [
+        if (actions != null) ...actions!,
+        if (showSettings)
+          IconButton(
+            icon: Icon(Icons.settings_outlined, color: AppColors.primaryMain),
+            onPressed: () {
+              Navigator.pushNamed(context, '/settings');
+            },
+          ),
+      ],
     );
   }
 
