@@ -8,6 +8,7 @@ import './features/smart-trip-planner/smart-trip-planner.dart';
 import './features/fuel-and-emissions/fuel-and-emissions.dart';
 import './features/home/home_screen.dart';
 import './features/chatbot/chatbot_screen.dart';
+import './features/settings/settings_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -25,6 +26,7 @@ class MyApp extends StatelessWidget {
       home: const MainScreen(),
       routes: {
         '/smart-trip-planner': (context) => const SmartTripPlanner(),
+        '/settings': (context) => const SettingsScreen(),
       },
     );
   }
