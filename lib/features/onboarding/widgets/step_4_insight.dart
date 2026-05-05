@@ -16,11 +16,12 @@ class _Step4InsightState extends State<Step4Insight> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(24.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.all(24.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
           Text(
             'Insight Level',
             textAlign: TextAlign.center,
@@ -108,7 +109,7 @@ class _Step4InsightState extends State<Step4Insight> {
             iconColor: Colors.blueGrey,
             iconBackgroundColor: Colors.blueGrey.withOpacity(0.1),
           ),
-          const Spacer(),
+          const SizedBox(height: 32),
           FilledButton(
             onPressed: widget.onFinish,
             style: FilledButton.styleFrom(
@@ -157,6 +158,7 @@ class _Step4InsightState extends State<Step4Insight> {
           ),
         ],
       ),
+            ),
     );
   }
 

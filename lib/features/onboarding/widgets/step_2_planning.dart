@@ -16,11 +16,12 @@ class _Step2PlanningState extends State<Step2Planning> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(24.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.all(24.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
           Text(
             'How much do you\nplan ahead?',
             style: Theme.of(context).textTheme.headlineMedium?.copyWith(
@@ -58,7 +59,7 @@ class _Step2PlanningState extends State<Step2Planning> {
             isSelected: _selectedOption == 'I decide along the way',
             onTap: () => setState(() => _selectedOption = 'I decide along the way'),
           ),
-          const Spacer(),
+          const SizedBox(height: 32),
           // Bottom mock illustration
           Container(
             height: 120,
@@ -114,6 +115,7 @@ class _Step2PlanningState extends State<Step2Planning> {
                 ),
           ),
         ],
+      ),
       ),
     );
   }
