@@ -16,11 +16,12 @@ class _Step3RefuelingState extends State<Step3Refueling> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(24.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.all(24.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
           Text(
             'What matters most\nwhen refueling?',
             style: Theme.of(context).textTheme.headlineMedium?.copyWith(
@@ -64,7 +65,7 @@ class _Step3RefuelingState extends State<Step3Refueling> {
             iconColor: Colors.blueGrey,
             iconBackgroundColor: Colors.blueGrey.withOpacity(0.1),
           ),
-          const Spacer(),
+          const SizedBox(height: 32),
           // Bottom mock map
           Container(
             height: 150,
@@ -122,6 +123,7 @@ class _Step3RefuelingState extends State<Step3Refueling> {
             ),
           ),
         ],
+      ),
       ),
     );
   }

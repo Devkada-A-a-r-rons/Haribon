@@ -17,13 +17,6 @@ class SettingsScreen extends StatelessWidget {
         backgroundColor: AppColors.greyLightest,
         elevation: 0,
         centerTitle: true,
-        leading: Padding(
-          padding: const EdgeInsets.only(left: 16.0),
-          child: CircleAvatar(
-            backgroundColor: Colors.grey.shade300,
-            backgroundImage: const NetworkImage('https://i.pravatar.cc/150?img=11'), // Placeholder avatar
-          ),
-        ),
         title: Text(
           'Settings',
           style: textTheme.titleMedium?.copyWith(
@@ -31,21 +24,6 @@ class SettingsScreen extends StatelessWidget {
             color: AppColors.navyDarker,
           ),
         ),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            child: Text(
-              'Save',
-              style: textTheme.bodyMedium?.copyWith(
-                color: AppColors.blueLightAccent, // Light blue app theme color equivalent to the mockup
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          ),
-          const SizedBox(width: 8),
-        ],
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -198,20 +176,6 @@ class SettingsScreen extends StatelessWidget {
                     style: textTheme.titleSmall?.copyWith(
                       color: Colors.white,
                       fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 16),
-              // Reset to Defaults
-              Center(
-                child: TextButton(
-                  onPressed: () {},
-                  child: Text(
-                    'Reset to Defaults',
-                    style: textTheme.bodyMedium?.copyWith(
-                      color: AppColors.blueLightAccent, // Light blue
-                      fontWeight: FontWeight.w600,
                     ),
                   ),
                 ),
