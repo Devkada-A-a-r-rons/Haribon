@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'summary_header.dart';
+import 'package:haribon/theme/app_colors.dart';
+
 
 /// MODULE: HERO TRIP CARD
 /// Blue → Green gradient card showing route, duration, and distance.
@@ -28,11 +30,11 @@ class HeroTripCard extends StatelessWidget {
         gradient: const LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [Color(0xFF004CCA), Color(0xFF006E2F)],
+          colors: [AppColors.bluePrimary, AppColors.greenDark],
         ),
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFF004CCA).withValues(alpha: 0.25),
+            color: AppColors.bluePrimary.withValues(alpha: 0.25),
             blurRadius: 20,
             offset: const Offset(0, 8),
           ),

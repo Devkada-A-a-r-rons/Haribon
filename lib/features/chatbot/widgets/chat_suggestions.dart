@@ -29,13 +29,13 @@ class ChatSuggestions extends StatelessWidget {
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
           decoration: BoxDecoration(
-            color: const Color(0xFFEFF6FF), // Light blue background
+            color: AppColors.blueGreyLightestBg, // Light blue background
             borderRadius: BorderRadius.circular(16),
             border: Border.all(color: Colors.blue.withValues(alpha: 0.1)),
           ),
           child: Row(
             children: [
-              Icon(suggestion.icon, size: 18, color: const Color(0xFF2B52C3)),
+              Icon(suggestion.icon, size: 18, color: AppColors.blueAccent),
               const SizedBox(width: 12),
               Expanded(
                 child: Text(
@@ -43,7 +43,7 @@ class ChatSuggestions extends StatelessWidget {
                   style: GoogleFonts.inter(
                     fontSize: 14,
                     fontWeight: FontWeight.w600,
-                    color: const Color(0xFF1E3A8A),
+                    color: AppColors.navyPrimary,
                   ),
                 ),
               ),

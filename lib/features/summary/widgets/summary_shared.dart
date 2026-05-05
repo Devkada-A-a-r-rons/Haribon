@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'summary_header.dart';
+import 'package:haribon/theme/app_colors.dart';
+
 
 /// Standardized white card used as the container for every summary module.
 class SectionCard extends StatelessWidget {
@@ -17,7 +19,7 @@ class SectionCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: const Color(0xFFDBE5FF)),
+        border: Border.all(color: AppColors.blueLightBg),
         boxShadow: [
           BoxShadow(
             color: SummaryColors.primary.withValues(alpha: 0.06),

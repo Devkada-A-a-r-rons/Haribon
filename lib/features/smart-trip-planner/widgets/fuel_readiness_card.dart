@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:haribon/theme/app_colors.dart';
+
 
 class FuelReadinessCard extends StatelessWidget {
   const FuelReadinessCard({super.key});
@@ -23,16 +25,16 @@ class FuelReadinessCard extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Icon(Icons.local_gas_station_outlined, color: Color(0xFF3B5B78)),
+              const Icon(Icons.local_gas_station_outlined, color: AppColors.blueGreyDark),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                 decoration: BoxDecoration(
-                  color: const Color(0xFFFFEBEE),
+                  color: AppColors.redSoftBg,
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Text(
                   'Refill Needed',
-                  style: textTheme.labelSmall?.copyWith(color: const Color(0xFFC62828), fontWeight: FontWeight.bold, fontSize: 10),
+                  style: textTheme.labelSmall?.copyWith(color: AppColors.redDark, fontWeight: FontWeight.bold, fontSize: 10),
                 ),
               ),
             ],
@@ -40,18 +42,18 @@ class FuelReadinessCard extends StatelessWidget {
           const SizedBox(height: 12),
           Text('Fuel Readiness', style: textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w800)),
           const SizedBox(height: 2),
-          Text('Current Tank: 8L (96km)', style: textTheme.bodySmall?.copyWith(color: const Color(0xFF6B7B8A))),
+          Text('Current Tank: 8L (96km)', style: textTheme.bodySmall?.copyWith(color: AppColors.blueGreySecondary)),
           const SizedBox(height: 16),
           Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: const Color(0xFFF8F9FA),
+              color: AppColors.greyLightest,
               borderRadius: BorderRadius.circular(8),
-              border: const Border(left: BorderSide(color: Color(0xFFC62828), width: 3)),
+              border: const Border(left: BorderSide(color: AppColors.redDark, width: 3)),
             ),
             child: Text(
               'Warning: 10.3L more needed for the 220km trip to Baguio.',
-              style: textTheme.bodySmall?.copyWith(color: const Color(0xFF1B2430), fontWeight: FontWeight.w500),
+              style: textTheme.bodySmall?.copyWith(color: AppColors.navyDarker, fontWeight: FontWeight.w500),
             ),
           ),
         ],

@@ -76,10 +76,10 @@ class TimelineNode extends StatelessWidget {
           width: 16,
           height: 16,
           decoration: BoxDecoration(
-            color: const Color(0xFF8B9B3A), // Olive green from mockup
+            color: AppColors.olivePrimary, // Olive green from mockup
             shape: BoxShape.circle,
             border: Border.all(
-              color: const Color(0xFFF0F4E3), // Light olive ring
+              color: AppColors.oliveSoftBg, // Light olive ring
               width: 4,
             ),
           ),

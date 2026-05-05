@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:haribon/theme/app_colors.dart';
+
 
 class FuelConsumptionBreakdownCard extends StatelessWidget {
   const FuelConsumptionBreakdownCard({super.key});
@@ -24,7 +26,7 @@ class FuelConsumptionBreakdownCard extends StatelessWidget {
             style: textTheme.labelSmall?.copyWith(
               fontWeight: FontWeight.w800,
               letterSpacing: 1.2,
-              color: const Color(0xFF1B2430),
+              color: AppColors.navyDarker,
               fontSize: 10,
             ),
           ),
@@ -36,10 +38,10 @@ class FuelConsumptionBreakdownCard extends StatelessWidget {
               height: 16,
               child: Row(
                 children: [
-                  Expanded(flex: 70, child: Container(color: const Color(0xFF3B5B78))), // Base
-                  Expanded(flex: 10, child: Container(color: const Color(0xFFF57C00))), // Traffic
-                  Expanded(flex: 15, child: Container(color: const Color(0xFFC62828))), // Terrain
-                  Expanded(flex: 5, child: Container(color: const Color(0xFFB0BEC5))),  // Idle
+                  Expanded(flex: 70, child: Container(color: AppColors.blueGreyDark)), // Base
+                  Expanded(flex: 10, child: Container(color: AppColors.orangePrimary)), // Traffic
+                  Expanded(flex: 15, child: Container(color: AppColors.redDark)), // Terrain
+                  Expanded(flex: 5, child: Container(color: AppColors.blueGreyLight)),  // Idle
                 ],
               ),
             ),
@@ -48,15 +50,15 @@ class FuelConsumptionBreakdownCard extends StatelessWidget {
           // Grid
           Row(
             children: [
-              Expanded(child: _buildLegendItem(textTheme, Icons.local_gas_station, const Color(0xFF3B5B78), 'Base', '18.3L')),
-              Expanded(child: _buildLegendItem(textTheme, Icons.directions_car, const Color(0xFFF57C00), 'Traffic', '+1.5L')),
+              Expanded(child: _buildLegendItem(textTheme, Icons.local_gas_station, AppColors.blueGreyDark, 'Base', '18.3L')),
+              Expanded(child: _buildLegendItem(textTheme, Icons.directions_car, AppColors.orangePrimary, 'Traffic', '+1.5L')),
             ],
           ),
           const SizedBox(height: 16),
           Row(
             children: [
-              Expanded(child: _buildLegendItem(textTheme, Icons.terrain, const Color(0xFFC62828), 'Terrain', '+2.9L')),
-              Expanded(child: _buildLegendItem(textTheme, Icons.timer, const Color(0xFFB0BEC5), 'Idle', '+0.5L')),
+              Expanded(child: _buildLegendItem(textTheme, Icons.terrain, AppColors.redDark, 'Terrain', '+2.9L')),
+              Expanded(child: _buildLegendItem(textTheme, Icons.timer, AppColors.blueGreyLight, 'Idle', '+0.5L')),
             ],
           ),
         ],
@@ -73,9 +75,9 @@ class FuelConsumptionBreakdownCard extends StatelessWidget {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(label, style: textTheme.labelSmall?.copyWith(color: const Color(0xFF6B7B8A), fontSize: 10)),
+            Text(label, style: textTheme.labelSmall?.copyWith(color: AppColors.blueGreySecondary, fontSize: 10)),
             const SizedBox(height: 2),
-            Text(value, style: textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w700, color: const Color(0xFF1B2430))),
+            Text(value, style: textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w700, color: AppColors.navyDarker)),
           ],
         ),
       ],

@@ -99,7 +99,7 @@ class TimelineItemCard extends StatelessWidget {
                     const SizedBox(height: 16),
                     const Icon(
                       Icons.location_on_outlined,
-                      color: Color(0xFF8B9B3A),
+                      color: AppColors.olivePrimary,
                       size: 24,
                     )
                   ],
@@ -121,7 +121,7 @@ class TimelineItemCard extends StatelessWidget {
       case TimelineStopType.optional:
         return AppColors.textTertiary.withValues(alpha: 0.6);
       case TimelineStopType.arrival:
-        return const Color(0xFF8B9B3A); // Olive green
+        return AppColors.olivePrimary; // Olive green
     }
   }
 
@@ -167,7 +167,7 @@ class TimelineItemCard extends StatelessWidget {
     return ElevatedButton(
       onPressed: () {},
       style: ElevatedButton.styleFrom(
-        backgroundColor: isPrimary ? const Color(0xFF4A5568) : AppColors.surfaceDim.withValues(alpha: 0.3),
+        backgroundColor: isPrimary ? AppColors.greySecondary : AppColors.surfaceDim.withValues(alpha: 0.3),
         foregroundColor: isPrimary ? Colors.white : AppColors.textSecondary,
         elevation: 0,
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),

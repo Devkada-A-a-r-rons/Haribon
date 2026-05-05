@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:haribon/theme/app_colors.dart';
+
 
 class ProfileHeader extends StatelessWidget {
   const ProfileHeader({super.key});
@@ -13,7 +15,7 @@ class ProfileHeader extends StatelessWidget {
           'Alex Rivera',
           style: textTheme.headlineMedium?.copyWith(
             fontWeight: FontWeight.w800,
-            color: const Color(0xFF1B2430),
+            color: AppColors.navyDarker,
             fontSize: 24,
           ),
         ),
@@ -23,7 +25,7 @@ class ProfileHeader extends StatelessWidget {
           style: textTheme.labelSmall?.copyWith(
             fontWeight: FontWeight.w800,
             letterSpacing: 1.2,
-            color: const Color(0xFF3B5B78),
+            color: AppColors.blueGreyDark,
             fontSize: 10,
           ),
         ),

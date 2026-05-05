@@ -136,7 +136,7 @@ class HomeLatestTripCard extends StatelessWidget {
                   child: FilledButton(
                     onPressed: onViewSummary,
                     style: FilledButton.styleFrom(
-                      backgroundColor: const Color(0xFF2B52C3),
+                      backgroundColor: AppColors.blueAccent,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(50),
                       ),

@@ -7,6 +7,8 @@ import 'widgets/expense_planner_content.dart';
 import 'widgets/visual_breakdown_card.dart';
 import 'widgets/bottom_action_card.dart';
 import 'widgets/fuel_readiness_card.dart';
+import 'package:haribon/theme/app_colors.dart';
+
 
 class SmartTripPlanner extends StatefulWidget {
   const SmartTripPlanner({super.key});
@@ -24,12 +26,12 @@ class _SmartTripPlannerState extends State<SmartTripPlanner> {
     final textTheme = theme.textTheme;
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF8F9FA),
+      backgroundColor: AppColors.greyLightest,
       appBar: CommonAppBar(
         title: 'Smart Trip Planner',
         actions: [
           IconButton(
-            icon: const Icon(Icons.account_circle_outlined, color: Color(0xFF1B2430)),
+            icon: const Icon(Icons.account_circle_outlined, color: AppColors.navyDarker),
             onPressed: () {},
           ),
         ],
@@ -46,7 +48,7 @@ class _SmartTripPlannerState extends State<SmartTripPlanner> {
                 child: Text(
                   'CURRENT BUDGET STATUS',
                   style: textTheme.labelSmall?.copyWith(
-                    color: const Color(0xFF3B5B78),
+                    color: AppColors.blueGreyDark,
                     fontWeight: FontWeight.w800,
                     letterSpacing: 1.2,
                     fontSize: 10,
@@ -61,7 +63,7 @@ class _SmartTripPlannerState extends State<SmartTripPlanner> {
                   Text(
                     '₱2,500',
                     style: textTheme.headlineMedium?.copyWith(
-                      color: const Color(0xFF1B2430),
+                      color: AppColors.navyDarker,
                       fontWeight: FontWeight.w900,
                       fontSize: 36,
                     ),
@@ -70,7 +72,7 @@ class _SmartTripPlannerState extends State<SmartTripPlanner> {
                   Text(
                     'Total Budget',
                     style: textTheme.bodyMedium?.copyWith(
-                      color: const Color(0xFF6B7B8A),
+                      color: AppColors.blueGreySecondary,
                       fontSize: 12,
                     ),
                   ),
@@ -84,7 +86,7 @@ class _SmartTripPlannerState extends State<SmartTripPlanner> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(4),
                   gradient: const LinearGradient(
-                    colors: [Color(0xFF9CBEE1), Color(0xFFC8E6C9)],
+                    colors: [AppColors.bluePale, AppColors.greenLightBg],
                   ),
                 ),
               ),
@@ -95,14 +97,14 @@ class _SmartTripPlannerState extends State<SmartTripPlanner> {
                   Text(
                     'Est. Cost: ₱2,680',
                     style: textTheme.bodySmall?.copyWith(
-                      color: const Color(0xFFC62828),
+                      color: AppColors.redDark,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
                   Text(
                     'Balance: -₱180',
                     style: textTheme.bodySmall?.copyWith(
-                      color: const Color(0xFF8F9FAA),
+                      color: AppColors.greyLightAccent,
                       fontWeight: FontWeight.w500,
                     ),
                   ),

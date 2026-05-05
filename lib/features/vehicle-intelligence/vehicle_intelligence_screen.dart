@@ -4,6 +4,8 @@ import './widgets/compact_dropdown.dart';
 import './widgets/compact_text_field.dart';
 import './widgets/info_card.dart';
 import './widgets/efficiency_card.dart';
+import 'package:haribon/theme/app_colors.dart';
+
 
 class VehicleIntelligenceScreen extends StatefulWidget {
   const VehicleIntelligenceScreen({super.key});
@@ -21,7 +23,7 @@ class _VehicleIntelligenceScreenState extends State<VehicleIntelligenceScreen> {
     final textTheme = theme.textTheme;
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF8F9FA),
+      backgroundColor: AppColors.greyLightest,
       appBar: const CommonAppBar(
         title: 'Setup',
       ),
@@ -91,7 +93,7 @@ class _VehicleIntelligenceScreenState extends State<VehicleIntelligenceScreen> {
                         Text(
                           '${(_fuelLevel * 100).toInt()}%',
                           style: const TextStyle(
-                            color: Color(0xFF3B5B78),
+                            color: AppColors.blueGreyDark,
                             fontWeight: FontWeight.w700,
                             fontSize: 22,
                           ),
@@ -138,7 +140,7 @@ class _VehicleIntelligenceScreenState extends State<VehicleIntelligenceScreen> {
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(3),
                                 gradient: LinearGradient(
-                                  colors: [Color(0xFFC62828), Color(0xFFF0E5D8), Color(0xFF4A6B5D)],
+                                  colors: [AppColors.redDark, AppColors.beigePrimary, AppColors.tealDark],
                                 ),
                               ),
                             ),
@@ -150,7 +152,7 @@ class _VehicleIntelligenceScreenState extends State<VehicleIntelligenceScreen> {
                                 decoration: BoxDecoration(
                                   color: Colors.white,
                                   shape: BoxShape.circle,
-                                  border: Border.all(color: const Color(0xFF3B5B78), width: 2),
+                                  border: Border.all(color: AppColors.blueGreyDark, width: 2),
                                 ),
                               ),
                             ),
@@ -176,7 +178,7 @@ class _VehicleIntelligenceScreenState extends State<VehicleIntelligenceScreen> {
                   child: FilledButton.icon(
                     onPressed: () {},
                     style: FilledButton.styleFrom(
-                      backgroundColor: const Color(0xFF567261), // Dark green
+                      backgroundColor: AppColors.tealPrimary, // Dark green
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
                       ),

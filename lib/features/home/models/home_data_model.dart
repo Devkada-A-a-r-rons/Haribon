@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:haribon/theme/app_colors.dart';
+
 
 class HomeDashboardData {
   final String userName;
@@ -24,22 +26,22 @@ class HomeDashboardData {
           label: 'Avg Dist/Trip',
           value: '142 km',
           icon: Icons.route_rounded,
-          color: Color(0xFFE1F5FE),
-          iconColor: Color(0xFF0288D1),
+          color: AppColors.blueLighterBg,
+          iconColor: AppColors.blueLight,
         ),
         const HomeStat(
           label: 'Avg Fuel',
           value: '12.4 L',
           icon: Icons.local_gas_station_rounded,
-          color: Color(0xFFE8F5E9),
-          iconColor: Color(0xFF2E7D32),
+          color: AppColors.greenSoftBg,
+          iconColor: AppColors.greenAccent,
         ),
         const HomeStat(
           label: 'Mo. Sav',
           value: '₱420',
           icon: Icons.savings_rounded,
-          color: Color(0xFFFFF3E0),
-          iconColor: Color(0xFFEF6C00),
+          color: AppColors.orangeSoftBg,
+          iconColor: AppColors.orangeDark,
         ),
       ],
       efficiencyTrend: [40, 50, 45, 70, 65, 90, 110],
@@ -49,14 +51,14 @@ class HomeDashboardData {
           subtitle: '45km remaining',
           icon: Icons.local_gas_station_rounded,
           iconColor: Colors.blue,
-          backgroundColor: Color(0xFFE3F2FD),
+          backgroundColor: AppColors.blueLightestBg,
         ),
         const HomeActivity(
           title: 'Planned: Subic Weekend',
           subtitle: 'Sat, Oct 14 • 2h 30m',
           icon: Icons.calendar_today_rounded,
           iconColor: Colors.green,
-          backgroundColor: Color(0xFFE8F5E9),
+          backgroundColor: AppColors.greenSoftBg,
         ),
       ],
     );

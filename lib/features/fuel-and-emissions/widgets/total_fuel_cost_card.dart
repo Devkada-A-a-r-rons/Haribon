@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:haribon/theme/app_colors.dart';
+
 
 class TotalFuelCostCard extends StatelessWidget {
   const TotalFuelCostCard({super.key});
@@ -24,7 +26,7 @@ class TotalFuelCostCard extends StatelessWidget {
             style: textTheme.labelSmall?.copyWith(
               fontWeight: FontWeight.w800,
               letterSpacing: 1.2,
-              color: const Color(0xFF1B2430),
+              color: AppColors.navyDarker,
               fontSize: 10,
             ),
           ),
@@ -33,14 +35,14 @@ class TotalFuelCostCard extends StatelessWidget {
             '₱1,508',
             style: textTheme.headlineMedium?.copyWith(
               fontWeight: FontWeight.w800,
-              color: const Color(0xFF3B5B78),
+              color: AppColors.blueGreyDark,
               fontSize: 28,
             ),
           ),
           const SizedBox(height: 8),
           Text(
             '₱317 extra from road conditions.',
-            style: textTheme.bodySmall?.copyWith(color: const Color(0xFF6B7B8A)),
+            style: textTheme.bodySmall?.copyWith(color: AppColors.blueGreySecondary),
           ),
         ],
       ),

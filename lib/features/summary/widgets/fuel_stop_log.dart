@@ -3,6 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'summary_header.dart';
 import 'summary_shared.dart';
 import '../models/trip_summary_model.dart';
+import 'package:haribon/theme/app_colors.dart';
+
 
 /// MODULE: FUEL STOP LOG
 /// Timeline-style list of fuel stops with brand color, station, volume, price.
@@ -27,7 +29,7 @@ class FuelStopLog extends StatelessWidget {
               padding: const EdgeInsets.only(left: 40),
               child: Divider(
                 height: 24,
-                color: const Color(0xFFE5EEFF),
+                color: AppColors.blueSoftBg,
                 thickness: 1,
               ),
             ),
@@ -82,7 +84,7 @@ class _FuelStopRow extends StatelessWidget {
                 style: GoogleFonts.inter(
                   fontSize: 14,
                   fontWeight: FontWeight.w600,
-                  color: const Color(0xFF0B1C30),
+                  color: AppColors.navyDarkest,
                 ),
                 overflow: TextOverflow.ellipsis,
               ),
@@ -91,7 +93,7 @@ class _FuelStopRow extends StatelessWidget {
                 '${stop.liters.toStringAsFixed(1)} L  ·  ₱${stop.pricePerLiter.toStringAsFixed(2)}/L',
                 style: GoogleFonts.inter(
                   fontSize: 12,
-                  color: const Color(0xFF737687),
+                  color: AppColors.greyAccent,
                 ),
               ),
             ],

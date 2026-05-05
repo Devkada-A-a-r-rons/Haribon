@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:haribon/theme/app_colors.dart';
+
 
 class RefuelingPlannerContent extends StatelessWidget {
   const RefuelingPlannerContent({super.key});
@@ -8,11 +10,11 @@ class RefuelingPlannerContent extends StatelessWidget {
     final theme = Theme.of(context);
     return Column(
       children: [
-        _buildTimelineItem(theme, 'Pampanga', 'DEPARTURE POINT', Icons.adjust, const Color(0xFF9CBEE1), isFirst: true),
-        _buildTimelineItem(theme, 'Shell Angeles', 'Recommended 12L @ P63/L', Icons.close, const Color(0xFF3B5B78), highlight: 'Optimal\nPrice'),
-        _buildTimelineItem(theme, 'Petron Tarlac', 'Optional Backup', Icons.circle, const Color(0xFFE0E0E0)),
-        _buildTimelineItem(theme, 'Shell Baguio Road', 'Skip: High Peak Price', Icons.circle, const Color(0xFFE0E0E0), isRed: true),
-        _buildTimelineItem(theme, 'Baguio City', '220KM JOURNEY END', Icons.location_on, const Color(0xFFC8E6C9), isLast: true),
+        _buildTimelineItem(theme, 'Pampanga', 'DEPARTURE POINT', Icons.adjust, AppColors.bluePale, isFirst: true),
+        _buildTimelineItem(theme, 'Shell Angeles', 'Recommended 12L @ P63/L', Icons.close, AppColors.blueGreyDark, highlight: 'Optimal\nPrice'),
+        _buildTimelineItem(theme, 'Petron Tarlac', 'Optional Backup', Icons.circle, AppColors.greyLight),
+        _buildTimelineItem(theme, 'Shell Baguio Road', 'Skip: High Peak Price', Icons.circle, AppColors.greyLight, isRed: true),
+        _buildTimelineItem(theme, 'Baguio City', '220KM JOURNEY END', Icons.location_on, AppColors.greenLightBg, isLast: true),
       ],
     );
   }
@@ -26,7 +28,7 @@ class RefuelingPlannerContent extends StatelessWidget {
             width: 32,
             child: Column(
               children: [
-                Expanded(child: Container(color: isFirst ? Colors.transparent : const Color(0xFFE0E0E0), width: 2)),
+                Expanded(child: Container(color: isFirst ? Colors.transparent : AppColors.greyLight, width: 2)),
                 Container(
                   padding: const EdgeInsets.all(4),
                   decoration: BoxDecoration(
@@ -36,7 +38,7 @@ class RefuelingPlannerContent extends StatelessWidget {
                   ),
                   child: Icon(icon, size: 12, color: iconColor),
                 ),
-                Expanded(child: Container(color: isLast ? Colors.transparent : const Color(0xFFE0E0E0), width: 2)),
+                Expanded(child: Container(color: isLast ? Colors.transparent : AppColors.greyLight, width: 2)),
               ],
             ),
           ),
@@ -51,8 +53,8 @@ class RefuelingPlannerContent extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(title, style: theme.textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold, color: const Color(0xFF1B2430))),
-                        Text(subtitle, style: theme.textTheme.labelSmall?.copyWith(color: isRed ? const Color(0xFFC62828) : const Color(0xFF6B7B8A))),
+                        Text(title, style: theme.textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold, color: AppColors.navyDarker)),
+                        Text(subtitle, style: theme.textTheme.labelSmall?.copyWith(color: isRed ? AppColors.redDark : AppColors.blueGreySecondary)),
                       ],
                     ),
                   ),
@@ -60,7 +62,7 @@ class RefuelingPlannerContent extends StatelessWidget {
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                       decoration: BoxDecoration(
-                        color: const Color(0xFF3B5B78),
+                        color: AppColors.blueGreyDark,
                         borderRadius: BorderRadius.circular(4),
                       ),
                       child: Text(

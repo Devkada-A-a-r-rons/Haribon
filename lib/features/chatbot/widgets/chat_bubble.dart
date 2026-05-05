@@ -28,7 +28,7 @@ class ChatBubble extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                    color: isAi ? AppColors.containerLowest : const Color(0xFF2B52C3),
+                    color: isAi ? AppColors.containerLowest : AppColors.blueAccent,
                     borderRadius: BorderRadius.only(
                       topLeft: const Radius.circular(20),
                       topRight: const Radius.circular(20),
@@ -77,7 +77,7 @@ class ChatBubble extends StatelessWidget {
       width: 40,
       height: 40,
       decoration: BoxDecoration(
-        color: const Color(0xFF2B52C3),
+        color: AppColors.blueAccent,
         borderRadius: BorderRadius.circular(10),
       ),
       child: const Icon(Icons.auto_awesome, color: Colors.white, size: 20),

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:haribon/theme/app_colors.dart';
+
 
 class BottomActionCard extends StatelessWidget {
   const BottomActionCard({super.key});
@@ -38,7 +40,7 @@ class BottomActionCard extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(22),
               gradient: const LinearGradient(
-                colors: [Color(0xFF9CBEE1), Color(0xFFC8E6C9)],
+                colors: [AppColors.bluePale, AppColors.greenLightBg],
               ),
             ),
             child: ElevatedButton(

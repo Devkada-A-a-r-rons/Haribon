@@ -3,6 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'summary_header.dart';
 import 'summary_shared.dart';
 import '../models/trip_summary_model.dart';
+import 'package:haribon/theme/app_colors.dart';
+
 
 /// MODULE: KEY STATS GRID
 /// 2×2 grid of stat cards: fuel used, avg speed, CO₂ saved, cost vs estimate.
@@ -99,7 +101,7 @@ class _StatCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: const Color(0xFFDBE5FF)),
+        border: Border.all(color: AppColors.blueLightBg),
         boxShadow: [
           BoxShadow(
             color: SummaryColors.primary.withValues(alpha: 0.05),
@@ -122,7 +124,7 @@ class _StatCard extends StatelessWidget {
                   style: GoogleFonts.inter(
                     fontSize: 11,
                     fontWeight: FontWeight.w600,
-                    color: const Color(0xFF737687),
+                    color: AppColors.greyAccent,
                     letterSpacing: 0.3,
                   ),
                   overflow: TextOverflow.ellipsis,
@@ -144,7 +146,7 @@ class _StatCard extends StatelessWidget {
             data.subValue,
             style: GoogleFonts.inter(
               fontSize: 11,
-              color: const Color(0xFF9EA3B5),
+              color: AppColors.greyPale,
             ),
             overflow: TextOverflow.ellipsis,
           ),
