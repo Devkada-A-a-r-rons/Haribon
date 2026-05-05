@@ -6,11 +6,13 @@ import '../../summary/models/trip_summary_model.dart';
 class HomeLatestTripCard extends StatelessWidget {
   final TripSummary summary;
   final VoidCallback? onViewSummary;
+  final VoidCallback? onViewMap;
 
   const HomeLatestTripCard({
     super.key,
     required this.summary,
     this.onViewSummary,
+    this.onViewMap,
   });
 
   @override
@@ -57,7 +59,7 @@ class HomeLatestTripCard extends StatelessWidget {
                     border: Border.all(color: Colors.white24),
                   ),
                   child: Text(
-                    'Latest Trip',
+                    summary.efficiencyRating == 'Active Plan' ? 'Active Plan' : 'Latest Trip',
                     style: GoogleFonts.inter(
                       color: Colors.white,
                       fontSize: 12,
@@ -67,30 +69,33 @@ class HomeLatestTripCard extends StatelessWidget {
                 ),
               ),
               Positioned.fill(
-                child: Center(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.all(12),
-                        decoration: BoxDecoration(
-                          color: Colors.white.withValues(alpha: 0.2),
-                          shape: BoxShape.rectangle,
-                          borderRadius: BorderRadius.circular(12),
-                          border: Border.all(color: Colors.white24),
+                child: GestureDetector(
+                  onTap: onViewMap,
+                  child: Center(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.all(12),
+                          decoration: BoxDecoration(
+                            color: Colors.white.withValues(alpha: 0.2),
+                            shape: BoxShape.rectangle,
+                            borderRadius: BorderRadius.circular(12),
+                            border: Border.all(color: Colors.white24),
+                          ),
+                          child: const Icon(Icons.map_rounded, color: Colors.white, size: 28),
                         ),
-                        child: const Icon(Icons.map_rounded, color: Colors.white, size: 28),
-                      ),
-                      const SizedBox(height: 8),
-                      Text(
-                        'Map View',
-                        style: GoogleFonts.inter(
-                          color: Colors.white,
-                          fontSize: 12,
-                          fontWeight: FontWeight.w600,
+                        const SizedBox(height: 8),
+                        Text(
+                          'Map View',
+                          style: GoogleFonts.inter(
+                            color: Colors.white,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),

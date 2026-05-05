@@ -71,12 +71,9 @@ class _Step3RefuelingState extends State<Step3Refueling> {
             height: 150,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
-              image: DecorationImage(
-                image: const NetworkImage('https://placeholder.com/map'), // Mock placeholder
-                fit: BoxFit.cover,
-                onError: (_, __) {},
-              ),
+              // Background image placeholder removed for Web compatibility
               color: AppColors.containerLow,
+
             ),
             child: Container(
               decoration: BoxDecoration(

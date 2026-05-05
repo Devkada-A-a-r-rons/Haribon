@@ -21,8 +21,8 @@ class NativeLLMService implements LLMInterface {
     final loadCommand = LlamaLoad(
       path: modelPath,
       modelParams: ModelParams(),
-      contextParams: ContextParams(contextSize: 2048),
-      samplingParams: SamplerParams(temp: 0.7),
+      contextParams: ContextParams()..nCtx = 2048,
+      samplingParams: SamplerParams()..temp = 0.7,
     );
 
     _llama = LlamaParent(loadCommand);

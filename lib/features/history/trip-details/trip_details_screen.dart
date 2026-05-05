@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import '../../../theme/app_colors.dart';
 import '../../common/widgets/app_bar.dart';
 import 'widgets/metrics_grid.dart';
@@ -9,7 +10,8 @@ import 'widgets/logistics_timeline.dart';
 import 'widgets/route_insights.dart';
 
 class TripDetailsScreen extends StatelessWidget {
-  const TripDetailsScreen({super.key});
+  final Map<String, dynamic> tripData;
+  const TripDetailsScreen({super.key, required this.tripData});
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +34,7 @@ class TripDetailsScreen extends StatelessWidget {
             ),
             const SizedBox(height: 4),
             Text(
-              'Pampanga → Baguio',
+              '${tripData['origin_name']} → ${tripData['destination_name']}',
               style: GoogleFonts.inter(
                 fontSize: 24,
                 fontWeight: FontWeight.w600,
@@ -41,7 +43,7 @@ class TripDetailsScreen extends StatelessWidget {
             ),
             const SizedBox(height: 4),
             Text(
-              'Oct 24, 2023 • 3h 45m',
+              '${DateFormat('MMM d, yyyy').format(DateTime.parse(tripData['created_at']))} • ${(tripData['distance_km'] ?? tripData['route_distance_km'] ?? 0).toStringAsFixed(0)} km',
               style: GoogleFonts.inter(
                 fontSize: 14,
                 fontWeight: FontWeight.w500,
@@ -51,7 +53,7 @@ class TripDetailsScreen extends StatelessWidget {
             const SizedBox(height: 24),
             
             // Metrics Grid
-            const MetricsGrid(),
+            MetricsGrid(tripData: tripData),
             const SizedBox(height: 24),
             
             // Consumption Breakdown

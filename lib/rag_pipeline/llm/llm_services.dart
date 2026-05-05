@@ -1,13 +1,15 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'llm_interface.dart';
 import 'gemini_llm_service.dart';
 
 class LLMServiceFactory {
   static LLMInterface getService({String? apiKey}) {
-    if (kIsWeb) {
-      return GeminiLLMService(apiKey: apiKey ?? const String.fromEnvironment('GEMINI_API_KEY'));
+    final effectiveKey = apiKey ?? dotenv.env['GEMINI_API_KEY'];
+    
+    if (effectiveKey != null && effectiveKey.isNotEmpty) {
+      return GeminiLLMService(apiKey: effectiveKey);
     } else {
       return LocalLLMService();
     }

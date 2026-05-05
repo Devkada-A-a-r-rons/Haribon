@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 import '../../../theme/app_colors.dart';
 import '../models/chat_message.dart';
 
@@ -43,13 +44,25 @@ class ChatBubble extends StatelessWidget {
                       )
                     ] : null,
                   ),
-                  child: Text(
-                    message.text,
-                    style: GoogleFonts.inter(
-                      fontSize: 15,
-                      height: 1.4,
-                      color: isAi ? AppColors.textPrimary : Colors.white,
-                      fontWeight: FontWeight.w500,
+                  child: MarkdownBody(
+                    data: message.text,
+                    styleSheet: MarkdownStyleSheet(
+                      p: GoogleFonts.inter(
+                        fontSize: 15,
+                        height: 1.4,
+                        color: isAi ? AppColors.textPrimary : Colors.white,
+                        fontWeight: FontWeight.w500,
+                      ),
+                      strong: GoogleFonts.inter(
+                        fontSize: 15,
+                        height: 1.4,
+                        color: isAi ? AppColors.textPrimary : Colors.white,
+                        fontWeight: FontWeight.w800,
+                      ),
+                      listBullet: GoogleFonts.inter(
+                        fontSize: 15,
+                        color: isAi ? AppColors.textPrimary : Colors.white,
+                      ),
                     ),
                   ),
                 ),

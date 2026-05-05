@@ -6,6 +6,9 @@ import 'widgets/step_2_planning.dart';
 import 'widgets/step_3_refueling.dart';
 import 'widgets/step_4_insight.dart';
 
+import '../../core/database/database_service.dart';
+import '../../core/supabase/supabase_service.dart';
+
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
 
@@ -20,6 +23,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   // Data collected during onboarding
   String _userName = '';
+  String _vehicleType = '';
+  String _travelFrequency = '';
+  double _avgRefuelingCost = 0.0;
   String _planningStyle = '';
   String _refuelingPriority = '';
 
@@ -38,6 +44,36 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         duration: const Duration(milliseconds: 300),
         curve: Curves.easeInOut,
       );
+    }
+  }
+
+  Future<void> _finishOnboarding() async {
+    final Map<String, dynamic> onboardingData = {
+      'user_name': _userName,
+      'vehicle_type': _vehicleType,
+      'travel_frequency': _travelFrequency,
+      'avg_refueling_cost': _avgRefuelingCost,
+      'planning_style': _planningStyle,
+      'refueling_priority': _refuelingPriority,
+    };
+
+    try {
+      // Save locally
+      await DatabaseService().saveOnboardingData(onboardingData);
+      
+      // Save to Supabase
+      await SupabaseService().saveOnboardingData(onboardingData);
+
+      if (mounted) {
+        Navigator.of(context).pushReplacementNamed('/home');
+      }
+    } catch (e) {
+      debugPrint('Error finishing onboarding: $e');
+      // Still navigate to home even if save fails, or show error?
+      // For now, let's navigate.
+      if (mounted) {
+        Navigator.of(context).pushReplacementNamed('/home');
+      }
     }
   }
 
@@ -65,25 +101,27 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 },
                 children: [
                   Step1Welcome(onContinue: (name, vehicle, frequency, cost) {
-                    _userName = name;
-                    // You could store other data here if needed for future use
+                    setState(() {
+                      _userName = name;
+                      _vehicleType = vehicle;
+                      _travelFrequency = frequency;
+                      _avgRefuelingCost = double.tryParse(cost) ?? 0.0;
+                    });
                     _nextPage();
                   }),
                   Step2Planning(onContinue: (style) {
-                    _planningStyle = style;
+                    setState(() {
+                      _planningStyle = style;
+                    });
                     _nextPage();
                   }),
                   Step3Refueling(onContinue: (priority) {
-                    _refuelingPriority = priority;
+                    setState(() {
+                      _refuelingPriority = priority;
+                    });
                     _nextPage();
                   }),
-                  Step4Insight(onFinish: () {
-                    // Navigate to main app
-                    debugPrint('Onboarding finished for $_userName');
-                    debugPrint('Planning Style: $_planningStyle');
-                    debugPrint('Refueling Priority: $_refuelingPriority');
-                    Navigator.of(context).pushReplacementNamed('/home');
-                  }),
+                  Step4Insight(onFinish: _finishOnboarding),
                 ],
               ),
             ),

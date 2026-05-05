@@ -1,7 +1,18 @@
 import 'package:flutter/material.dart';
 
 class EfficiencyCard extends StatelessWidget {
-  const EfficiencyCard({super.key});
+  final double kmPerLiter;
+  final double litersPerKm;
+  final double fullTankRangeKm;
+  final String efficiencyCategory;
+
+  const EfficiencyCard({
+    super.key,
+    this.kmPerLiter = 0,
+    this.litersPerKm = 0,
+    this.fullTankRangeKm = 0,
+    this.efficiencyCategory = '--',
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +54,7 @@ class EfficiencyCard extends StatelessWidget {
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Text(
-                  'Efficient',
+                  efficiencyCategory,
                   style: textTheme.labelSmall?.copyWith(
                     color: colorScheme.onTertiaryContainer,
                     fontWeight: FontWeight.bold,
@@ -73,7 +84,7 @@ class EfficiencyCard extends StatelessWidget {
                       textBaseline: TextBaseline.alphabetic,
                       children: [
                         Text(
-                          '12.5',
+                          kmPerLiter > 0 ? kmPerLiter.toStringAsFixed(1) : '--',
                           style: textTheme.titleMedium?.copyWith(
                             fontWeight: FontWeight.bold,
                             color: colorScheme.onPrimaryContainer,
@@ -110,7 +121,7 @@ class EfficiencyCard extends StatelessWidget {
                       textBaseline: TextBaseline.alphabetic,
                       children: [
                         Text(
-                          '0.08',
+                          litersPerKm > 0 ? litersPerKm.toStringAsFixed(4) : '--',
                           style: textTheme.titleMedium?.copyWith(
                             fontWeight: FontWeight.bold,
                             color: colorScheme.onPrimaryContainer,
@@ -134,7 +145,9 @@ class EfficiencyCard extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           Text(
-            'Full Tank Potential: 1,285 km',
+            fullTankRangeKm > 0
+                ? 'Full Tank Potential: ${fullTankRangeKm.toStringAsFixed(0)} km'
+                : 'Full Tank Potential: -- km',
             style: textTheme.labelSmall?.copyWith(
               fontWeight: FontWeight.bold,
               color: colorScheme.onPrimaryContainer,

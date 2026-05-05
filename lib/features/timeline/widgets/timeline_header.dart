@@ -3,7 +3,14 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../../theme/app_colors.dart';
 
 class TimelineHeader extends StatelessWidget {
-  const TimelineHeader({super.key});
+  final String origin;
+  final String destination;
+
+  const TimelineHeader({
+    super.key,
+    required this.origin,
+    required this.destination,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +65,7 @@ class TimelineHeader extends StatelessWidget {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    'Manila to Baguio',
+                    '$origin to $destination',
                     style: GoogleFonts.poppins(
                       fontSize: 24,
                       fontWeight: FontWeight.w700,

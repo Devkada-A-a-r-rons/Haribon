@@ -3,7 +3,8 @@ import 'package:haribon/theme/app_colors.dart';
 
 
 class OptimizationTipsCard extends StatelessWidget {
-  const OptimizationTipsCard({super.key});
+  final List<String> tips;
+  const OptimizationTipsCard({super.key, required this.tips});
 
   @override
   Widget build(BuildContext context) {
@@ -32,9 +33,14 @@ class OptimizationTipsCard extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 20),
-          _buildBulletPoint(textTheme, 'Avoid peak traffic to save ₱300 on this route next time.'),
-          const SizedBox(height: 16),
-          _buildBulletPoint(textTheme, 'Maintain steady speed for efficiency; avoid sudden braking in hilly areas.'),
+          ...tips.asMap().entries.map((entry) {
+            final idx = entry.key;
+            final text = entry.value;
+            return Padding(
+              padding: EdgeInsets.only(bottom: idx == tips.length - 1 ? 0 : 16),
+              child: _buildBulletPoint(textTheme, text),
+            );
+          }).toList(),
         ],
       ),
     );

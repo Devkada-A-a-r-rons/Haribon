@@ -79,17 +79,21 @@ TripSummary _buildMockSummary() => TripSummary(
 class TripSummaryScreen extends StatelessWidget {
   final TripSummary summary;
   final VoidCallback? onSeeTimeline;
+  final VoidCallback? onPlanNext;
+  final VoidCallback? onViewAnalysis;
   final ScrollController? scrollController;
 
   const TripSummaryScreen({
     super.key, 
     required this.summary,
     this.onSeeTimeline,
+    this.onPlanNext,
+    this.onViewAnalysis,
     this.scrollController,
   });
 
   factory TripSummaryScreen.mock({Key? key}) =>
-      TripSummaryScreen(key: key, summary: _buildMockSummary());
+      TripSummaryScreen(key: key, summary: TripSummaryScreen.mock().summary);
 
   @override
   Widget build(BuildContext context) {
@@ -112,7 +116,10 @@ class TripSummaryScreen extends StatelessWidget {
                     distanceKm: summary.distanceKm,
                   ),
                   const SizedBox(height: 16),
-                  const RouteMapCard(),
+                  RouteMapCard(
+                    originName: summary.origin,
+                    destinationName: summary.destination,
+                  ),
                   const SizedBox(height: 16),
                   EfficiencyScoreGauge(
                     score: summary.efficiencyScore,
@@ -153,7 +160,10 @@ class TripSummaryScreen extends StatelessWidget {
                   const SizedBox(height: 16),
                   RouteBreakdownChart(segments: summary.routeSegments),
                   const SizedBox(height: 16),
-                  _CtaFooter(summary: summary),
+                  _CtaFooter(
+                    onPlanNext: onPlanNext,
+                    onViewAnalysis: onViewAnalysis,
+                  ),
                 ]),
               ),
             ),
@@ -165,8 +175,9 @@ class TripSummaryScreen extends StatelessWidget {
 }
 
 class _CtaFooter extends StatelessWidget {
-  final TripSummary summary;
-  const _CtaFooter({required this.summary});
+  final VoidCallback? onPlanNext;
+  final VoidCallback? onViewAnalysis;
+  const _CtaFooter({this.onPlanNext, this.onViewAnalysis});
 
   @override
   Widget build(BuildContext context) {
@@ -175,7 +186,7 @@ class _CtaFooter extends StatelessWidget {
         SizedBox(
           width: double.infinity,
           child: FilledButton.icon(
-            onPressed: () {},
+            onPressed: onPlanNext,
             icon: const Icon(Icons.map_rounded, size: 18),
             label: Text(
               'Plan Next Trip',
@@ -195,7 +206,7 @@ class _CtaFooter extends StatelessWidget {
         SizedBox(
           width: double.infinity,
           child: OutlinedButton.icon(
-            onPressed: () {},
+            onPressed: onViewAnalysis,
             icon: const Icon(Icons.bar_chart_rounded, size: 18),
             label: Text(
               'View Monthly Report',

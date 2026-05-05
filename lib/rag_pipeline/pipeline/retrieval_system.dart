@@ -17,8 +17,16 @@ class RetrievalSystem {
     // 3. Calculate similarity and rank
     List<Map<String, dynamic>> results = [];
     for (var entry in allEmbeddings) {
-      final vectorStr = entry['vector'] as String;
-      final vector = vectorStr.split(',').map((e) => double.parse(e)).toList();
+      List<double> vector;
+      final rawVector = entry['vector'];
+      
+      if (rawVector is String) {
+        vector = rawVector.split(',').map((e) => double.parse(e)).toList();
+      } else if (rawVector is List) {
+        vector = (rawVector as List).map((e) => (e as num).toDouble()).toList();
+      } else {
+        continue;
+      }
       
       final similarity = _embeddingService.calculateSimilarity(queryVector, vector);
       

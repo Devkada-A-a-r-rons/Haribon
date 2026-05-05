@@ -1,27 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:haribon/theme/app_colors.dart';
 
-class ProfileHeader extends StatefulWidget {
-  const ProfileHeader({super.key});
+class ProfileHeader extends StatelessWidget {
+  final TextEditingController controller;
 
-  @override
-  State<ProfileHeader> createState() => _ProfileHeaderState();
-}
-
-class _ProfileHeaderState extends State<ProfileHeader> {
-  late TextEditingController _nameController;
-
-  @override
-  void initState() {
-    super.initState();
-    _nameController = TextEditingController(text: 'Alex Rivera');
-  }
-
-  @override
-  void dispose() {
-    _nameController.dispose();
-    super.dispose();
-  }
+  const ProfileHeader({
+    super.key,
+    required this.controller,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +19,7 @@ class _ProfileHeaderState extends State<ProfileHeader> {
           children: [
             Expanded(
               child: TextField(
-                controller: _nameController,
+                controller: controller,
                 style: textTheme.headlineMedium?.copyWith(
                   fontWeight: FontWeight.w800,
                   color: AppColors.navyDarker,

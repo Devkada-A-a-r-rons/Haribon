@@ -3,11 +3,25 @@ import 'package:haribon/theme/app_colors.dart';
 
 
 class FuelConsumptionBreakdownCard extends StatelessWidget {
-  const FuelConsumptionBreakdownCard({super.key});
+  final double totalLiters;
+  final double trafficLiters;
+
+  const FuelConsumptionBreakdownCard({
+    super.key,
+    required this.totalLiters,
+    required this.trafficLiters,
+  });
 
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+    
+    // Proportional breakdown logic
+    final base = totalLiters * 0.75;
+    final traffic = trafficLiters;
+    final terrain = totalLiters * 0.08;
+    final idle = totalLiters * 0.02;
+
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(20),
@@ -38,10 +52,10 @@ class FuelConsumptionBreakdownCard extends StatelessWidget {
               height: 16,
               child: Row(
                 children: [
-                  Expanded(flex: 70, child: Container(color: AppColors.blueGreyDark)), // Base
-                  Expanded(flex: 10, child: Container(color: AppColors.orangePrimary)), // Traffic
-                  Expanded(flex: 15, child: Container(color: AppColors.redDark)), // Terrain
-                  Expanded(flex: 5, child: Container(color: AppColors.blueGreyLight)),  // Idle
+                  Expanded(flex: (base * 100 / totalLiters).toInt().clamp(1, 100), child: Container(color: AppColors.blueGreyDark)),
+                  Expanded(flex: (traffic * 100 / totalLiters).toInt().clamp(1, 100), child: Container(color: AppColors.orangePrimary)),
+                  Expanded(flex: (terrain * 100 / totalLiters).toInt().clamp(1, 100), child: Container(color: AppColors.redDark)),
+                  Expanded(flex: (idle * 100 / totalLiters).toInt().clamp(1, 100), child: Container(color: AppColors.blueGreyLight)),
                 ],
               ),
             ),
@@ -50,15 +64,15 @@ class FuelConsumptionBreakdownCard extends StatelessWidget {
           // Grid
           Row(
             children: [
-              Expanded(child: _buildLegendItem(textTheme, Icons.local_gas_station, AppColors.blueGreyDark, 'Base', '18.3L')),
-              Expanded(child: _buildLegendItem(textTheme, Icons.directions_car, AppColors.orangePrimary, 'Traffic', '+1.5L')),
+              Expanded(child: _buildLegendItem(textTheme, Icons.local_gas_station, AppColors.blueGreyDark, 'Base', '${base.toStringAsFixed(1)}L')),
+              Expanded(child: _buildLegendItem(textTheme, Icons.directions_car, AppColors.orangePrimary, 'Traffic', '+${traffic.toStringAsFixed(1)}L')),
             ],
           ),
           const SizedBox(height: 16),
           Row(
             children: [
-              Expanded(child: _buildLegendItem(textTheme, Icons.terrain, AppColors.redDark, 'Terrain', '+2.9L')),
-              Expanded(child: _buildLegendItem(textTheme, Icons.timer, AppColors.blueGreyLight, 'Idle', '+0.5L')),
+              Expanded(child: _buildLegendItem(textTheme, Icons.terrain, AppColors.redDark, 'Terrain', '+${terrain.toStringAsFixed(1)}L')),
+              Expanded(child: _buildLegendItem(textTheme, Icons.timer, AppColors.blueGreyLight, 'Idle', '+${idle.toStringAsFixed(1)}L')),
             ],
           ),
         ],

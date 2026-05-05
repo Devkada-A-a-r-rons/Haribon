@@ -3,11 +3,32 @@ import 'package:haribon/theme/app_colors.dart';
 
 
 class EfficiencyLossInsightsCard extends StatelessWidget {
-  const EfficiencyLossInsightsCard({super.key});
+  final List<String> insights;
+  const EfficiencyLossInsightsCard({super.key, required this.insights});
 
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+    
+    // Icon mapping logic for better visual context
+    IconData getIcon(int index) {
+      if (index == 0) return Icons.terrain;
+      if (index == 1) return Icons.directions_car;
+      return Icons.access_time;
+    }
+
+    Color getIconColor(int index) {
+      if (index == 0) return AppColors.redDark;
+      if (index == 1) return AppColors.orangePrimary;
+      return AppColors.blueGreyPrimary;
+    }
+
+    Color getBgColor(int index) {
+      if (index == 0) return AppColors.redSoftBg;
+      if (index == 1) return AppColors.orangeSoftBg;
+      return AppColors.blueGreySoftBg;
+    }
+
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(20),
@@ -31,30 +52,21 @@ class EfficiencyLossInsightsCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 20),
-          _buildInsightItem(
-            textTheme: textTheme,
-            icon: Icons.terrain,
-            iconColor: AppColors.redDark,
-            bgColor: AppColors.redSoftBg,
-            text: 'Mountain terrain increased fuel usage by 15%',
-          ),
-          const SizedBox(height: 16),
-          _buildInsightItem(
-            textTheme: textTheme,
-            icon: Icons.directions_car,
-            iconColor: AppColors.orangePrimary,
-            bgColor: AppColors.orangeSoftBg,
-            text: 'Traffic added 8% consumption',
-          ),
-          const SizedBox(height: 16),
-          _buildInsightItem(
-            textTheme: textTheme,
-            icon: Icons.access_time,
-            iconColor: AppColors.blueGreyPrimary,
-            bgColor: AppColors.blueGreySoftBg,
-            text: 'Idle time wasted 0.5L',
-            hideDivider: true,
-          ),
+          ...insights.asMap().entries.map((entry) {
+            final idx = entry.key;
+            final text = entry.value;
+            return Padding(
+              padding: EdgeInsets.only(bottom: idx == insights.length - 1 ? 0 : 16),
+              child: _buildInsightItem(
+                textTheme: textTheme,
+                icon: getIcon(idx),
+                iconColor: getIconColor(idx),
+                bgColor: getBgColor(idx),
+                text: text,
+                hideDivider: idx == insights.length - 1,
+              ),
+            );
+          }).toList(),
         ],
       ),
     );

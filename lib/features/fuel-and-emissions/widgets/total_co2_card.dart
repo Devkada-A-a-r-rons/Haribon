@@ -3,11 +3,14 @@ import 'package:haribon/theme/app_colors.dart';
 
 
 class TotalCo2Card extends StatelessWidget {
-  const TotalCo2Card({super.key});
+  final double co2;
+  const TotalCo2Card({super.key, required this.co2});
 
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+    final trees = (co2 / 20.0).ceil(); // Rough estimate: 20kg CO2 per tree per year
+
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(20),
@@ -32,7 +35,7 @@ class TotalCo2Card extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           Text(
-            '53.6 kg',
+            '${co2.toStringAsFixed(1)} kg',
             style: textTheme.headlineMedium?.copyWith(
               fontWeight: FontWeight.w800,
               color: AppColors.tealDark,
@@ -46,7 +49,7 @@ class TotalCo2Card extends StatelessWidget {
               const SizedBox(width: 8),
               Expanded(
                 child: Text(
-                  'Equivalent to 2 small trees needed to offset',
+                  'Equivalent to $trees tree${trees == 1 ? '' : 's'} needed to offset',
                   style: textTheme.bodySmall?.copyWith(color: AppColors.tealDark),
                 ),
               ),

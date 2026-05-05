@@ -1,0 +1,4356 @@
+{
+  "type": "FeatureCollection",
+  "generator": "overpass-turbo",
+  "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL.",
+  "timestamp": "2026-05-05T14:49:45Z",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/25679322",
+        "leisure": "park",
+        "name": "Renaissance Garden"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.7356497,
+          13.1514724
+        ]
+      },
+      "id": "node/25679322"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/281142099",
+        "leisure": "park",
+        "name": "Rock Garden"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.0780221,
+          14.6345308
+        ]
+      },
+      "id": "node/281142099"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/598405175",
+        "leisure": "park",
+        "name": "Kalayaan Park"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.976039,
+          14.4070724
+        ]
+      },
+      "id": "node/598405175"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/671855661",
+        "leisure": "park",
+        "name": "Butiki Park"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.0945735,
+          14.6287257
+        ]
+      },
+      "id": "node/671855661"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/671855662",
+        "leisure": "park",
+        "name": "Womans' Park"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.094558,
+          14.6289515
+        ]
+      },
+      "id": "node/671855662"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/1027889987",
+        "leisure": "park",
+        "name": "Heroes Hill National Park"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.43526,
+          17.464526
+        ]
+      },
+      "id": "node/1027889987"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/1038058970",
+        "leisure": "park",
+        "name": "Halamanang Pilipino",
+        "tourism": "attraction"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.9820155,
+          14.5855393
+        ]
+      },
+      "id": "node/1038058970"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/1222944820",
+        "leisure": "park",
+        "name": "Pilar Freedom Park"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          124.3235648,
+          9.8306111
+        ]
+      },
+      "id": "node/1222944820"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/1252757724",
+        "addr:city": "Baguio",
+        "addr:place": "Camp John Hay",
+        "alt_name": "Cemetery of Negativism)",
+        "leisure": "park",
+        "name": "Lost Cemetery",
+        "tourism": "attraction"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.6172399,
+          16.3992622
+        ]
+      },
+      "id": "node/1252757724"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/1254150058",
+        "addr:city": "Baguio",
+        "addr:street": "Lapu Lapu Ave, Fort Del Pilar",
+        "fixme": "find it somewhere here",
+        "leisure": "park",
+        "name": "The Grove '55",
+        "note": "approx position only (there's a sign says welcome on street)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.6212785,
+          16.3667474
+        ]
+      },
+      "id": "node/1254150058"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/1254229953",
+        "addr:city": "Baguio",
+        "addr:street": "Roxas Ave, PMA",
+        "leisure": "park",
+        "name": "Maagap Mini Park"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.6206211,
+          16.363756
+        ]
+      },
+      "id": "node/1254229953"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/1264539619",
+        "leisure": "park",
+        "name": "Green Park"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.9160113,
+          14.0046619
+        ]
+      },
+      "id": "node/1264539619"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/1330414212",
+        "leisure": "park",
+        "name": "Maigo Park"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9602787,
+          8.1603658
+        ]
+      },
+      "id": "node/1330414212"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/1511250447",
+        "leisure": "park",
+        "name": "Loboc Town Park"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          124.0660245,
+          9.662147
+        ]
+      },
+      "id": "node/1511250447"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/1515316470",
+        "leisure": "park",
+        "name": "Lolong's Crocodile Park"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          125.995104,
+          8.2374101
+        ]
+      },
+      "id": "node/1515316470"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/1696399844",
+        "leisure": "park",
+        "name": "Carbin Reef"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.4645946,
+          10.9791607
+        ]
+      },
+      "id": "node/1696399844"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/1758054010",
+        "leisure": "park",
+        "name": "Roxas Park",
+        "source": "DTI - Bohol"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          124.306053,
+          9.628684
+        ]
+      },
+      "id": "node/1758054010"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/1758054190",
+        "leisure": "park",
+        "name": "Bunhayag Nature Park",
+        "source": "DTI - Bohol"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          124.462486,
+          9.759926
+        ]
+      },
+      "id": "node/1758054190"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/1758054272",
+        "leisure": "park",
+        "name": "Lemela Seaside Park",
+        "source": "DTI - Bohol"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          124.134933,
+          9.59938
+        ]
+      },
+      "id": "node/1758054272"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/1758054335",
+        "leisure": "park",
+        "name": "Peoples Park by the Sea",
+        "source": "DTI - Bohol"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          124.162064,
+          9.60451
+        ]
+      },
+      "id": "node/1758054335"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/1758102244",
+        "leisure": "park",
+        "name": "Sikatuna Tree and Inland Fishery Park",
+        "source": "DTI - Bohol"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.959381,
+          9.692801
+        ]
+      },
+      "id": "node/1758102244"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/1812472614",
+        "leisure": "park",
+        "name": "Aviary Park"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.9288674,
+          11.9784286
+        ]
+      },
+      "id": "node/1812472614"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/2028003785",
+        "is_in:city": "Angat",
+        "is_in:state": "Bulacan",
+        "leisure": "park",
+        "name": "GK Enchanted Farm",
+        "place": "neighbourhood"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.0083459,
+          14.9244982
+        ]
+      },
+      "id": "node/2028003785"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/2028058371",
+        "leisure": "park",
+        "name": "Children's Area",
+        "note": "estimate"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.0078541,
+          14.9243878
+        ]
+      },
+      "id": "node/2028058371"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/2028058377",
+        "leisure": "park",
+        "name": "Shell Centre for Social Enterprise & Innovation"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.0068114,
+          14.9247195
+        ]
+      },
+      "id": "node/2028058377"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/2030142778",
+        "leisure": "park",
+        "name": "Grassroots Al Fresco"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.0080368,
+          14.9245916
+        ]
+      },
+      "id": "node/2030142778"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/2030142785",
+        "leisure": "park",
+        "name": "Human Nature"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.0081489,
+          14.9243585
+        ]
+      },
+      "id": "node/2030142785"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/2317904781",
+        "leisure": "park",
+        "name": "Hindang Cave and Wild Monkeys"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          124.7370285,
+          10.4606805
+        ]
+      },
+      "id": "node/2317904781"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/2500471711",
+        "leisure": "park",
+        "name": "Adventure Park"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.884359,
+          9.6648374
+        ]
+      },
+      "id": "node/2500471711"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/2503487533",
+        "leisure": "park",
+        "name": "Tagaytay Highlands"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.0289184,
+          14.1349389
+        ]
+      },
+      "id": "node/2503487533"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/2537867318",
+        "leisure": "park"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.046436,
+          11.2701927
+        ]
+      },
+      "id": "node/2537867318"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/2541418104",
+        "leisure": "park",
+        "name": "Lalawigan Plaza"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          125.4723897,
+          11.5898338
+        ]
+      },
+      "id": "node/2541418104"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/2603016638",
+        "leisure": "park",
+        "name": "Seven Hills (Mukidbukid dy Aciete)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          124.842612,
+          12.2185158
+        ]
+      },
+      "id": "node/2603016638"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/2611983918",
+        "leisure": "park",
+        "name": "Elevation 105 meters"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          124.8212576,
+          11.9033889
+        ]
+      },
+      "id": "node/2611983918"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/2613777724",
+        "leisure": "park",
+        "name": "Bukid Layawon"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          124.7820245,
+          12.0024009
+        ]
+      },
+      "id": "node/2613777724"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/2732906769",
+        "leisure": "park",
+        "name": "Uugong Park"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.2241407,
+          14.5083398
+        ]
+      },
+      "id": "node/2732906769"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/3093490054",
+        "leisure": "park",
+        "name": "Cassamata Hill National Park"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.6218128,
+          17.5932206
+        ]
+      },
+      "id": "node/3093490054"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/3149387045",
+        "leisure": "park",
+        "name": "Minalungao National Park"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.122909,
+          15.2989285
+        ]
+      },
+      "id": "node/3149387045"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/3331472524",
+        "leisure": "park",
+        "name": "Pacific War Memorial"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.5763447,
+          14.3806455
+        ]
+      },
+      "id": "node/3331472524"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/3414036722",
+        "leisure": "park",
+        "name": "Perez park"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.9316103,
+          16.1453592
+        ]
+      },
+      "id": "node/3414036722"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/3414040443",
+        "leisure": "park",
+        "name": "Viewing Deck"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.929944,
+          16.1332107
+        ]
+      },
+      "id": "node/3414040443"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/3658423127",
+        "addr:city": "Bugallon, Pangasinan",
+        "addr:postcode": "2416",
+        "addr:street": "Brgy Laguit Padilla",
+        "leisure": "park",
+        "name": "Lily of the Valley Bible Camp"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.1628451,
+          15.9479662
+        ]
+      },
+      "id": "node/3658423127"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/3676084184",
+        "addr:city": "Cebu Province",
+        "addr:housenumber": "Mantalongon Dalaguete Cebu",
+        "addr:postcode": "6022",
+        "leisure": "park",
+        "name": "Kristory Park"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.4676382,
+          9.8076339
+        ]
+      },
+      "id": "node/3676084184"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/3688101071",
+        "leisure": "park",
+        "name": "So. Natuyay"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.1989294,
+          10.4919538
+        ]
+      },
+      "id": "node/3688101071"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/3688744224",
+        "addr:city": "San Carlos City",
+        "leisure": "park",
+        "name": "So. Bedio"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.1952521,
+          10.5114011
+        ]
+      },
+      "id": "node/3688744224"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/3767192071",
+        "leisure": "park",
+        "name": "Marcos Park"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          125.2372842,
+          8.9977887
+        ]
+      },
+      "id": "node/3767192071"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/3848641722",
+        "leisure": "park"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          125.0017372,
+          10.8919229
+        ]
+      },
+      "id": "node/3848641722"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/3848641723",
+        "leisure": "park"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          125.0014605,
+          10.8912492
+        ]
+      },
+      "id": "node/3848641723"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/3848654570",
+        "leisure": "park"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          124.999285,
+          10.8855211
+        ]
+      },
+      "id": "node/3848654570"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/3848666378",
+        "leisure": "park"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          124.9820241,
+          10.3030132
+        ]
+      },
+      "id": "node/3848666378"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/3848666379",
+        "leisure": "park"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          124.9821086,
+          10.3031043
+        ]
+      },
+      "id": "node/3848666379"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/3942776294",
+        "addr:city": "Argao",
+        "ele": "478",
+        "leisure": "park",
+        "name": "Binalabag"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.5780088,
+          9.9119748
+        ]
+      },
+      "id": "node/3942776294"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4033040885",
+        "leisure": "park"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          124.0023594,
+          11.2050611
+        ]
+      },
+      "id": "node/4033040885"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4146462870",
+        "fee": "yes",
+        "leisure": "park",
+        "name": "Island Eco Tourism Park"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          124.0485148,
+          10.2478658
+        ]
+      },
+      "id": "node/4146462870"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4245442836",
+        "leisure": "park",
+        "name": "Veterans Memorial Park"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.9762985,
+          17.089967
+        ]
+      },
+      "id": "node/4245442836"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4318097057",
+        "leisure": "park",
+        "name": "Hayanggabon Eco Park"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          125.8471497,
+          9.5386556
+        ]
+      },
+      "id": "node/4318097057"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4389807555",
+        "leisure": "park",
+        "name": "Perseveranda Memorial Park"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          124.891468,
+          11.7876945
+        ]
+      },
+      "id": "node/4389807555"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4568484848",
+        "leisure": "park",
+        "name": "Paranymphus"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.1890884,
+          13.6297188
+        ]
+      },
+      "id": "node/4568484848"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4628453687",
+        "leisure": "park"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.9342048,
+          10.7490547
+        ]
+      },
+      "id": "node/4628453687"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4636729395",
+        "leisure": "park",
+        "name": "Friendship Park"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          124.6522002,
+          8.4879253
+        ]
+      },
+      "id": "node/4636729395"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4636729396",
+        "leisure": "park",
+        "name": "Cyber Park"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          124.6530295,
+          8.488444
+        ]
+      },
+      "id": "node/4636729396"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4655589475",
+        "leisure": "park",
+        "name": "Barangay Buayan Park"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          125.2300407,
+          6.1105536
+        ]
+      },
+      "id": "node/4655589475"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4731459826",
+        "leisure": "park",
+        "name": "Igtring"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          122.2934908,
+          10.7658466
+        ]
+      },
+      "id": "node/4731459826"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4764145036",
+        "leisure": "park"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          122.5819637,
+          10.6068894
+        ]
+      },
+      "id": "node/4764145036"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4787536947",
+        "leisure": "park",
+        "name": "Lake Bito"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          122.6799558,
+          11.0228595
+        ]
+      },
+      "id": "node/4787536947"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4848407122",
+        "description": "A small public park for the small barangay of balabago. ",
+        "leisure": "park",
+        "name": "Balabago public park"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          122.5806903,
+          10.7397673
+        ]
+      },
+      "id": "node/4848407122"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4915810811",
+        "leisure": "park",
+        "name": "Torch of Wisdom",
+        "operator": "Bicol University"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.7251229,
+          13.1443007
+        ]
+      },
+      "id": "node/4915810811"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4986568759",
+        "addr:city": "sorsogon city",
+        "leisure": "park",
+        "name": "Tinago Park"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          124.0012519,
+          12.9755163
+        ]
+      },
+      "id": "node/4986568759"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/5287048987",
+        "leisure": "park"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.0762608,
+          14.3393379
+        ]
+      },
+      "id": "node/5287048987"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/5430392857",
+        "leisure": "park",
+        "name": "TANAW Park"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.4094075,
+          14.0749996
+        ]
+      },
+      "id": "node/5430392857"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/5591344159",
+        "leisure": "park",
+        "name": "The Prime Park"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.9873052,
+          14.2716038
+        ]
+      },
+      "id": "node/5591344159"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/5591350180",
+        "leisure": "park",
+        "name": "Narra Blvd Park"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.9870923,
+          14.2681851
+        ]
+      },
+      "id": "node/5591350180"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/5638750715",
+        "leisure": "park",
+        "name": "Amazing Grace Inland Resort"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          122.2957811,
+          10.8824679
+        ]
+      },
+      "id": "node/5638750715"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/5753335441",
+        "leisure": "park",
+        "name": "BF Homes Phase III Playground and Park"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.0274501,
+          14.736898
+        ]
+      },
+      "id": "node/5753335441"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/5808414765",
+        "leisure": "park",
+        "name": "open areas"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.9894495,
+          14.7627153
+        ]
+      },
+      "id": "node/5808414765"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/5820765042",
+        "addr:city": "sipocot",
+        "addr:housenumber": "zone 4",
+        "addr:street": "paetan",
+        "description": "Plaza",
+        "leisure": "park",
+        "name": "Paetan Plaza"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          122.9754163,
+          13.8177378
+        ]
+      },
+      "id": "node/5820765042"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/5924600729",
+        "leisure": "park",
+        "name": "Maputi Bird Reserve",
+        "tourism": "attraction"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          125.034982,
+          8.1065411
+        ]
+      },
+      "id": "node/5924600729"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/5954971942",
+        "leisure": "park"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.6988447,
+          17.6219001
+        ]
+      },
+      "id": "node/5954971942"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/5954971943",
+        "leisure": "park"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.6992903,
+          17.6214266
+        ]
+      },
+      "id": "node/5954971943"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/5984271354",
+        "leisure": "park",
+        "name": "private"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.772418,
+          17.5602567
+        ]
+      },
+      "id": "node/5984271354"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/5998326633",
+        "leisure": "park"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.6803976,
+          17.720489
+        ]
+      },
+      "id": "node/5998326633"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/6017166233",
+        "leisure": "park",
+        "name": "La Union Botanical and Zoological Garden"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.3660499,
+          16.5873137
+        ]
+      },
+      "id": "node/6017166233"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/6039755232",
+        "leisure": "park",
+        "name": "Pilar Municipal Park"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          124.3271975,
+          9.8296548
+        ]
+      },
+      "id": "node/6039755232"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/6094910551",
+        "leisure": "park",
+        "name": "Botolan Community Park"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.0086987,
+          15.2763521
+        ]
+      },
+      "id": "node/6094910551"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/6130980266",
+        "leisure": "park",
+        "name": "Pangasihan Bird Sanctuary"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          125.1699197,
+          8.8660281
+        ]
+      },
+      "id": "node/6130980266"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/6240812213",
+        "leisure": "park",
+        "name": "Capalayan Playground"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          125.5441799,
+          9.7406165
+        ]
+      },
+      "id": "node/6240812213"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/6362155166",
+        "addr:city": "Meycauayan",
+        "addr:postcode": "3020",
+        "addr:street": "Exaltacion Street",
+        "leisure": "park",
+        "name": "Park Gazeebo",
+        "opening_hours": "Mo-Su 07:00-22:00"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.9568867,
+          14.7304247
+        ]
+      },
+      "id": "node/6362155166"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/6406782134",
+        "addr:city": "Atok",
+        "addr:postcode": "2612",
+        "addr:street": "Paoay",
+        "leisure": "park",
+        "name": "Sakura Park"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.7577372,
+          16.6264532
+        ]
+      },
+      "id": "node/6406782134"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/6407937549",
+        "addr:city": "Bokod",
+        "addr:postcode": "2605",
+        "addr:street": "Karao, Bokod, Benguet",
+        "description": "by foot trail (for renovation due to Typhoon Ompong)",
+        "leisure": "park",
+        "name": "Bojombong/ Pigingan Falls",
+        "operator": "Tourism Office, LGU Bokod",
+        "waterway": "waterfall"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.8459394,
+          16.5012725
+        ]
+      },
+      "id": "node/6407937549"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/6527699708",
+        "leisure": "park",
+        "name": "Xavier University Peace Park"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          124.6467585,
+          8.4772555
+        ]
+      },
+      "id": "node/6527699708"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/6790909042",
+        "leisure": "park",
+        "name": "Gorden Park",
+        "opening_hours": "24/7"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8385964,
+          10.239842
+        ]
+      },
+      "id": "node/6790909042"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/6824659614",
+        "leisure": "park",
+        "name": "PHILCAG"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          124.9788277,
+          10.7733368
+        ]
+      },
+      "id": "node/6824659614"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/6828139302",
+        "leisure": "park"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.9433069,
+          14.3515147
+        ]
+      },
+      "id": "node/6828139302"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/6857744011",
+        "leisure": "park"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9963027,
+          12.661515
+        ]
+      },
+      "id": "node/6857744011"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/6859538676",
+        "leisure": "park",
+        "name": "sunset",
+        "opening_hours": "Mo-Su 09:00-22:00",
+        "smoking": "no"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          124.1373474,
+          13.0712786
+        ]
+      },
+      "id": "node/6859538676"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/7045753174",
+        "addr:city": "Capas Tarlac",
+        "addr:postcode": "2315",
+        "addr:street": "Adelfa Street",
+        "leisure": "park",
+        "name": "DLS Park",
+        "opening_hours": "24/7"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.5885103,
+          15.3269719
+        ]
+      },
+      "id": "node/7045753174"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/7099402298",
+        "leisure": "park",
+        "name": "unkown"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9152022,
+          12.9776139
+        ]
+      },
+      "id": "node/7099402298"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/7106440950",
+        "addr:city": "Batangas City",
+        "addr:postcode": "4200",
+        "addr:street": "Brgy Balete",
+        "leisure": "park",
+        "name": "Date Farm",
+        "opening_hours": "09:00-17:00",
+        "operator": "https://www.facebook.com/datespalmtree"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.0691887,
+          13.8304834
+        ]
+      },
+      "id": "node/7106440950"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/7469030265",
+        "addr:street": "sandaiz",
+        "leisure": "park",
+        "name": "SANDAIZ PARK"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          122.5139766,
+          11.4114821
+        ]
+      },
+      "id": "node/7469030265"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/7647047469",
+        "leisure": "park",
+        "name": "Bulan Eco-Park"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8731304,
+          12.7027416
+        ]
+      },
+      "id": "node/7647047469"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/7888571178",
+        "addr:city": "Baliuag",
+        "addr:postcode": "3006",
+        "addr:street": "Doña Remedios Trinidad Highway",
+        "leisure": "park",
+        "name": "ORCHARD PLACE RESIDENCES",
+        "operator": "PROMINENCE PROPERTIES, INC."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.8831403,
+          14.9527872
+        ]
+      },
+      "id": "node/7888571178"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/8222761304",
+        "leisure": "park",
+        "name": "Capiz Ecology Park and Cultural Village"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          122.6982378,
+          11.3367792
+        ]
+      },
+      "id": "node/8222761304"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/8317870119",
+        "leisure": "park",
+        "name": "Victoria Park"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.9796251,
+          14.5911622
+        ]
+      },
+      "id": "node/8317870119"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/8395955110",
+        "addr:city": "Claveria",
+        "addr:housenumber": "Brgy. Aposkahoy",
+        "addr:postcode": "9004",
+        "addr:street": "Gingoog-Claveria-Villanueva Road",
+        "leisure": "park",
+        "name": "Hidden Paradise",
+        "operator": "Private"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          124.9938775,
+          8.6894138
+        ]
+      },
+      "id": "node/8395955110"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/8436991426",
+        "leisure": "park"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.6185575,
+          14.7533978
+        ]
+      },
+      "id": "node/8436991426"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/8447242891",
+        "leisure": "park",
+        "name": "KC'S Dragon Fruit Farm"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          122.9361859,
+          11.2456007
+        ]
+      },
+      "id": "node/8447242891"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/8447301593",
+        "leisure": "park",
+        "name": "Mil-Win’s Farm"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          122.8089176,
+          11.1667723
+        ]
+      },
+      "id": "node/8447301593"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/8450449190",
+        "leisure": "park",
+        "name": "Alawihaw Eco Farm"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          122.849685,
+          11.1447827
+        ]
+      },
+      "id": "node/8450449190"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/8477525917",
+        "leisure": "park",
+        "name": "San Carlos Park Marina",
+        "operator": "LGU"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.4243513,
+          10.4832269
+        ]
+      },
+      "id": "node/8477525917"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/8481948452",
+        "leisure": "park",
+        "name": "Halayhayin Wating Shed"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.4607474,
+          14.4296937
+        ]
+      },
+      "id": "node/8481948452"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/8487807258",
+        "leisure": "park"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.9683746,
+          17.1749405
+        ]
+      },
+      "id": "node/8487807258"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/8491614759",
+        "leisure": "park",
+        "name": "Overlooking"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.4587299,
+          14.5434717
+        ]
+      },
+      "id": "node/8491614759"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/8526829780",
+        "leisure": "park"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          124.9426457,
+          10.3950438
+        ]
+      },
+      "id": "node/8526829780"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/8554512433",
+        "leisure": "park",
+        "name": "Nailaban Cockfighting Arena"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.2761508,
+          12.2373893
+        ]
+      },
+      "id": "node/8554512433"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/8674605193",
+        "leisure": "park",
+        "name": "Balboa's Adventure Park"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          122.8810585,
+          11.0887366
+        ]
+      },
+      "id": "node/8674605193"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/8685936291",
+        "leisure": "park",
+        "name": "Hokage Farms",
+        "operator": "hokage farms"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.8942896,
+          15.3240701
+        ]
+      },
+      "id": "node/8685936291"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/8881565926",
+        "leisure": "park",
+        "name": "Kafarmer's Farm",
+        "operator": "Kafarmer"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.7572502,
+          15.1683086
+        ]
+      },
+      "id": "node/8881565926"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/9005900721",
+        "leisure": "park",
+        "name": "Eleazar Farm"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.8550062,
+          14.1640031
+        ]
+      },
+      "id": "node/9005900721"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/9245762336",
+        "denotation": "park",
+        "leaf_cycle": "evergreen",
+        "leaf_type": "broadleaved",
+        "leisure": "park",
+        "name": "Southgrove Estates Park",
+        "opening_hours": "Mo-Su 06:00-22:00"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.9833591,
+          14.3650306
+        ]
+      },
+      "id": "node/9245762336"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/9462172682",
+        "leisure": "park",
+        "name": "alunat rever"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.2539774,
+          12.0474762
+        ]
+      },
+      "id": "node/9462172682"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/9462172683",
+        "leisure": "park",
+        "name": "malbucaya"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.268971,
+          12.0698908
+        ]
+      },
+      "id": "node/9462172683"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/9465234734",
+        "leisure": "park",
+        "name": "Napyetan garden pool"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.3059268,
+          12.0633956
+        ]
+      },
+      "id": "node/9465234734"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/9515957491",
+        "addr:city": "Ormoc City",
+        "addr:postcode": "6541",
+        "addr:street": "Mas-in",
+        "leisure": "park",
+        "name": "Lakip Eco Park",
+        "opening_hours": "24/7",
+        "operator": "LAKIP"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          124.5111424,
+          11.0649798
+        ]
+      },
+      "id": "node/9515957491"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/9529010424",
+        "leisure": "park",
+        "name": "Ajonay Park"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          124.8318095,
+          10.1307089
+        ]
+      },
+      "id": "node/9529010424"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/9569759316",
+        "leisure": "park",
+        "name": "Dolores Park",
+        "opening_hours": "Mo-Su 09:00-21:00",
+        "operator": "FORESTblock"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          122.6128546,
+          11.2826836
+        ]
+      },
+      "id": "node/9569759316"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/9604113060",
+        "leisure": "park",
+        "name": "Landmark Estate 2"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.1385402,
+          14.2124334
+        ]
+      },
+      "id": "node/9604113060"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/9669309373",
+        "leisure": "park",
+        "name": "Igbulawan Nature Farm"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          122.0637849,
+          10.5313135
+        ]
+      },
+      "id": "node/9669309373"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/9710114269",
+        "leisure": "park",
+        "name": "Lopues Housing Corner"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          122.939247,
+          10.6051289
+        ]
+      },
+      "id": "node/9710114269"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/9710128534",
+        "leisure": "park",
+        "name": "Lopues Open Land"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          122.9386021,
+          10.6053319
+        ]
+      },
+      "id": "node/9710128534"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/9710144727",
+        "leisure": "park",
+        "name": "Forest Coffee Chill Area"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          122.9393491,
+          10.6050491
+        ]
+      },
+      "id": "node/9710144727"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/9849917145",
+        "addr:city": "Silang",
+        "addr:housenumber": "005",
+        "addr:postcode": "4118",
+        "addr:street": "Silang-Banaybanay Road",
+        "description": "residential",
+        "leisure": "park",
+        "name": "Cordero's Compound",
+        "opening_hours": "Mo-Su 09:00-21:00",
+        "operator": "Cordero Family"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.9559856,
+          14.2103837
+        ]
+      },
+      "id": "node/9849917145"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/9878778049",
+        "addr:city": "Labo",
+        "addr:street": "Brgy Guisican",
+        "image": "https://www.google.com/maps/uv?pb=!1s0x339885f41ba84179%3A0xdf172729af37d316!3m1!7e115!4shttps%3A%2F%2Flh5.googleusercontent.com%2Fp%2FAF1QipM_jqCdVAaUf2Q5RPgeLbmb6FZvMLCeCxMv3yUJ%3Dw72-h160-k-no!5sbag%20angan%20farm%20resort%20-%20Google%20Search!15sCgIg",
+        "leisure": "park",
+        "name": "BAG ANGAN FARM",
+        "opening_hours": "Mo-Su 08:00-22:00",
+        "operator": "Arnel Bacer"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          122.4748906,
+          14.1669467
+        ]
+      },
+      "id": "node/9878778049"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/9882896623",
+        "leisure": "park",
+        "name": "Camp Alexa"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.4773829,
+          10.5994033
+        ]
+      },
+      "id": "node/9882896623"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/9891032655",
+        "leisure": "park",
+        "name": "New Yummy Ideas of CNN Inland Resort"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.0987681,
+          11.3419741
+        ]
+      },
+      "id": "node/9891032655"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/9960411439",
+        "description": "Radio Station DU9GT",
+        "leisure": "park",
+        "name": "Radio DU9GT"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          125.5279676,
+          8.9327259
+        ]
+      },
+      "id": "node/9960411439"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/10038465794",
+        "leisure": "park",
+        "name": "Swilonggo Garden"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.0096798,
+          11.1066582
+        ]
+      },
+      "id": "node/10038465794"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/10048959452",
+        "leisure": "park"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.1886111,
+          13.9230916
+        ]
+      },
+      "id": "node/10048959452"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/10127822022",
+        "leisure": "park"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.4121542,
+          14.5044185
+        ]
+      },
+      "id": "node/10127822022"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/10170540260",
+        "addr:city": "Iligan City",
+        "addr:housenumber": "022",
+        "addr:postcode": "9200",
+        "addr:street": "Doña Teodora Boulevard",
+        "leisure": "park",
+        "name": "Garden Park Residence"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          124.2482465,
+          8.2381392
+        ]
+      },
+      "id": "node/10170540260"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/10595629526",
+        "leisure": "park",
+        "name": "Davilan Freedom Park"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.0389209,
+          14.2848515
+        ]
+      },
+      "id": "node/10595629526"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/10613813454",
+        "leisure": "park"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          124.8656454,
+          10.1289205
+        ]
+      },
+      "id": "node/10613813454"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/10660019903",
+        "leisure": "park",
+        "name": "Municipal Plaza"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          125.2529419,
+          10.3515689
+        ]
+      },
+      "id": "node/10660019903"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/10740787412",
+        "leisure": "park",
+        "name": "RTMG Ogis Motor Pool"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.480197,
+          8.0905269
+        ]
+      },
+      "id": "node/10740787412"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/10751947165",
+        "leisure": "park"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.2742903,
+          10.3947034
+        ]
+      },
+      "id": "node/10751947165"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/10766555105",
+        "leisure": "park",
+        "name": "Calapnagan Eco Park"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.1458329,
+          10.3616297
+        ]
+      },
+      "id": "node/10766555105"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/10769760671",
+        "access": "private",
+        "leisure": "park",
+        "name": "Mirala Grand Lawn"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.0758179,
+          14.1836932
+        ]
+      },
+      "id": "node/10769760671"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/10775461755",
+        "leisure": "park",
+        "name": "Calatrava Echo Park"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.458718,
+          10.6055898
+        ]
+      },
+      "id": "node/10775461755"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/10821287971",
+        "leisure": "park"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          124.9646705,
+          10.6052665
+        ]
+      },
+      "id": "node/10821287971"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/10823280112",
+        "leisure": "park",
+        "name": "Lunas Adventure Park"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          124.8762825,
+          10.2484339
+        ]
+      },
+      "id": "node/10823280112"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/10824706456",
+        "leisure": "park",
+        "name": "Family Picnic Grove"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          122.0374325,
+          14.4143995
+        ]
+      },
+      "id": "node/10824706456"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/10824706463",
+        "leisure": "park",
+        "name": "Banyan Tree Park"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          122.0365871,
+          14.4192288
+        ]
+      },
+      "id": "node/10824706463"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/10936734659",
+        "addr:city": "Caloocan",
+        "addr:housenumber": "93",
+        "addr:postcode": "1402",
+        "addr:street": "Julieta Street",
+        "leisure": "park",
+        "name": "Julita's Parking Lot",
+        "opening_hours": "24/7"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.0082663,
+          14.6779083
+        ]
+      },
+      "id": "node/10936734659"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/10943160922",
+        "addr:city": "Sibagat",
+        "addr:housenumber": "P-5",
+        "addr:postcode": "8503",
+        "addr:street": "ElRio",
+        "leisure": "park"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          125.6734585,
+          8.8601637
+        ]
+      },
+      "id": "node/10943160922"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/10956655893",
+        "leisure": "park",
+        "name": "Mablaran Falls"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          122.0291615,
+          12.5595666
+        ]
+      },
+      "id": "node/10956655893"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/10963002321",
+        "leisure": "park",
+        "name": "Art & Zeny Coconut Farm",
+        "operator": "Art & Zeny Gonzales",
+        "operator:type": "private"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.4684393,
+          15.7888731
+        ]
+      },
+      "id": "node/10963002321"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/11019089344",
+        "leisure": "park",
+        "name": "Rosalie Rendu Children's Hall"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.045998,
+          14.4704187
+        ]
+      },
+      "id": "node/11019089344"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/11040550985",
+        "leisure": "park",
+        "name": "Mercado Del Lago"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.0628209,
+          14.48798
+        ]
+      },
+      "id": "node/11040550985"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/11042429142",
+        "leisure": "park",
+        "name": "Banban Binhi Eco Park"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.0287456,
+          9.8528657
+        ]
+      },
+      "id": "node/11042429142"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/11076319811",
+        "addr:city": "San Marcelino",
+        "addr:district": "San Rafael",
+        "addr:postcode": "2207",
+        "addr:province": "Zanmbales",
+        "leisure": "park",
+        "name": "San Rafael View Deck"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.2334956,
+          14.9737812
+        ]
+      },
+      "id": "node/11076319811"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/11076393828",
+        "leisure": "park",
+        "name": "Calbayog Centennial Forest"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          124.578788,
+          12.0708118
+        ]
+      },
+      "id": "node/11076393828"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/11079744582",
+        "leisure": "park",
+        "name": "Wao Spring Resort"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          124.705901,
+          7.659219
+        ]
+      },
+      "id": "node/11079744582"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/11193158261",
+        "leisure": "park",
+        "name": "UPS IV Park"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.0407299,
+          14.4628586
+        ]
+      },
+      "id": "node/11193158261"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/11274941870",
+        "leisure": "park",
+        "name": "The Vigan Tourist Park"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.3812655,
+          17.5692864
+        ]
+      },
+      "id": "node/11274941870"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/11276776026",
+        "leisure": "park",
+        "name": "Bio Park sa Wonderland"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          124.7291371,
+          7.6298663
+        ]
+      },
+      "id": "node/11276776026"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/11383192248",
+        "addr:city": "Bulan",
+        "addr:district": "(boundary Beguin)",
+        "addr:housenumber": "3434",
+        "addr:postcode": "4706",
+        "addr:province": "Sorsogon",
+        "addr:street": "San Juan Daan",
+        "addr:unit": "Lot",
+        "leisure": "park",
+        "name": "Rosewood Reserve Integrated Farm",
+        "opening_hours": "24/7",
+        "operator": "Engr. Gerona, B.A.",
+        "operator:type": "private"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9196346,
+          12.695869
+        ]
+      },
+      "id": "node/11383192248"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/11393185604",
+        "leisure": "park",
+        "name": "Bella Lagranja"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          122.41618,
+          10.7389842
+        ]
+      },
+      "id": "node/11393185604"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/11528242031",
+        "addr:city": "Gloria",
+        "addr:district": "Gaudencio Antonino",
+        "addr:province": "Oriental Mindoro",
+        "leisure": "park",
+        "name": "SOSA-SIGUE FAMILY PARK",
+        "operator": "SOSA-SIGUE CLAN",
+        "operator:type": "private"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.4637674,
+          12.9093991
+        ]
+      },
+      "id": "node/11528242031"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/11530433764",
+        "leisure": "park",
+        "name": "Happy Place"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.0335907,
+          14.4206359
+        ]
+      },
+      "id": "node/11530433764"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/11530448124",
+        "leisure": "park",
+        "name": "Greenview Park"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.0555196,
+          14.6985195
+        ]
+      },
+      "id": "node/11530448124"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/11530620300",
+        "leisure": "park",
+        "name": "Riverwalk"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          125.7047377,
+          7.5869785
+        ]
+      },
+      "id": "node/11530620300"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/11530850030",
+        "leisure": "park",
+        "name": "Lexington Garden Village Cat Village"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.076223,
+          14.549075
+        ]
+      },
+      "id": "node/11530850030"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/11786176349",
+        "leisure": "park",
+        "name": "Evacuation Area"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          122.9308459,
+          9.1065927
+        ]
+      },
+      "id": "node/11786176349"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/11839711748",
+        "description": "Bato, Leyte is East from Here",
+        "leisure": "park",
+        "name": "Moon Set @ Bato, Leyte"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.1741404,
+          10.3821801
+        ]
+      },
+      "id": "node/11839711748"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/11846264148",
+        "leisure": "park",
+        "name": "Brgy. Talaba Covered Court"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.9631824,
+          13.970255
+        ]
+      },
+      "id": "node/11846264148"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/11885595056",
+        "leisure": "park",
+        "name": "Instaland"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          122.6072512,
+          11.2980421
+        ]
+      },
+      "id": "node/11885595056"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/11885698458",
+        "leisure": "park",
+        "name": "Donya Thelma Ferrer Spring Resort"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          122.6189403,
+          11.2929155
+        ]
+      },
+      "id": "node/11885698458"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/11885698459",
+        "leisure": "park",
+        "name": "Caveland Nature Park"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          122.6193495,
+          11.2914689
+        ]
+      },
+      "id": "node/11885698459"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/11885698460",
+        "leisure": "park",
+        "name": "Villa Anita Resort"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          122.6057402,
+          11.2745982
+        ]
+      },
+      "id": "node/11885698460"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/11890167982",
+        "leisure": "park"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.1930998,
+          12.323467
+        ]
+      },
+      "id": "node/11890167982"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/11930741467",
+        "addr:city": "Cabuyao",
+        "addr:neighbourhood": "Lakeside Nest",
+        "addr:postcode": "4025",
+        "addr:province": "Laguna",
+        "leisure": "park",
+        "name": "Phase 1 Basketball Court"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.1451766,
+          14.2640178
+        ]
+      },
+      "id": "node/11930741467"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/11930763270",
+        "access": "yes",
+        "addr:city": "Cabuyao",
+        "addr:neighbourhood": "Southville 1",
+        "addr:postcode": "4025",
+        "addr:province": "Laguna",
+        "dog": "yes",
+        "leisure": "park",
+        "name": "Phase 15 Basketball Court",
+        "smoking": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.1379656,
+          14.2679445
+        ]
+      },
+      "id": "node/11930763270"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/11976644801",
+        "leisure": "park",
+        "name": "Greenland"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.110468,
+          11.5565617
+        ]
+      },
+      "id": "node/11976644801"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/11977429544",
+        "leisure": "park",
+        "name": "Villa Margarita - Inland Resort and RestoBar"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.024242,
+          11.1888443
+        ]
+      },
+      "id": "node/11977429544"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/11991295111",
+        "leisure": "park",
+        "name": "Pajo Riverbank"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          122.4772642,
+          11.0780106
+        ]
+      },
+      "id": "node/11991295111"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/12036916825",
+        "leisure": "park"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.006127,
+          14.649837
+        ]
+      },
+      "id": "node/12036916825"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/12053621837",
+        "leisure": "park",
+        "name": "Andrew Park"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.0010117,
+          14.4797812
+        ]
+      },
+      "id": "node/12053621837"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/12085910777",
+        "addr:city": "Unisan",
+        "addr:district": "3",
+        "addr:postcode": "4305",
+        "addr:province": "Quezon",
+        "addr:street": "R. Vargas Street",
+        "leisure": "park",
+        "name": "paradise park",
+        "opening_hours": "24/7"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.9753794,
+          13.8386574
+        ]
+      },
+      "id": "node/12085910777"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/12145309984",
+        "leisure": "park",
+        "name": "Playground"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          125.4790351,
+          11.6435037
+        ]
+      },
+      "id": "node/12145309984"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/12162109840",
+        "leisure": "park"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.0261314,
+          14.5860637
+        ]
+      },
+      "id": "node/12162109840"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/12183210296",
+        "leisure": "park",
+        "name": "SITE"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.0143683,
+          14.1319386
+        ]
+      },
+      "id": "node/12183210296"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/12192565988",
+        "leisure": "park",
+        "name": "Iloilo Tree Park"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          122.5628712,
+          10.7695021
+        ]
+      },
+      "id": "node/12192565988"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/12193937711",
+        "access": "yes",
+        "addr:city": "Tonsuya",
+        "addr:district": "2",
+        "addr:neighbourhood": "Catmon",
+        "addr:postcode": "1470",
+        "addr:street": "C. Perez Street",
+        "leisure": "park",
+        "name": "Theres a bridge in this area"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.9609476,
+          14.6634649
+        ]
+      },
+      "id": "node/12193937711"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/12194016783",
+        "leisure": "park",
+        "name": "Siruma forest"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.2521995,
+          14.0261589
+        ]
+      },
+      "id": "node/12194016783"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/12227850532",
+        "leisure": "park",
+        "name": "Community Park, Kids Playground",
+        "opening_hours": "Tu-Su 10:00-20:00"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.0550705,
+          14.2980077
+        ]
+      },
+      "id": "node/12227850532"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/12282076378",
+        "leisure": "park",
+        "name": "KD NATURES FARM"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.0712394,
+          15.7197201
+        ]
+      },
+      "id": "node/12282076378"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/12316543493",
+        "leisure": "park",
+        "name": "BIATALS View Deck"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.1175783,
+          16.3499307
+        ]
+      },
+      "id": "node/12316543493"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/12353233252",
+        "leisure": "park",
+        "name": "Malabanban Sur"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.433781,
+          13.915887
+        ]
+      },
+      "id": "node/12353233252"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/12355388816",
+        "leisure": "park",
+        "name": "Triangle Park"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.0455533,
+          14.5761655
+        ]
+      },
+      "id": "node/12355388816"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/12520544902",
+        "leisure": "park",
+        "name": "Cyberville Clubhouse"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.9186028,
+          14.3522153
+        ]
+      },
+      "id": "node/12520544902"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/12537606590",
+        "leisure": "park",
+        "name": "Balong-Bato Basketball Court"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.0235943,
+          14.6083069
+        ]
+      },
+      "id": "node/12537606590"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/12537606592",
+        "leisure": "park",
+        "name": "San Juan Elementary school gymnasium"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.0228003,
+          14.6066218
+        ]
+      },
+      "id": "node/12537606592"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/12548731983",
+        "leisure": "park"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          122.5434866,
+          10.6893218
+        ]
+      },
+      "id": "node/12548731983"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/12603637821",
+        "leisure": "park",
+        "name": "San Juanico Viewing Deck"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          124.9656716,
+          11.2968472
+        ]
+      },
+      "id": "node/12603637821"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/12635319943",
+        "leisure": "park",
+        "name": "Caglayan ES"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.3231957,
+          17.7953233
+        ]
+      },
+      "id": "node/12635319943"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/12650989319",
+        "leisure": "park",
+        "name": "SJDM River Park Esplanade",
+        "operator": "City of San Jose Del Monte",
+        "operator:type": "government_facility-public"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.0453713,
+          14.8281264
+        ]
+      },
+      "id": "node/12650989319"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/12690745067",
+        "leisure": "park"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.1119485,
+          14.5487639
+        ]
+      },
+      "id": "node/12690745067"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/12709053889",
+        "leisure": "park"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.0481763,
+          13.7894966
+        ]
+      },
+      "id": "node/12709053889"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/12709201806",
+        "leisure": "park",
+        "name": "Bayan Park Circle"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.606794,
+          16.4272357
+        ]
+      },
+      "id": "node/12709201806"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/12720832401",
+        "leisure": "park",
+        "name": "Admirals Farm Park"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.5543548,
+          16.4419152
+        ]
+      },
+      "id": "node/12720832401"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/12728996772",
+        "addr:city": "Mandaue City",
+        "addr:postcode": "6014",
+        "addr:province": "Cebu",
+        "addr:street": "M.L. Quezon St",
+        "leisure": "park",
+        "name": "Appa's House"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.93251,
+          10.3448442
+        ]
+      },
+      "id": "node/12728996772"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/12775748590",
+        "leisure": "park",
+        "name": "Bayan Park Entrance"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.6067582,
+          16.4276561
+        ]
+      },
+      "id": "node/12775748590"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/12777903298",
+        "leisure": "park"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.9509833,
+          10.5004034
+        ]
+      },
+      "id": "node/12777903298"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/12777967322",
+        "addr:housename": "Pandan People's Park",
+        "amenity": "shelter",
+        "leisure": "park",
+        "shelter_type": "gazebo"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          122.0957994,
+          11.7211074
+        ]
+      },
+      "id": "node/12777967322"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/12799062013",
+        "leisure": "park",
+        "name": "Arco de Emperador"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.076092,
+          14.5775398
+        ]
+      },
+      "id": "node/12799062013"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/12800205520",
+        "leisure": "park",
+        "name": "Wetlands Park - SM City Laoag"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.5870599,
+          18.1895357
+        ]
+      },
+      "id": "node/12800205520"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/12827728901",
+        "addr:city": "City of Antipolo",
+        "addr:district": "2",
+        "addr:housename": "Sitio Cabading",
+        "addr:neighbourhood": "San Jose",
+        "addr:postcode": "1870",
+        "addr:province": "Rizal",
+        "leisure": "park",
+        "name": "ANTIPOLO SKATE PARK",
+        "operator": "Antipolo City Government",
+        "operator:type": "government"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.2235294,
+          14.6354662
+        ]
+      },
+      "id": "node/12827728901"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/12828212958",
+        "description": "Purok Rosas De Baybayon",
+        "leisure": "park",
+        "name": "Purok Rosas"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.421529,
+          10.9388035
+        ]
+      },
+      "id": "node/12828212958"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/12828212960",
+        "leisure": "park",
+        "name": "Santan 2"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.4220476,
+          10.9458517
+        ]
+      },
+      "id": "node/12828212960"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/12836734648",
+        "leisure": "park",
+        "name": "Banal na Bundok"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.0590363,
+          15.1254574
+        ]
+      },
+      "id": "node/12836734648"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/12905695989",
+        "leisure": "park",
+        "name": "Parking Lot sa Blk4"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.1437991,
+          14.548081
+        ]
+      },
+      "id": "node/12905695989"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/12979921178",
+        "leisure": "park",
+        "name": "Guadalupe Linear Park",
+        "opening_hours": "24/7",
+        "operator": "Makati LGU",
+        "operator:type": "government"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.044971,
+          14.5681946
+        ]
+      },
+      "id": "node/12979921178"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/13068166427",
+        "leisure": "park",
+        "name": "Buhisan Ecopark"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8473867,
+          10.3103914
+        ]
+      },
+      "id": "node/13068166427"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/13124599532",
+        "leisure": "park",
+        "name": "Forest"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.1633624,
+          14.5813135
+        ]
+      },
+      "id": "node/13124599532"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/13152293026",
+        "leisure": "park"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.9134911,
+          13.8694812
+        ]
+      },
+      "id": "node/13152293026"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/13153287001",
+        "leisure": "park",
+        "name": "Treehouse Bike Park"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.7597188,
+          15.1756236
+        ]
+      },
+      "id": "node/13153287001"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/13166998922",
+        "leisure": "park",
+        "name": "Unknown Building"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.418636,
+          15.6386603
+        ]
+      },
+      "id": "node/13166998922"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/13185183180",
+        "leisure": "park",
+        "name": "Dunoy Lake Philippine Crocodile Sanctuary"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          122.1596911,
+          16.9973726
+        ]
+      },
+      "id": "node/13185183180"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/13258074633",
+        "access": "customers",
+        "addr:city": "Libona",
+        "addr:district": "Kinawe",
+        "addr:neighbourhood": "Zone 4A",
+        "addr:postcode": "8796",
+        "addr:province": "Bukidnon",
+        "dog": "yes",
+        "email": "thrill.playground.ph@gmail.com",
+        "leisure": "park",
+        "mobile": "+699299835318",
+        "name": "Thrill Playgrounds & Tipi Cafe",
+        "opening_hours": "24/7",
+        "operator": "Thrill Playgrounds Entertainment Inc.",
+        "operator:type": "private",
+        "website": "https://www.thrillplaygrounds.com/"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          124.6746156,
+          8.36723
+        ]
+      },
+      "id": "node/13258074633"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/13260722565",
+        "leisure": "park",
+        "name": "The Teacher"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.7231998,
+          13.145734
+        ]
+      },
+      "id": "node/13260722565"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/13264530860",
+        "leisure": "park",
+        "name": "Main Canteen"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.7241197,
+          13.142149
+        ]
+      },
+      "id": "node/13264530860"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/13264531505",
+        "leisure": "park",
+        "name": "Palayok"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.7238133,
+          13.1446345
+        ]
+      },
+      "id": "node/13264531505"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/13265167574",
+        "leisure": "park",
+        "name": "CenTree"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.7250312,
+          13.1434423
+        ]
+      },
+      "id": "node/13265167574"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/13265167575",
+        "leisure": "park",
+        "name": "Pyramid"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.7245087,
+          13.1443463
+        ]
+      },
+      "id": "node/13265167575"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/13266460337",
+        "leisure": "park",
+        "name": "BUGS Eco Park"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.7243753,
+          13.1448311
+        ]
+      },
+      "id": "node/13266460337"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/13266460338",
+        "leisure": "park",
+        "name": "Founders Park"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.725813,
+          13.1436725
+        ]
+      },
+      "id": "node/13266460338"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/13270218002",
+        "leisure": "park",
+        "name": "Rizal Statue"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.72493,
+          13.1428862
+        ]
+      },
+      "id": "node/13270218002"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/13287574897",
+        "leisure": "park",
+        "name": "Arko"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.1012028,
+          14.5411632
+        ]
+      },
+      "id": "node/13287574897"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/13291177179",
+        "access": "permissive",
+        "leisure": "park",
+        "name": "Arete Open Space",
+        "note": "Open to the ADMU community. Call the office to ask re. access if not from the Ateneo community.",
+        "operator": "Ateneo de Manila",
+        "operator:type": "private",
+        "phone": "0284266001"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.0757879,
+          14.6416101
+        ]
+      },
+      "id": "node/13291177179"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/13291200904",
+        "access": "yes",
+        "dog": "yes",
+        "leisure": "park",
+        "name": "Natural Science Complex Ampitheater"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.0719225,
+          14.6498109
+        ]
+      },
+      "id": "node/13291200904"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/13291200905",
+        "leisure": "park"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.0643505,
+          14.6554649
+        ]
+      },
+      "id": "node/13291200905"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/13307657401",
+        "leisure": "park",
+        "name": "Mt Camisong Forest park and events"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.6859425,
+          16.4147939
+        ]
+      },
+      "id": "node/13307657401"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/13377348530",
+        "addr:city": "Calamba",
+        "addr:district": "Uwisan",
+        "addr:housenumber": "267",
+        "addr:neighbourhood": "Purok 3",
+        "addr:postcode": "4027",
+        "addr:province": "Laguna",
+        "addr:street": "D. Lucius Street",
+        "leisure": "park",
+        "name": "Melecious' Place"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.172674,
+          14.2373812
+        ]
+      },
+      "id": "node/13377348530"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/13379156867",
+        "leisure": "park",
+        "name": "IPESR Food Stalls"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.7220625,
+          13.1441892
+        ]
+      },
+      "id": "node/13379156867"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/13449581401",
+        "leisure": "park",
+        "name": "Apalit Skate Park"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.7684575,
+          14.9533294
+        ]
+      },
+      "id": "node/13449581401"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/13458054894",
+        "leisure": "park",
+        "name": "Pet Area"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.0310532,
+          14.5717904
+        ]
+      },
+      "id": "node/13458054894"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/13465235993",
+        "leisure": "park",
+        "name": "Dinosaur Park"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.1575184,
+          14.5256687
+        ]
+      },
+      "id": "node/13465235993"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/13469729144",
+        "leisure": "park",
+        "name": "Sulok na ning Sulok"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.6379998,
+          15.0621271
+        ]
+      },
+      "id": "node/13469729144"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/13473113581",
+        "leisure": "park",
+        "name": "Dog Park"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.051247,
+          14.5568124
+        ]
+      },
+      "id": "node/13473113581"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/13473113582",
+        "leisure": "park",
+        "name": "Greenway Park Entrance"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.0444109,
+          14.5488115
+        ]
+      },
+      "id": "node/13473113582"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/13526161923",
+        "leisure": "park",
+        "name": "TAMBAYAN NI ASHTON"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.8776616,
+          14.4054909
+        ]
+      },
+      "id": "node/13526161923"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/13535857801",
+        "leisure": "park",
+        "name": "Pepita Park"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9182527,
+          12.9791124
+        ]
+      },
+      "id": "node/13535857801"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/13577625418",
+        "leisure": "park",
+        "name": "Town & Country Tennis Court"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.6054753,
+          15.1282215
+        ]
+      },
+      "id": "node/13577625418"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/13577625419",
+        "leisure": "park",
+        "name": "Town & Country Basketball Court"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.609627,
+          15.126339
+        ]
+      },
+      "id": "node/13577625419"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/13660289514",
+        "leisure": "park",
+        "name": "San Francisco Municipal Plaza"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          125.1580432,
+          10.0560713
+        ]
+      },
+      "id": "node/13660289514"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/13677223980",
+        "addr:city": "Tacurong City",
+        "addr:place": "Baras",
+        "addr:postcode": "9800",
+        "addr:province": "Sultan Kudarat",
+        "leisure": "park",
+        "name": "Baras Bird Sanctuary"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          124.6378605,
+          6.6278866
+        ]
+      },
+      "id": "node/13677223980"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/13712894517",
+        "leisure": "park",
+        "name": "Station 1, MIBNP",
+        "operator": "Ranger",
+        "operator:type": "government"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.0221936,
+          12.6440977
+        ]
+      },
+      "id": "node/13712894517"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/13734059552",
+        "leisure": "park",
+        "name": "MVSTesoro Farm and Resturant"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.0413541,
+          15.5336512
+        ]
+      },
+      "id": "node/13734059552"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/13734122026",
+        "leisure": "park",
+        "name": "san filipe bata court"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.9130085,
+          15.4966542
+        ]
+      },
+      "id": "node/13734122026"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/13773712286",
+        "addr:city": "Quezon City",
+        "addr:street": "Cordillera Street",
+        "leisure": "park",
+        "name": "Haobart Village Mini Park",
+        "operator": "HOA"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.0465891,
+          14.7360196
+        ]
+      },
+      "id": "node/13773712286"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/13793426845",
+        "addr:city": "Baclayon",
+        "addr:neighbourhood": "San Isidro",
+        "addr:postcode": "6301",
+        "addr:province": "Bohol",
+        "leisure": "park",
+        "name": "The Pickle Peak",
+        "opening_hours": "Mo-Su 06:00-24:00"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8940538,
+          9.6345808
+        ]
+      },
+      "id": "node/13793426845"
+    }
+  ]
+}

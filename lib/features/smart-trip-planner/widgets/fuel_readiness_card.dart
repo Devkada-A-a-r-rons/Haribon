@@ -3,13 +3,29 @@ import 'package:haribon/theme/app_colors.dart';
 
 
 class FuelReadinessCard extends StatelessWidget {
-  const FuelReadinessCard({super.key});
+  final double distanceKm;
+  final double litersPerKm;
+  final double currentLiters;
+  final String destination;
+
+  const FuelReadinessCard({
+    super.key,
+    required this.distanceKm,
+    required this.litersPerKm,
+    required this.currentLiters,
+    required this.destination,
+  });
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final textTheme = theme.textTheme;
-    
+
+    final fuelNeeded = distanceKm * litersPerKm;
+    final isReady = currentLiters >= fuelNeeded;
+    final deficit = fuelNeeded - currentLiters;
+    final currentRange = currentLiters / litersPerKm;
+
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -29,12 +45,16 @@ class FuelReadinessCard extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                 decoration: BoxDecoration(
-                  color: AppColors.redSoftBg,
+                  color: isReady ? AppColors.greenSoftBg : AppColors.redSoftBg,
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Text(
-                  'Refill Needed',
-                  style: textTheme.labelSmall?.copyWith(color: AppColors.redDark, fontWeight: FontWeight.bold, fontSize: 10),
+                  isReady ? 'Ready' : 'Refill Needed',
+                  style: textTheme.labelSmall?.copyWith(
+                    color: isReady ? Colors.green.shade700 : AppColors.redDark,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 10,
+                  ),
                 ),
               ),
             ],
@@ -42,17 +62,27 @@ class FuelReadinessCard extends StatelessWidget {
           const SizedBox(height: 12),
           Text('Fuel Readiness', style: textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w800)),
           const SizedBox(height: 2),
-          Text('Current Tank: 8L (96km)', style: textTheme.bodySmall?.copyWith(color: AppColors.blueGreySecondary)),
+          Text(
+            'Current Tank: ${currentLiters.toStringAsFixed(1)}L (${currentRange.toStringAsFixed(0)}km range)',
+            style: textTheme.bodySmall?.copyWith(color: AppColors.blueGreySecondary),
+          ),
           const SizedBox(height: 16),
           Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
               color: AppColors.greyLightest,
               borderRadius: BorderRadius.circular(8),
-              border: const Border(left: BorderSide(color: AppColors.redDark, width: 3)),
+              border: Border(
+                left: BorderSide(
+                  color: isReady ? AppColors.tealPrimary : AppColors.redDark,
+                  width: 3,
+                ),
+              ),
             ),
             child: Text(
-              'Warning: 10.3L more needed for the 220km trip to Baguio.',
+              isReady
+                  ? 'You have enough fuel for the ${distanceKm.toStringAsFixed(0)}km trip to $destination.'
+                  : 'Warning: ${deficit.toStringAsFixed(1)}L more needed for the ${distanceKm.toStringAsFixed(0)}km trip to $destination.',
               style: textTheme.bodySmall?.copyWith(color: AppColors.navyDarker, fontWeight: FontWeight.w500),
             ),
           ),

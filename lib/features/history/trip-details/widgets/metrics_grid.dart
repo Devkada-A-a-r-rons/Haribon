@@ -3,20 +3,29 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../../../theme/app_colors.dart';
 
 class MetricsGrid extends StatelessWidget {
-  const MetricsGrid({super.key});
+  final Map<String, dynamic> tripData;
+  const MetricsGrid({super.key, required this.tripData});
 
   @override
   Widget build(BuildContext context) {
+    // Correctly fetch values using fallbacks for active plans vs saved trips
+    final fuelCost = (tripData['est_fuel_cost'] ?? tripData['budget'] ?? 0.0).toDouble();
+    final toll = (tripData['toll_fee'] ?? 0.0).toDouble();
+    final budget = (tripData['total_budget'] ?? tripData['budget'] ?? 0.0).toDouble();
+    final distance = (tripData['distance_km'] ?? tripData['route_distance_km'] ?? 0.0).toDouble();
+    final liters = fuelCost > 0 ? (fuelCost / 68.0) : (distance * 0.08); // fallback calculation
+    final fuelCapacity = (tripData['fuel_capacity'] ?? 45.0).toDouble();
+
     return Column(
       children: [
         Row(
           children: [
             Expanded(
               child: _buildMetricCard(
-                title: 'FUEL LEVEL',
-                value: '54%',
+                title: 'FUEL CAPACITY',
+                value: '${fuelCapacity.toStringAsFixed(0)}L',
                 icon: Icons.local_gas_station_outlined,
-                subtitle: '43.2L Remaining',
+                subtitle: 'Vehicle Spec',
                 backgroundColor: AppColors.containerLow,
               ),
             ),
@@ -24,9 +33,9 @@ class MetricsGrid extends StatelessWidget {
             Expanded(
               child: _buildMetricCard(
                 title: 'DISTANCE',
-                value: '214 km',
+                value: '${distance.toStringAsFixed(0)} km',
                 icon: Icons.location_on_outlined,
-                subtitle: 'To Baguio',
+                subtitle: 'Start to Finish',
                 backgroundColor: AppColors.containerLow,
               ),
             ),
@@ -36,15 +45,15 @@ class MetricsGrid extends StatelessWidget {
         Row(
           children: [
             Expanded(
-              child: _buildFuelUsedCard(),
+              child: _buildFuelUsedCard(liters),
             ),
             const SizedBox(width: 16),
             Expanded(
               child: _buildMetricCard(
-                title: 'TOTAL COST',
-                value: '₱1,508',
-                icon: Icons.trending_up,
-                subtitle: '+₱317 vs Avg',
+                title: 'TOTAL BUDGET',
+                value: '₱${budget.toStringAsFixed(0)}',
+                icon: Icons.account_balance_wallet_outlined,
+                subtitle: 'Allocated Funds',
                 backgroundColor: AppColors.historyBlueGray,
                 textColor: Colors.white,
                 subtitleColor: Colors.white70,
@@ -117,7 +126,7 @@ class MetricsGrid extends StatelessWidget {
     );
   }
 
-  Widget _buildFuelUsedCard() {
+  Widget _buildFuelUsedCard(double liters) {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -150,7 +159,7 @@ class MetricsGrid extends StatelessWidget {
             textBaseline: TextBaseline.alphabetic,
             children: [
               Text(
-                '23.2',
+                liters.toStringAsFixed(1),
                 style: GoogleFonts.inter(
                   fontSize: 24,
                   fontWeight: FontWeight.w800,

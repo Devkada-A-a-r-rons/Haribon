@@ -3,7 +3,8 @@ import 'package:haribon/theme/app_colors.dart';
 
 
 class InsightCard extends StatelessWidget {
-  const InsightCard({super.key});
+  final List<String> insights;
+  const InsightCard({super.key, required this.insights});
 
   @override
   Widget build(BuildContext context) {
@@ -34,11 +35,18 @@ class InsightCard extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 16),
-          _buildInsightRow(theme, AppColors.tealDark, 'Refuel at Shell Angeles to save\n₱60'),
-          const SizedBox(height: 12),
-          _buildInsightRow(theme, AppColors.blueGreyDark, 'Food is your 2nd biggest\nexpense'),
-          const SizedBox(height: 12),
-          _buildInsightRow(theme, AppColors.redDark, 'Over budget by ₱180'),
+          ...insights.asMap().entries.map((entry) {
+            final index = entry.key;
+            final text = entry.value;
+            Color dotColor = AppColors.blueGreyDark;
+            if (index == 0) dotColor = AppColors.tealDark;
+            if (text.toLowerCase().contains('budget') && text.toLowerCase().contains('over')) dotColor = AppColors.redDark;
+            
+            return Padding(
+              padding: EdgeInsets.only(bottom: index == insights.length - 1 ? 0 : 12.0),
+              child: _buildInsightRow(theme, dotColor, text),
+            );
+          }).toList(),
         ],
       ),
     );
