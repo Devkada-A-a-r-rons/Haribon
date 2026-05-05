@@ -70,10 +70,10 @@ class SummaryHeader extends StatelessWidget {
 
 /// Shared summary-specific color constants used across widgets.
 abstract class SummaryColors {
-  static const primary = Color(0xFF004CCA);
-  static const eco = Color(0xFF006E2F);
-  static const amber = Color(0xFFF59E0B);
-  static const surface = Color(0xFFF8F9FF);
-  static const container = Color(0xFFE5EEFF);
-  static const white = Color(0xFFFFFFFF);
+  static const primary = AppColors.bluePrimary;
+  static const eco = AppColors.greenDark;
+  static const amber = AppColors.amberPrimary;
+  static const surface = AppColors.blueGreyWhite;
+  static const container = AppColors.blueSoftBg;
+  static const white = AppColors.whitePrimary;
 }

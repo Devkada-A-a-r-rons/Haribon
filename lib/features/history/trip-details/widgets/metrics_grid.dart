@@ -45,7 +45,7 @@ class MetricsGrid extends StatelessWidget {
                 value: '₱1,508',
                 icon: Icons.trending_up,
                 subtitle: '+₱317 vs Avg',
-                backgroundColor: const Color(0xFF3B5B72),
+                backgroundColor: AppColors.historyBlueGray,
                 textColor: Colors.white,
                 subtitleColor: Colors.white70,
               ),
@@ -67,7 +67,7 @@ class MetricsGrid extends StatelessWidget {
   }) {
     final colorText = textColor ?? AppColors.textPrimary;
     final colorSubText = subtitleColor ?? AppColors.textSecondary;
-    final colorTitle = textColor ?? const Color(0xFF1E3A8A); // dark navy for title
+    final colorTitle = textColor ?? AppColors.historyNavy; // dark navy for title
 
     return Container(
       padding: const EdgeInsets.all(16),
@@ -140,7 +140,7 @@ class MetricsGrid extends StatelessWidget {
             style: GoogleFonts.inter(
               fontSize: 9,
               fontWeight: FontWeight.w800,
-              color: const Color(0xFF1E3A8A),
+              color: AppColors.historyNavy,
               letterSpacing: 1,
             ),
           ),
@@ -177,7 +177,7 @@ class MetricsGrid extends StatelessWidget {
                 child: Container(
                   height: 4,
                   decoration: const BoxDecoration(
-                    color: Color(0xFF2B52C3),
+                    color: AppColors.historyBlue,
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(2),
                       bottomLeft: Radius.circular(2),
@@ -190,7 +190,7 @@ class MetricsGrid extends StatelessWidget {
                 child: Container(
                   height: 4,
                   decoration: const BoxDecoration(
-                    color: Color(0xFFD32F2F),
+                    color: AppColors.insightRed,
                     borderRadius: BorderRadius.only(
                       topRight: Radius.circular(2),
                       bottomRight: Radius.circular(2),

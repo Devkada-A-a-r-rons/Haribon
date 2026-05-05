@@ -3,6 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'summary_header.dart';
 import 'summary_shared.dart';
 import '../models/trip_summary_model.dart';
+import 'package:haribon/theme/app_colors.dart';
+
 
 /// MODULE: ROUTE BREAKDOWN CHART
 /// Animated horizontal bar chart showing time distribution per road segment.
@@ -82,7 +84,7 @@ class _SegmentRow extends StatelessWidget {
               style: GoogleFonts.inter(
                 fontSize: 12,
                 fontWeight: FontWeight.w500,
-                color: const Color(0xFF44474E),
+                color: AppColors.greyPrimary,
               ),
               overflow: TextOverflow.ellipsis,
             ),
@@ -95,7 +97,7 @@ class _SegmentRow extends StatelessWidget {
               child: Stack(
                 children: [
                   // Track
-                  Container(height: 10, color: const Color(0xFFE5EEFF)),
+                  Container(height: 10, color: AppColors.blueSoftBg),
                   // Fill
                   FractionallySizedBox(
                     widthFactor: segment.fraction * progress,

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:haribon/theme/app_colors.dart';
+
 
 class VisualBreakdownCard extends StatelessWidget {
   const VisualBreakdownCard({super.key});
@@ -31,8 +33,8 @@ class VisualBreakdownCard extends StatelessWidget {
                   width: 120,
                   child: CircularProgressIndicator(
                     value: 0.35,
-                    backgroundColor: const Color(0xFFF0F2F5),
-                    color: const Color(0xFF3B5B78),
+                    backgroundColor: AppColors.greySoftBg,
+                    color: AppColors.blueGreyDark,
                     strokeWidth: 16,
                     strokeCap: StrokeCap.round,
                   ),
@@ -40,9 +42,9 @@ class VisualBreakdownCard extends StatelessWidget {
                 Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text('Largest', style: theme.textTheme.labelSmall?.copyWith(color: const Color(0xFF8F9FAA), fontSize: 8)),
-                    Text('Fuel', style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold, color: const Color(0xFF1B2430))),
-                    Text('35%', style: theme.textTheme.labelSmall?.copyWith(color: const Color(0xFF8F9FAA), fontSize: 10)),
+                    Text('Largest', style: theme.textTheme.labelSmall?.copyWith(color: AppColors.greyLightAccent, fontSize: 8)),
+                    Text('Fuel', style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold, color: AppColors.navyDarker)),
+                    Text('35%', style: theme.textTheme.labelSmall?.copyWith(color: AppColors.greyLightAccent, fontSize: 10)),
                   ],
                 ),
               ],
@@ -54,19 +56,19 @@ class VisualBreakdownCard extends StatelessWidget {
             child: Text(
               'Visual Breakdown',
               style: theme.textTheme.titleMedium?.copyWith(
-                color: const Color(0xFF1B2430),
+                color: AppColors.navyDarker,
                 fontWeight: FontWeight.bold,
               ),
             ),
           ),
           const SizedBox(height: 16),
-          _buildLegendRow(theme, const Color(0xFF3B5B78), 'Fuel', '₱940 (35%)'),
+          _buildLegendRow(theme, AppColors.blueGreyDark, 'Fuel', '₱940 (35%)'),
           const SizedBox(height: 12),
-          _buildLegendRow(theme, const Color(0xFF4A6B5D), 'Food', '₱660 (25%)'),
+          _buildLegendRow(theme, AppColors.tealDark, 'Food', '₱660 (25%)'),
           const SizedBox(height: 12),
-          _buildLegendRow(theme, const Color(0xFF9CBEE1), 'Tolls', '₱780 (29%)'),
+          _buildLegendRow(theme, AppColors.bluePale, 'Tolls', '₱780 (29%)'),
           const SizedBox(height: 12),
-          _buildLegendRow(theme, const Color(0xFFC8E6C9), 'Parking', '₱300 (11%)'),
+          _buildLegendRow(theme, AppColors.greenLightBg, 'Parking', '₱300 (11%)'),
         ],
       ),
     );
@@ -78,9 +80,9 @@ class VisualBreakdownCard extends StatelessWidget {
         Container(width: 8, height: 8, decoration: BoxDecoration(color: dotColor, shape: BoxShape.circle)),
         const SizedBox(width: 12),
         Expanded(
-          child: Text(label, style: theme.textTheme.bodySmall?.copyWith(color: const Color(0xFF6B7B8A))),
+          child: Text(label, style: theme.textTheme.bodySmall?.copyWith(color: AppColors.blueGreySecondary)),
         ),
-        Text(amount, style: theme.textTheme.bodySmall?.copyWith(color: const Color(0xFF1B2430), fontWeight: FontWeight.bold)),
+        Text(amount, style: theme.textTheme.bodySmall?.copyWith(color: AppColors.navyDarker, fontWeight: FontWeight.bold)),
       ],
     );
   }

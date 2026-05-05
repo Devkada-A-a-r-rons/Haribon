@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:haribon/theme/app_colors.dart';
+
 
 class TotalCo2Card extends StatelessWidget {
   const TotalCo2Card({super.key});
@@ -24,7 +26,7 @@ class TotalCo2Card extends StatelessWidget {
             style: textTheme.labelSmall?.copyWith(
               fontWeight: FontWeight.w800,
               letterSpacing: 1.2,
-              color: const Color(0xFF1B2430),
+              color: AppColors.navyDarker,
               fontSize: 10,
             ),
           ),
@@ -33,19 +35,19 @@ class TotalCo2Card extends StatelessWidget {
             '53.6 kg',
             style: textTheme.headlineMedium?.copyWith(
               fontWeight: FontWeight.w800,
-              color: const Color(0xFF4A6B5D),
+              color: AppColors.tealDark,
               fontSize: 28,
             ),
           ),
           const SizedBox(height: 12),
           Row(
             children: [
-              const Icon(Icons.park, size: 16, color: Color(0xFF4A6B5D)),
+              const Icon(Icons.park, size: 16, color: AppColors.tealDark),
               const SizedBox(width: 8),
               Expanded(
                 child: Text(
                   'Equivalent to 2 small trees needed to offset',
-                  style: textTheme.bodySmall?.copyWith(color: const Color(0xFF4A6B5D)),
+                  style: textTheme.bodySmall?.copyWith(color: AppColors.tealDark),
                 ),
               ),
             ],

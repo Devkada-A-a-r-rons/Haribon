@@ -61,7 +61,7 @@ class _LogisticsTimelineState extends State<LogisticsTimeline> {
                         location: 'ANGELES',
                         title: 'Shell Angeles • 12L',
                         trailingText: '₱756',
-                        trailingColor: const Color(0xFF2E5E3D),
+                        trailingColor: AppColors.carbonGreenDark,
                         isFirst: true,
                         isLast: false,
                         isPassed: true,
@@ -95,8 +95,8 @@ class _LogisticsTimelineState extends State<LogisticsTimeline> {
     required bool isLast,
     required bool isPassed,
   }) {
-    final dotColor = isPassed ? const Color(0xFF3B5B72) : AppColors.surfaceDim;
-    final lineColor = isPassed ? const Color(0xFF3B5B72).withOpacity(0.5) : AppColors.surfaceDim;
+    final dotColor = isPassed ? AppColors.historyBlueGray : AppColors.surfaceDim;
+    final lineColor = isPassed ? AppColors.historyBlueGray.withOpacity(0.5) : AppColors.surfaceDim;
 
     return IntrinsicHeight(
       child: Row(
@@ -153,7 +153,7 @@ class _LogisticsTimelineState extends State<LogisticsTimeline> {
                         style: GoogleFonts.inter(
                           fontSize: 9,
                           fontWeight: FontWeight.w800,
-                          color: const Color(0xFF1E3A8A),
+                          color: AppColors.historyNavy,
                           letterSpacing: 1,
                         ),
                       ),

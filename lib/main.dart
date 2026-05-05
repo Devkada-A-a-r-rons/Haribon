@@ -10,6 +10,8 @@ import './features/home/home_screen.dart';
 import './features/chatbot/chatbot_screen.dart';
 import './features/settings/settings_screen.dart';
 import './features/history/history.dart';
+import 'package:haribon/theme/app_colors.dart';
+
 
 void main() {
   runApp(const MyApp());
@@ -76,7 +78,7 @@ class _MainScreenState extends State<MainScreen> {
                 _currentIndex = 6; // Switch to Chatbot
               });
             },
-            backgroundColor: const Color(0xFF2B52C3),
+            backgroundColor: AppColors.blueAccent,
             child: const Icon(Icons.auto_awesome, color: Colors.white),
           ),
     );

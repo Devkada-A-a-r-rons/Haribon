@@ -9,7 +9,7 @@ class CarbonImpact extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: const Color(0xFFF1F8F4), // Light greenish background
+        color: AppColors.carbonGreenBg, // Light greenish background
         borderRadius: BorderRadius.circular(12),
       ),
       child: Row(
@@ -17,12 +17,12 @@ class CarbonImpact extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: const Color(0xFFDCEADD),
+              color: AppColors.carbonGreenCircle,
               shape: BoxShape.circle,
             ),
             child: const Icon(
               Icons.park,
-              color: Color(0xFF2E5E3D), // Dark green tree
+              color: AppColors.carbonGreenDark, // Dark green tree
               size: 24,
             ),
           ),
@@ -36,7 +36,7 @@ class CarbonImpact extends StatelessWidget {
                   style: GoogleFonts.inter(
                     fontSize: 9,
                     fontWeight: FontWeight.w800,
-                    color: const Color(0xFF2E5E3D),
+                    color: AppColors.carbonGreenDark,
                     letterSpacing: 1,
                   ),
                 ),
@@ -51,14 +51,14 @@ class CarbonImpact extends StatelessWidget {
                         text: '53.6 kg CO2 ',
                         style: const TextStyle(
                           fontWeight: FontWeight.w800,
-                          color: Color(0xFF2E5E3D),
+                          color: AppColors.carbonGreenDark,
                         ),
                       ),
                       TextSpan(
                         text: '/ 2 Trees',
                         style: const TextStyle(
                           fontWeight: FontWeight.w600,
-                          color: Color(0xFF7A9783),
+                          color: AppColors.carbonGreenText,
                         ),
                       ),
                     ],

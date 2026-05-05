@@ -65,7 +65,7 @@ class EfficiencyTrendChart extends StatelessWidget {
                 return _ChartBar(
                   height: value,
                   color: isLast 
-                    ? const Color(0xFF2B52C3) 
+                    ? AppColors.blueAccent 
                     : value > 80 ? Colors.blue.shade300 : Colors.blue.shade50,
                 );
               }).toList(),

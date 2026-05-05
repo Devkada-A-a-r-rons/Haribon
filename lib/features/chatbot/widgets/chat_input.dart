@@ -48,7 +48,7 @@ class ChatInput extends StatelessWidget {
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(30),
-                    borderSide: const BorderSide(color: Color(0xFF2B52C3), width: 1.5),
+                    borderSide: const BorderSide(color: AppColors.blueAccent, width: 1.5),
                   ),
                   fillColor: AppColors.containerLowest,
                   filled: true,
@@ -66,7 +66,7 @@ class ChatInput extends StatelessWidget {
                 width: 44,
                 height: 44,
                 decoration: const BoxDecoration(
-                  color: Color(0xFF2B52C3),
+                  color: AppColors.blueAccent,
                   shape: BoxShape.circle,
                 ),
                 child: const Icon(

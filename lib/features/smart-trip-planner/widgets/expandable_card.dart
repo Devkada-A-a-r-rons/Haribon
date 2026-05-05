@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:haribon/theme/app_colors.dart';
+
 
 class ExpandableCard extends StatelessWidget {
   final IconData icon;
@@ -34,12 +36,12 @@ class ExpandableCard extends StatelessWidget {
         child: ExpansionTile(
           initiallyExpanded: initiallyExpanded,
           tilePadding: const EdgeInsets.all(16),
-          iconColor: const Color(0xFF1B2430),
-          collapsedIconColor: const Color(0xFF1B2430),
+          iconColor: AppColors.navyDarker,
+          collapsedIconColor: AppColors.navyDarker,
           title: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Icon(icon, color: const Color(0xFF3B5B78), size: 20),
+              Icon(icon, color: AppColors.blueGreyDark, size: 20),
               const SizedBox(width: 16),
               Expanded(
                 child: Column(
@@ -48,7 +50,7 @@ class ExpandableCard extends StatelessWidget {
                     Text(
                       title,
                       style: theme.textTheme.titleMedium?.copyWith(
-                        color: const Color(0xFF1B2430),
+                        color: AppColors.navyDarker,
                         fontWeight: FontWeight.w700,
                         height: 1.2,
                       ),

@@ -41,8 +41,8 @@ class HistoryScreen extends StatelessWidget {
             TripCard(
               route: 'Pampanga → Baguio',
               badgeText: '92 EXCELLENT',
-              badgeColor: const Color(0xFFC8E6C9), // Light green
-              badgeTextColor: const Color(0xFF2E7D32), // Dark green
+              badgeColor: AppColors.badgeExcellentBg, // Light green
+              badgeTextColor: AppColors.badgeExcellentText, // Dark green
               badgeIcon: Icons.auto_awesome,
               date: 'OCT 12, 2023 • 08:30 AM',
               distance: '145 km',
@@ -60,8 +60,8 @@ class HistoryScreen extends StatelessWidget {
             TripCard(
               route: 'Manila → Bicol',
               badgeText: '84 GOOD',
-              badgeColor: const Color(0xFFE6EE9C), // Light yellow/lime
-              badgeTextColor: const Color(0xFF827717), // Dark olive
+              badgeColor: AppColors.badgeGoodBg, // Light yellow/lime
+              badgeTextColor: AppColors.insightOlive, // Dark olive
               badgeIcon: Icons.eco_outlined,
               date: 'SEP 28, 2023 • 05:15 AM',
               distance: '360 km',
@@ -79,8 +79,8 @@ class HistoryScreen extends StatelessWidget {
             TripCard(
               route: 'Tagaytay → Manila',
               badgeText: '96 OPTIMAL',
-              badgeColor: const Color(0xFFC8E6C9), // Light green
-              badgeTextColor: const Color(0xFF2E7D32), // Dark green
+              badgeColor: AppColors.badgeExcellentBg, // Light green
+              badgeTextColor: AppColors.badgeExcellentText, // Dark green
               badgeIcon: Icons.eco_outlined,
               date: 'SEP 15, 2023 • 04:45 PM',
               distance: '65 km',

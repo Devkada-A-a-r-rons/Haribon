@@ -19,13 +19,13 @@ class AgilaImageWidget extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(Icons.directions_car, size: 64, color: Color(0xFF82B1FF)),
+            const Icon(Icons.directions_car, size: 64, color: AppColors.brandAgila),
             Text(
               'AGILA',
               style: GoogleFonts.inter(
                 fontSize: 24,
                 fontWeight: FontWeight.w900,
-                color: const Color(0xFF82B1FF),
+                color: AppColors.brandAgila,
                 letterSpacing: 2,
               ),
             ),
@@ -46,7 +46,7 @@ class BirdGradientImageWidget extends StatelessWidget {
       width: double.infinity,
       decoration: BoxDecoration(
         gradient: const LinearGradient(
-          colors: [Color(0xFF2B52C3), Color(0xFF1E3A8A)],
+          colors: [AppColors.historyBlue, AppColors.historyNavy],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
@@ -69,7 +69,7 @@ class AerovistaImageWidget extends StatelessWidget {
       width: double.infinity,
       decoration: BoxDecoration(
         gradient: const LinearGradient(
-          colors: [Color(0xFF111827), Color(0xFF065F46)],
+          colors: [AppColors.brandAerovistaDark, AppColors.brandAerovistaGreen],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),

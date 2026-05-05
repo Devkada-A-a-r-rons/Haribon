@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:haribon/theme/app_colors.dart';
+
 
 class TotalFuelCard extends StatelessWidget {
   const TotalFuelCard({super.key});
@@ -24,7 +26,7 @@ class TotalFuelCard extends StatelessWidget {
             style: textTheme.labelSmall?.copyWith(
               fontWeight: FontWeight.w800,
               letterSpacing: 1.2,
-              color: const Color(0xFF1B2430),
+              color: AppColors.navyDarker,
               fontSize: 10,
             ),
           ),
@@ -33,19 +35,19 @@ class TotalFuelCard extends StatelessWidget {
             '23.2L',
             style: textTheme.headlineLarge?.copyWith(
               fontWeight: FontWeight.w900,
-              color: const Color(0xFF3B5B78),
+              color: AppColors.blueGreyDark,
               fontSize: 40,
             ),
           ),
           const SizedBox(height: 12),
           RichText(
             text: TextSpan(
-              style: textTheme.bodySmall?.copyWith(color: const Color(0xFF6B7B8A)),
+              style: textTheme.bodySmall?.copyWith(color: AppColors.blueGreySecondary),
               children: [
                 const TextSpan(text: 'Base Fuel '),
-                TextSpan(text: '18.3L', style: textTheme.bodySmall?.copyWith(color: const Color(0xFF3B5B78), fontWeight: FontWeight.bold)),
+                TextSpan(text: '18.3L', style: textTheme.bodySmall?.copyWith(color: AppColors.blueGreyDark, fontWeight: FontWeight.bold)),
                 const TextSpan(text: ' | Extra Fuel '),
-                TextSpan(text: '+4.9L', style: textTheme.bodySmall?.copyWith(color: const Color(0xFFC62828), fontWeight: FontWeight.bold)),
+                TextSpan(text: '+4.9L', style: textTheme.bodySmall?.copyWith(color: AppColors.redDark, fontWeight: FontWeight.bold)),
               ],
             ),
           ),

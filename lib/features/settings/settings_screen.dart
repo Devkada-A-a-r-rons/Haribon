@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'widgets/profile_header.dart';
 import 'widgets/setting_section.dart';
+import 'package:haribon/theme/app_colors.dart';
+
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
@@ -10,9 +12,9 @@ class SettingsScreen extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF8F9FA),
+      backgroundColor: AppColors.greyLightest,
       appBar: AppBar(
-        backgroundColor: const Color(0xFFF8F9FA),
+        backgroundColor: AppColors.greyLightest,
         elevation: 0,
         centerTitle: true,
         leading: Padding(
@@ -26,7 +28,7 @@ class SettingsScreen extends StatelessWidget {
           'Settings',
           style: textTheme.titleMedium?.copyWith(
             fontWeight: FontWeight.w800,
-            color: const Color(0xFF1B2430),
+            color: AppColors.navyDarker,
           ),
         ),
         actions: [
@@ -37,7 +39,7 @@ class SettingsScreen extends StatelessWidget {
             child: Text(
               'Save',
               style: textTheme.bodyMedium?.copyWith(
-                color: const Color(0xFF7AA8F9), // Light blue app theme color equivalent to the mockup
+                color: AppColors.blueLightAccent, // Light blue app theme color equivalent to the mockup
                 fontWeight: FontWeight.w600,
               ),
             ),
@@ -87,7 +89,7 @@ class SettingsScreen extends StatelessWidget {
                     Navigator.pop(context);
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF4A6B5D), // Dark green color
+                    backgroundColor: AppColors.tealDark, // Dark green color
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
@@ -110,7 +112,7 @@ class SettingsScreen extends StatelessWidget {
                   child: Text(
                     'Reset to Defaults',
                     style: textTheme.bodyMedium?.copyWith(
-                      color: const Color(0xFF7AA8F9), // Light blue
+                      color: AppColors.blueLightAccent, // Light blue
                       fontWeight: FontWeight.w600,
                     ),
                   ),

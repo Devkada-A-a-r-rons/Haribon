@@ -33,14 +33,14 @@ TripSummary _buildMockSummary() => TripSummary(
       brand: 'Petron',
       liters: 10.2,
       pricePerLiter: 69.70,
-      brandColor: const Color(0xFFE53935),
+      brandColor: AppColors.redPrimary,
     ),
     FuelStop(
       stationName: 'Shell Kennon Road',
       brand: 'Shell',
       liters: 8.2,
       pricePerLiter: 82.00,
-      brandColor: const Color(0xFFFFB300),
+      brandColor: AppColors.amberAccent,
     ),
   ],
   aiInsight:

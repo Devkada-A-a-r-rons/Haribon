@@ -33,7 +33,7 @@ class ConsumptionBreakdown extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Icon(icon, size: 20, color: const Color(0xFF3B5B72)),
+        Icon(icon, size: 20, color: AppColors.historyBlueGray),
         const SizedBox(height: 8),
         Text(
           label,

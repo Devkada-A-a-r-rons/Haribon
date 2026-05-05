@@ -7,6 +7,8 @@ import 'widgets/total_fuel_cost_card.dart';
 import 'widgets/total_co2_card.dart';
 import 'widgets/efficiency_loss_insights_card.dart';
 import 'widgets/optimization_tips_card.dart';
+import 'package:haribon/theme/app_colors.dart';
+
 
 class FuelAndEmissionsScreen extends StatelessWidget {
   const FuelAndEmissionsScreen({super.key});
@@ -14,12 +16,12 @@ class FuelAndEmissionsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF8F9FA),
+      backgroundColor: AppColors.greyLightest,
       appBar: CommonAppBar(
         title: 'Fuel & Emissions',
         actions: [
           IconButton(
-            icon: const Icon(Icons.account_circle_outlined, color: Color(0xFF1B2430)),
+            icon: const Icon(Icons.account_circle_outlined, color: AppColors.navyDarker),
             onPressed: () {},
           ),
         ],

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:haribon/theme/app_colors.dart';
+
 
 class SegmentedToggle extends StatefulWidget {
   final List<String> options;
@@ -30,7 +32,7 @@ class _SegmentedToggleState extends State<SegmentedToggle> {
     return Container(
       padding: const EdgeInsets.all(4),
       decoration: BoxDecoration(
-        color: const Color(0xFFF0F2F5),
+        color: AppColors.greySoftBg,
         borderRadius: BorderRadius.circular(8),
       ),
       child: Row(
@@ -64,7 +66,7 @@ class _SegmentedToggleState extends State<SegmentedToggle> {
                 child: Text(
                   widget.options[index],
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: isSelected ? const Color(0xFF2B52C3) : const Color(0xFF6B7B8A), // Use primary blue for selected text
+                        color: isSelected ? AppColors.blueAccent : AppColors.blueGreySecondary, // Use primary blue for selected text
                         fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
                       ),
                 ),

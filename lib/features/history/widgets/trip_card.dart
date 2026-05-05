@@ -58,7 +58,7 @@ class TripCard extends StatelessWidget {
                   style: GoogleFonts.inter(
                     fontSize: 18,
                     fontWeight: FontWeight.w600,
-                    color: const Color(0xFF1E3A8A), // Dark navy
+                    color: AppColors.historyNavy,
                   ),
                 ),
               ),
@@ -109,7 +109,7 @@ class TripCard extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 20),
-          const Divider(height: 1, color: Color(0xFFF0F0F0)),
+          const Divider(height: 1, color: AppColors.historyDivider),
           const SizedBox(height: 16),
           Center(
             child: InkWell(
@@ -125,12 +125,12 @@ class TripCard extends StatelessWidget {
                       style: GoogleFonts.inter(
                         fontSize: 12,
                         fontWeight: FontWeight.w700,
-                        color: const Color(0xFF1E3A8A),
+                        color: AppColors.historyNavy,
                         letterSpacing: 1,
                       ),
                     ),
                     const SizedBox(width: 4),
-                    const Icon(Icons.chevron_right, size: 16, color: Color(0xFF1E3A8A)),
+                    const Icon(Icons.chevron_right, size: 16, color: AppColors.historyNavy),
                   ],
                 ),
               ),

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:haribon/theme/app_colors.dart';
+
 
 class OptimizationTipsCard extends StatelessWidget {
   const OptimizationTipsCard({super.key});
@@ -10,7 +12,7 @@ class OptimizationTipsCard extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: const Color(0xFFEDF7F6), // light teal/blue tint
+        color: AppColors.tealSoftBg, // light teal/blue tint
         borderRadius: BorderRadius.circular(16),
       ),
       child: Column(
@@ -18,13 +20,13 @@ class OptimizationTipsCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              const Icon(Icons.lightbulb_outline, color: Color(0xFF3B5B78), size: 22),
+              const Icon(Icons.lightbulb_outline, color: AppColors.blueGreyDark, size: 22),
               const SizedBox(width: 12),
               Text(
                 'Optimization Tips',
                 style: textTheme.titleMedium?.copyWith(
                   fontWeight: FontWeight.w800,
-                  color: const Color(0xFF3B5B78),
+                  color: AppColors.blueGreyDark,
                 ),
               ),
             ],
@@ -44,14 +46,14 @@ class OptimizationTipsCard extends StatelessWidget {
       children: [
         const Padding(
           padding: EdgeInsets.only(top: 6.0),
-          child: Icon(Icons.circle, size: 6, color: Color(0xFF3B5B78)),
+          child: Icon(Icons.circle, size: 6, color: AppColors.blueGreyDark),
         ),
         const SizedBox(width: 12),
         Expanded(
           child: Text(
             text,
             style: textTheme.bodySmall?.copyWith(
-              color: const Color(0xFF1B2430),
+              color: AppColors.navyDarker,
               height: 1.5,
             ),
           ),

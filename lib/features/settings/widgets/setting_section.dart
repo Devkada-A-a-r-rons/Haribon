@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'segmented_toggle.dart';
+import 'package:haribon/theme/app_colors.dart';
+
 
 class SettingSection extends StatelessWidget {
   final IconData icon;
@@ -28,14 +30,14 @@ class SettingSection extends StatelessWidget {
       children: [
         Row(
           children: [
-            Icon(icon, size: 14, color: const Color(0xFF3B5B78)),
+            Icon(icon, size: 14, color: AppColors.blueGreyDark),
             const SizedBox(width: 8),
             Text(
               sectionTitle.toUpperCase(),
               style: textTheme.labelSmall?.copyWith(
                 fontWeight: FontWeight.w800,
                 letterSpacing: 1.2,
-                color: const Color(0xFF6B7B8A),
+                color: AppColors.blueGreySecondary,
                 fontSize: 10,
               ),
             ),
@@ -45,7 +47,7 @@ class SettingSection extends StatelessWidget {
         Text(
           question,
           style: textTheme.bodyMedium?.copyWith(
-            color: const Color(0xFF1B2430),
+            color: AppColors.navyDarker,
             fontWeight: FontWeight.w500,
           ),
         ),

@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'summary_header.dart';
 import 'summary_shared.dart';
+import 'package:haribon/theme/app_colors.dart';
+
 
 /// MODULE: EFFICIENCY SCORE GAUGE
 /// Animated blue-to-green ring showing the trip efficiency score.
@@ -78,7 +80,7 @@ class _EfficiencyScoreGaugeState extends State<EfficiencyScoreGauge>
                   widget.percentileLabel,
                   style: GoogleFonts.inter(
                     fontSize: 13,
-                    color: const Color(0xFF737687),
+                    color: AppColors.greyAccent,
                   ),
                 ),
               ],
@@ -120,7 +122,7 @@ class _ScoreRing extends StatelessWidget {
                 'out of 100',
                 style: GoogleFonts.inter(
                   fontSize: 11,
-                  color: const Color(0xFF737687),
+                  color: AppColors.greyAccent,
                   fontWeight: FontWeight.w500,
                 ),
               ),
@@ -149,7 +151,7 @@ class _RingPainter extends CustomPainter {
       center,
       radius,
       Paint()
-        ..color = const Color(0xFFE5EEFF)
+        ..color = AppColors.blueSoftBg
         ..style = PaintingStyle.stroke
         ..strokeWidth = strokeWidth
         ..strokeCap = StrokeCap.round,
@@ -161,7 +163,7 @@ class _RingPainter extends CustomPainter {
       ..shader = const SweepGradient(
         startAngle: -math.pi / 2,
         endAngle: 3 * math.pi / 2,
-        colors: [Color(0xFF004CCA), Color(0xFF00A651), Color(0xFF006E2F)],
+        colors: [AppColors.bluePrimary, AppColors.greenPrimary, AppColors.greenDark],
         stops: [0.0, 0.65, 1.0],
       ).createShader(rect)
       ..style = PaintingStyle.stroke
