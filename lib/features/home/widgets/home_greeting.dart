@@ -18,7 +18,7 @@ class HomeGreeting extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Good morning, $userName!',
+          'Good Morning, $userName!',
           style: GoogleFonts.inter(
             fontSize: 28,
             fontWeight: FontWeight.w800,

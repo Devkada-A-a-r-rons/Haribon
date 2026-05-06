@@ -10,15 +10,16 @@ class HomeStatGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      physics: const BouncingScrollPhysics(),
-      child: Row(
-        children: stats.map((stat) => Padding(
-          padding: const EdgeInsets.only(right: 12),
-          child: _StatCard(stat: stat),
-        )).toList(),
-      ),
+    return Row(
+      children: stats.map((stat) {
+        final isLast = stat == stats.last;
+        return Expanded(
+          child: Padding(
+            padding: EdgeInsets.only(right: isLast ? 0 : 12),
+            child: _StatCard(stat: stat),
+          ),
+        );
+      }).toList(),
     );
   }
 }
@@ -31,11 +32,10 @@ class _StatCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 140,
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
       decoration: BoxDecoration(
         color: AppColors.containerLowest,
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(16),
         border: Border.all(color: AppColors.surfaceDim.withValues(alpha: 0.3)),
       ),
       child: Column(
@@ -50,21 +50,29 @@ class _StatCard extends StatelessWidget {
             child: Icon(stat.icon, color: stat.iconColor, size: 20),
           ),
           const SizedBox(height: 12),
-          Text(
-            stat.label,
-            style: GoogleFonts.inter(
-              fontSize: 12,
-              fontWeight: FontWeight.w600,
-              color: AppColors.textTertiary,
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            alignment: Alignment.centerLeft,
+            child: Text(
+              stat.label,
+              style: GoogleFonts.inter(
+                fontSize: 11,
+                fontWeight: FontWeight.w600,
+                color: AppColors.textTertiary,
+              ),
             ),
           ),
           const SizedBox(height: 4),
-          Text(
-            stat.value,
-            style: GoogleFonts.inter(
-              fontSize: 18,
-              fontWeight: FontWeight.w800,
-              color: AppColors.textPrimary,
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            alignment: Alignment.centerLeft,
+            child: Text(
+              stat.value,
+              style: GoogleFonts.inter(
+                fontSize: 16,
+                fontWeight: FontWeight.w800,
+                color: AppColors.textPrimary,
+              ),
             ),
           ),
         ],

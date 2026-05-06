@@ -248,12 +248,106 @@ class _HomeScreenState extends State<HomeScreen> {
                 },
               ),
               const SizedBox(height: 24),
+              Text(
+                'SHORTCUTS',
+                style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                  fontWeight: FontWeight.w800,
+                  letterSpacing: 1.2,
+                  color: AppColors.navyDarker,
+                  fontSize: 10,
+                ),
+              ),
+              const SizedBox(height: 16),
+              Row(
+                children: [
+                  Expanded(
+                    child: _buildShortcutButton(
+                      context,
+                      icon: Icons.map_outlined,
+                      label: 'Plan Trip',
+                      color: AppColors.primaryMain,
+                      onTap: () {},
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: _buildShortcutButton(
+                      context,
+                      icon: Icons.insert_chart_outlined,
+                      label: 'Monthly',
+                      color: AppColors.tealDark,
+                      onTap: () {},
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: _buildShortcutButton(
+                      context,
+                      icon: Icons.timeline_rounded,
+                      label: 'Timeline',
+                      color: AppColors.orangeDark,
+                      onTap: () {},
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 24),
+              Text(
+                'OVERALL STATS',
+                style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                  fontWeight: FontWeight.w800,
+                  letterSpacing: 1.2,
+                  color: AppColors.navyDarker,
+                  fontSize: 10,
+                ),
+              ),
+              const SizedBox(height: 16),
               HomeStatGrid(stats: _dashboardData.stats),
               const SizedBox(height: 24),
               EfficiencyTrendChart(data: _dashboardData.efficiencyTrend),
               const SizedBox(height: 10),
             ],
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildShortcutButton(BuildContext context, {required IconData icon, required String label, required Color color, required VoidCallback onTap}) {
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(16),
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
+        decoration: BoxDecoration(
+          color: AppColors.containerLowest,
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: AppColors.surfaceDim.withValues(alpha: 0.3)),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: color.withValues(alpha: 0.1),
+                shape: BoxShape.circle,
+              ),
+              child: Icon(icon, color: color, size: 24),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              label,
+              textAlign: TextAlign.center,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: GoogleFonts.inter(
+                fontSize: 12,
+                fontWeight: FontWeight.w700,
+                color: AppColors.textPrimary,
+              ),
+            ),
+          ],
         ),
       ),
     );
