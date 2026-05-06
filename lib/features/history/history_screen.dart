@@ -1,13 +1,15 @@
-﻿import 'dart:convert';
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:intl/intl.dart';
+import 'package:latlong2/latlong.dart';
 import '../../theme/app_colors.dart';
 import '../common/widgets/app_bar.dart';
 import 'widgets/trip_card.dart';
 import 'widgets/history_images.dart';
 import 'trip-details/trip_details_screen.dart';
+import '../summary/full_route_map_screen.dart';
 
 class HistoryScreen extends StatefulWidget {
   const HistoryScreen({super.key});
@@ -140,30 +142,49 @@ class _HistoryScreenState extends State<HistoryScreen> {
                   ),
                 )
               else
-                ..._trips.map((trip) {
+                  ..._trips.map((trip) {
                   final fuelCost = (trip['est_fuel_cost'] ?? trip['budget'] ?? 0.0).toDouble();
                   final budget = (trip['total_budget'] ?? trip['budget'] ?? 1.0).toDouble();
                   final toll = (trip['toll_fee'] ?? 0.0).toDouble();
                   final isActive = trip['is_active_plan'] == true;
                   final score = ((1.0 - ((fuelCost + toll) / budget).clamp(0, 1)) * 100).toInt().clamp(60, 98);
-                  
+                  // Use actual fuel liters if available, fallback compute from cost
+                  final fuelLiters = (trip['est_fuel_liters'] as num?)?.toDouble() ?? (fuelCost / 65.0);
+                  final originName = trip['origin_name'] ?? 'Origin';
+                  final destName = trip['destination_name'] ?? 'Destination';
+
                   return Padding(
                     padding: const EdgeInsets.only(bottom: 24.0),
                     child: TripCard(
-                      route: '${trip['origin_name'] ?? 'Pampanga'} â†’ ${trip['destination_name'] ?? 'Baguio'}',
+                      route: '$originName → $destName',
                       badgeText: isActive ? 'ACTIVE PLAN' : '$score ${score > 85 ? 'EXCELLENT' : 'GOOD'}',
                       badgeColor: isActive ? AppColors.primaryMain.withValues(alpha: 0.1) : (score > 85 ? AppColors.badgeExcellentBg : AppColors.badgeGoodBg),
                       badgeTextColor: isActive ? AppColors.primaryMain : (score > 85 ? AppColors.badgeExcellentText : AppColors.textTertiary),
                       badgeIcon: isActive ? Icons.rocket_launch_outlined : (score > 85 ? Icons.auto_awesome : Icons.eco_outlined),
-                      date: DateFormat('MMM d, yyyy â€¢ hh:mm a').format(DateTime.parse(trip['created_at'])),
+                      date: DateFormat("MMM d, yyyy \u2022 hh:mm a").format(DateTime.parse(trip['created_at'])),
                       distance: '${(trip['distance_km'] ?? trip['route_distance_km'] ?? 0).toStringAsFixed(0)} km',
-                      fuelUsed: '${((fuelCost / 68.0)).toStringAsFixed(1)} L',
-                      cost: 'â‚±${fuelCost.toStringAsFixed(0)}',
+                      fuelUsed: '${fuelLiters.toStringAsFixed(1)} L',
+                      cost: '\u20b1${fuelCost.toStringAsFixed(0)}',
                       imageWidget: _getRandomImage(trip['id']?.hashCode ?? trip['created_at'].hashCode),
                       onTap: () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(builder: (context) => TripDetailsScreen(tripData: trip)),
+                        );
+                      },
+                      onViewMap: () {
+                        final origin = _getCoords(originName);
+                        final dest = _getCoords(destName);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => FullRouteMapScreen(
+                              origin: origin,
+                              destination: dest,
+                              originName: originName,
+                              destinationName: destName,
+                            ),
+                          ),
                         );
                       },
                     ),
@@ -184,6 +205,27 @@ class _HistoryScreenState extends State<HistoryScreen> {
       const AerovistaImageWidget(),
     ];
     return images[seed % images.length];
+  }
+
+  LatLng _getCoords(String location) {
+    final lower = location.toLowerCase();
+    if (lower.contains('mall of asia') || lower.contains('moa')) return const LatLng(14.5352, 120.9822);
+    if (lower.contains('makati')) return const LatLng(14.5547, 121.0244);
+    if (lower.contains('bgc') || lower.contains('bonifacio')) return const LatLng(14.5500, 121.0494);
+    if (lower.contains('quezon') || lower.contains('qc')) return const LatLng(14.6760, 121.0437);
+    if (lower.contains('manila')) return const LatLng(14.5995, 120.9842);
+    if (lower.contains('clark') || lower.contains('angeles')) return const LatLng(15.1789, 120.5323);
+    if (lower.contains('pampanga')) return const LatLng(15.1450, 120.5887);
+    if (lower.contains('baguio')) return const LatLng(16.4124, 120.5999);
+    if (lower.contains('tarlac')) return const LatLng(15.4755, 120.5960);
+    if (lower.contains('bulacan') || lower.contains('malolos')) return const LatLng(14.8527, 120.8144);
+    if (lower.contains('cavite') || lower.contains('bacoor')) return const LatLng(14.4625, 120.9642);
+    if (lower.contains('tagaytay')) return const LatLng(14.1153, 120.9621);
+    if (lower.contains('batangas')) return const LatLng(13.7565, 121.0583);
+    if (lower.contains('laguna') || lower.contains('santa rosa')) return const LatLng(14.3122, 121.1114);
+    if (lower.contains('cebu')) return const LatLng(10.3157, 123.8854);
+    if (lower.contains('davao')) return const LatLng(7.1907, 125.4553);
+    return const LatLng(14.5995, 120.9842);
   }
 }
 

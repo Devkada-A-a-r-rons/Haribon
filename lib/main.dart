@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import './theme/app_theme.dart';
-import './features/summary/main_summary_screen.dart';
-import './features/summary/trip_summary_screen.dart';
 import './features/common/widgets/nav_bar.dart';
 import './features/vehicle-intelligence/vehicle_intelligence_screen.dart';
 import './features/smart-trip-planner/smart-trip-planner.dart';
@@ -9,15 +7,12 @@ import './features/fuel-and-emissions/fuel-and-emissions.dart';
 import './features/home/home_screen.dart';
 import './features/chatbot/chatbot_screen.dart';
 import './features/settings/settings_screen.dart';
-import './features/onboarding/onboarding_screen.dart';
 import './features/onboarding/welcome_screen.dart';
 import './features/history/history_screen.dart';
 import './features/chatbot/widgets/draggable_fab.dart';
 import 'package:haribon/theme/app_colors.dart';
 import 'package:flutter/foundation.dart';
 import 'package:device_preview/device_preview.dart';
-
-
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
@@ -42,11 +37,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Haribon',
       debugShowCheckedModeBanner: false,
-      useInheritedMediaQuery: true,
       locale: DevicePreview.locale(context),
       builder: DevicePreview.appBuilder,
       theme: AppTheme.lightTheme,
-      // home: const MainScreen(), // Uncomment this to bypass onboarding
       home: const WelcomeScreen(), 
       routes: {
         '/home': (context) => const MainScreen(),

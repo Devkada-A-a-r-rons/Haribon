@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../../theme/app_colors.dart';
 
@@ -14,6 +14,7 @@ class TripCard extends StatelessWidget {
   final String cost;
   final Widget imageWidget;
   final VoidCallback onTap;
+  final VoidCallback? onViewMap; // optional map button
 
   const TripCard({
     super.key,
@@ -28,6 +29,7 @@ class TripCard extends StatelessWidget {
     required this.cost,
     required this.imageWidget,
     required this.onTap,
+    this.onViewMap,
   });
 
   @override
@@ -104,30 +106,64 @@ class TripCard extends StatelessWidget {
           const SizedBox(height: 20),
           const Divider(height: 1, color: AppColors.historyDivider),
           const SizedBox(height: 16),
-          Center(
-            child: InkWell(
-              onTap: onTap,
-              borderRadius: BorderRadius.circular(8),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      'VIEW DETAILS',
-                      style: GoogleFonts.poppins(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w700,
-                        color: AppColors.textPrimary,
-                        letterSpacing: 1,
-                      ),
+          Row(
+            children: [
+              // View Details button
+              Expanded(
+                child: InkWell(
+                  onTap: onTap,
+                  borderRadius: BorderRadius.circular(8),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'VIEW DETAILS',
+                          style: GoogleFonts.poppins(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w700,
+                            color: AppColors.textPrimary,
+                            letterSpacing: 1,
+                          ),
+                        ),
+                        const SizedBox(width: 4),
+                        const Icon(Icons.chevron_right, size: 16, color: AppColors.textPrimary),
+                      ],
                     ),
-                    const SizedBox(width: 4),
-                    const Icon(Icons.chevron_right, size: 16, color: AppColors.textPrimary),
-                  ],
+                  ),
                 ),
               ),
-            ),
+              // View Map button (optional)
+              if (onViewMap != null) ...[
+                Container(width: 1, height: 20, color: AppColors.historyDivider),
+                Expanded(
+                  child: InkWell(
+                    onTap: onViewMap,
+                    borderRadius: BorderRadius.circular(8),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Icon(Icons.map_outlined, size: 14, color: AppColors.primaryMain),
+                          const SizedBox(width: 4),
+                          Text(
+                            'VIEW MAP',
+                            style: GoogleFonts.poppins(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w700,
+                              color: AppColors.primaryMain,
+                              letterSpacing: 1,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ],
           ),
         ],
       ),
@@ -159,4 +195,3 @@ class TripCard extends StatelessWidget {
     );
   }
 }
-
