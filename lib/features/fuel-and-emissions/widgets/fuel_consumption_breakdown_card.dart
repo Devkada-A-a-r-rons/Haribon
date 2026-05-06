@@ -51,11 +51,13 @@ class FuelConsumptionBreakdownCard extends StatelessWidget {
             child: SizedBox(
               height: 16,
               child: Row(
-                children: [
+                children: totalLiters > 0 ? [
                   Expanded(flex: (base * 100 / totalLiters).toInt().clamp(1, 100), child: Container(color: AppColors.blueGreyDark)),
                   Expanded(flex: (traffic * 100 / totalLiters).toInt().clamp(1, 100), child: Container(color: AppColors.orangePrimary)),
                   Expanded(flex: (terrain * 100 / totalLiters).toInt().clamp(1, 100), child: Container(color: AppColors.redDark)),
                   Expanded(flex: (idle * 100 / totalLiters).toInt().clamp(1, 100), child: Container(color: AppColors.blueGreyLight)),
+                ] : [
+                  Expanded(child: Container(color: AppColors.blueGreyLight)),
                 ],
               ),
             ),
