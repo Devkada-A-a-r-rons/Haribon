@@ -19,18 +19,6 @@ class InfoCard extends StatelessWidget {
 
     return Container(
       padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: theme.cardColor,
-        borderRadius: BorderRadius.circular(12),
-        // Add subtle shadow to distinguish the card if cardColor blends in
-        boxShadow: [
-          BoxShadow(
-            color: colorScheme.shadow.withOpacity(0.05),
-            blurRadius: 10,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -41,7 +29,6 @@ class InfoCard extends StatelessWidget {
               Text(
                 title,
                 style: theme.textTheme.labelSmall?.copyWith(
-                  color: colorScheme.onSurface.withOpacity(0.6),
                   fontWeight: FontWeight.w600,
                   fontSize: 10,
                 ),
