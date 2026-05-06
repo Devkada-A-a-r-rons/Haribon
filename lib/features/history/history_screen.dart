@@ -179,7 +179,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
 
   Widget _getRandomImage(int seed) {
     final images = [
-      const AgilaImageWidget(),
+      const HaribonImageWidget(),
       const BirdGradientImageWidget(),
       const AerovistaImageWidget(),
     ];

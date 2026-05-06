@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:haribon/theme/app_colors.dart';
 
-class AgilaImageWidget extends StatelessWidget {
-  const AgilaImageWidget({super.key});
+class HaribonImageWidget extends StatelessWidget {
+  const HaribonImageWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,13 +19,13 @@ class AgilaImageWidget extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(Icons.directions_car, size: 64, color: AppColors.brandAgila),
+            const Icon(Icons.directions_car, size: 64, color: AppColors.brandHaribon),
             Text(
-              'AGILA',
+              'HARIBON',
               style: GoogleFonts.inter(
                 fontSize: 24,
                 fontWeight: FontWeight.w900,
-                color: AppColors.brandAgila,
+                color: AppColors.brandHaribon,
                 letterSpacing: 2,
               ),
             ),

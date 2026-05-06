@@ -32,7 +32,7 @@ class _Step3RefuelingState extends State<Step3Refueling> {
           ),
           const SizedBox(height: 12),
           Text(
-            'Select your primary concern to help Agila optimize your journey stops.',
+            'Select your primary concern to help Haribon optimize your journey stops.',
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                   color: AppColors.textSecondary,
                 ),

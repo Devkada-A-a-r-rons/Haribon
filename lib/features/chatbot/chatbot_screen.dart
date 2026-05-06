@@ -44,7 +44,7 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
   Future<void> _initializeChat() async {
     // 1. Initialize RAG Pipeline
     _ragPipeline = RAGPipeline(llm: LLMServiceFactory.getService());
-    _conversationId = await _ragPipeline.createNewConversation('Chat with Agila');
+    _conversationId = await _ragPipeline.createNewConversation('Chat with Haribon');
 
     // 2. Fetch User Profile for personalized greeting
     final onboardingData = await DatabaseService().getOnboardingData();
@@ -57,7 +57,7 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
     // 3. Start with a greeting from AI
     setState(() {
       _messages.add(ChatMessage(
-        text: "Hello $_userName! I'm Agila, your travel assistant. I'm already familiar with your ${_userName == 'Alex' ? 'vehicle' : onboardingData?['vehicle_type'] ?? 'vehicle'}. How can I help you today?",
+        text: "Hello $_userName! I'm Haribon, your travel assistant. I'm already familiar with your ${_userName == 'Alex' ? 'vehicle' : onboardingData?['vehicle_type'] ?? 'vehicle'}. How can I help you today?",
         sender: MessageSender.ai,
         timestamp: DateTime.now(),
       ));
@@ -127,7 +127,7 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
     return Scaffold(
       backgroundColor: AppColors.surfaceMain,
       appBar: const CommonAppBar(
-        title: 'Agila AI',
+        title: 'Haribon AI',
         centerTitle: true,
       ),
       body: Column(

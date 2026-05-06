@@ -19,7 +19,7 @@ TripSummary _buildMockSummary() => TripSummary(
   distanceKm: 248,
   efficiencyScore: 87,
   efficiencyRating: 'Excellent',
-  efficiencyPercentile: 'Top 12% of Agila users this week',
+  efficiencyPercentile: 'Top 12% of Haribon users this week',
   stats: const TripStats(
     fuelLiters: 18.4,
     fuelCostPhp: 1380,

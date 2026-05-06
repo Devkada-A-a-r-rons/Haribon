@@ -79,7 +79,7 @@ class _Step1WelcomeState extends State<Step1Welcome> {
                 children: [
                   const TextSpan(text: 'Welcome to '),
                   TextSpan(
-                    text: 'Agila',
+                    text: 'Haribon',
                     style: TextStyle(color: AppColors.primaryMain),
                   ),
                 ],

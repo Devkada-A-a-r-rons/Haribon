@@ -63,7 +63,7 @@ class _Step4InsightState extends State<Step4Insight> {
                         children: [
                           Icon(Icons.check, size: 10, color: AppColors.primaryMain),
                           const SizedBox(width: 4),
-                          Text('Top 12% of Agila users', style: TextStyle(fontSize: 8, color: AppColors.primaryMain)),
+                          Text('Top 12% of Haribon users', style: TextStyle(fontSize: 8, color: AppColors.primaryMain)),
                         ],
                       ),
                     ),
