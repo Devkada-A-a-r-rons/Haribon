@@ -347,6 +347,7 @@ class _CompactTextFieldState extends State<CompactTextField> {
                         color: colorScheme.onSecondaryContainer.withOpacity(0.4),
                         fontWeight: FontWeight.w400,
                         fontSize: 12,
+                        fontFeatures: [],
                       ),
                       isDense: true,
                       contentPadding: const EdgeInsets.symmetric(vertical: 10),
@@ -374,6 +375,7 @@ class _CompactTextFieldState extends State<CompactTextField> {
                       color: colorScheme.onSecondaryContainer,
                       fontWeight: FontWeight.w500,
                       fontSize: 12,
+                      fontFeatures: [],
                     ),
                     onChanged:
                         widget.onLocationSelected != null ? _onTextChanged : null,

@@ -39,7 +39,6 @@ class _Step4InsightState extends State<Step4Insight> {
                 ),
           ),
           const SizedBox(height: 24),
-          // Top illustration mock
           Container(
             height: 140,
             padding: const EdgeInsets.all(12),
@@ -113,7 +112,7 @@ class _Step4InsightState extends State<Step4Insight> {
           FilledButton(
             onPressed: widget.onFinish,
             style: FilledButton.styleFrom(
-              backgroundColor: const Color(0xFF2E59D1), // Darker blue like in screenshot
+              backgroundColor: const Color(0xFF2E59D1),
             ),
             child: const Padding(
               padding: EdgeInsets.symmetric(vertical: 16),
@@ -122,7 +121,7 @@ class _Step4InsightState extends State<Step4Insight> {
           ),
           const SizedBox(height: 16),
           Text(
-            'SETUP AGILA ECOSYSTEM',
+            'SETUP HARIBON ECOSYSTEM',
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.labelSmall?.copyWith(
                   letterSpacing: 2,
@@ -130,7 +129,6 @@ class _Step4InsightState extends State<Step4Insight> {
                 ),
           ),
           const SizedBox(height: 16),
-          // Community card
           Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
@@ -158,7 +156,7 @@ class _Step4InsightState extends State<Step4Insight> {
           ),
         ],
       ),
-            ),
+      ),
     );
   }
 

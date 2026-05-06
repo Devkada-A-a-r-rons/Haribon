@@ -24,6 +24,7 @@ class ProfileHeader extends StatelessWidget {
                   fontWeight: FontWeight.w800,
                   color: AppColors.navyDarker,
                   fontSize: 24,
+                  fontFeatures: [],
                 ),
                 decoration: const InputDecoration(
                   border: InputBorder.none,
