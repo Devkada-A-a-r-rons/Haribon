@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import '../models/monthly_report_model.dart';
-import '../widgets/monthly_report_header.dart';
-import '../widgets/monthly_stats_card.dart';
-import '../widgets/efficiency_trend_chart.dart';
-import '../widgets/vehicle_usage_calendar.dart';
-import '../widgets/top_insight_card.dart';
-import '../widgets/daily_trips_list.dart';
-import '../../common/widgets/app_bar.dart';
-import '../../common/widgets/nav_bar.dart';
-import '../../../theme/app_colors.dart';
+import 'models/monthly_report_model.dart';
+import 'widgets/monthly_report_header.dart';
+import 'widgets/monthly_stats_card.dart';
+import 'widgets/efficiency_trend_chart.dart';
+import 'widgets/vehicle_usage_calendar.dart';
+import 'widgets/top_insight_card.dart';
+import 'widgets/daily_trips_list.dart';
+import '../common/widgets/app_bar.dart';
+import '../common/widgets/nav_bar.dart';
+import '../../theme/app_colors.dart';
 
 /// MAIN MONTHLY REPORT SCREEN
 /// Displays comprehensive monthly statistics and trip analytics.

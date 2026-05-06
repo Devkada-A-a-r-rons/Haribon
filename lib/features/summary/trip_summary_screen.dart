@@ -10,7 +10,7 @@ import 'widgets/fuel_stop_log.dart';
 import 'widgets/ai_insight_card.dart';
 import 'widgets/route_breakdown_chart.dart';
 import 'widgets/route_map_card.dart';
-import '../monthly-report/screens/monthly_report_screen.dart';
+import '../monthly-report/monthly_report_screen.dart';
 
 TripSummary _buildMockSummary() => TripSummary(
   origin: 'Manila',
