@@ -55,7 +55,7 @@ class _Step2PlanningState extends State<Step2Planning> {
           SelectionCard(
             icon: Icons.explore_outlined,
             title: 'I decide along the way',
-            subtitle: 'Pure discovery. Let the Agila AI find hidden gems live.',
+            subtitle: 'Pure discovery. Let the Haribon AI find hidden gems live.',
             isSelected: _selectedOption == 'I decide along the way',
             onTap: () => setState(() => _selectedOption = 'I decide along the way'),
           ),
@@ -84,7 +84,7 @@ class _Step2PlanningState extends State<Step2Planning> {
                         children: [
                           Icon(Icons.stars, color: AppColors.primaryMain, size: 14),
                           const SizedBox(width: 4),
-                          Text('Top 12% of Agila users', style: TextStyle(fontSize: 10)),
+                          Text('Top 12% of Haribon users', style: TextStyle(fontSize: 10)),
                         ],
                       ),
                     ],

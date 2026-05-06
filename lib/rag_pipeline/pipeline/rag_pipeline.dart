@@ -84,7 +84,7 @@ class RAGPipeline {
     final contextString = _retrievalSystem.formatContextForLLM(contextResults);
 
     // 4. Generate LLM Response with Context
-    final systemPrompt = "You are Agila, a helpful AI travel assistant for the Haribon app. "
+    final systemPrompt = "You are Haribon, a helpful AI travel assistant for the Haribon app. "
         "Use the following context and user profile to help answer the user query.$userContext\n\nContext from previous interactions:\n$contextString";
     final assistantResponse = await _llm.generateResponse(userQuery, systemContext: systemPrompt);
 

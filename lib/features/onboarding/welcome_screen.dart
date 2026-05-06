@@ -1,3 +1,4 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import '../../theme/app_colors.dart';
 import './onboarding_screen.dart';
@@ -47,35 +48,16 @@ class _WelcomeScreenState extends State<WelcomeScreen> with SingleTickerProvider
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.surfaceMain,
       body: Stack(
         children: [
-          // Background decorative elements
-          Positioned(
-            top: -100,
-            right: -100,
-            child: Container(
-              width: 300,
-              height: 300,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: AppColors.primaryMain.withOpacity(0.05),
-              ),
+          // Background image
+          Positioned.fill(
+            child: Image.asset(
+              'assets/images/landing_page.png',
+              fit: BoxFit.cover,
             ),
           ),
-          Positioned(
-            bottom: -50,
-            left: -50,
-            child: Container(
-              width: 200,
-              height: 200,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: AppColors.secondaryMain.withOpacity(0.05),
-              ),
-            ),
-          ),
-          
+
           SafeArea(
             child: Center(
               child: Padding(
@@ -83,8 +65,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> with SingleTickerProvider
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Spacer(),
-                    
+                    const SizedBox(height: 30),
+
                     // Logo Animation
                     FadeTransition(
                       opacity: _fadeAnimation,
@@ -92,17 +74,36 @@ class _WelcomeScreenState extends State<WelcomeScreen> with SingleTickerProvider
                         scale: _scaleAnimation,
                         child: Hero(
                           tag: 'app_logo',
-                          child: Image.asset(
-                            'assets/images/haribon_logo.png',
-                            height: 180,
-                            fit: BoxFit.contain,
+                          child: Stack(
+                            alignment: Alignment.center,
+                            children: [
+                              Transform.translate(
+                                offset: const Offset(4, 4),
+                                child: ImageFiltered(
+                                  imageFilter: ImageFilter.blur(sigmaX: 6, sigmaY: 6),
+                                  child: ColorFiltered(
+                                    colorFilter: const ColorFilter.mode(Color(0x55FFFFFF), BlendMode.srcIn),
+                                    child: Image.asset(
+                                      'assets/images/haribon_logo.png',
+                                      height: 220,
+                                      fit: BoxFit.contain,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Image.asset(
+                                'assets/images/haribon_logo.png',
+                                height: 220,
+                                fit: BoxFit.contain,
+                              ),
+                            ],
                           ),
                         ),
                       ),
                     ),
                     
-                    const SizedBox(height: 40),
-                    
+                    const SizedBox(height: 10),
+
                     // Text Animations
                     SlideTransition(
                       position: _slideAnimation,
@@ -111,21 +112,35 @@ class _WelcomeScreenState extends State<WelcomeScreen> with SingleTickerProvider
                         child: Column(
                           children: [
                             Text(
-                              'HARIBON',
+                              'haribon',
                               style: Theme.of(context).textTheme.displaySmall?.copyWith(
-                                fontWeight: FontWeight.w900,
-                                letterSpacing: 4,
-                                color: AppColors.textPrimary,
+                                fontWeight: FontWeight.bold,
+                                letterSpacing: 8,
+                                color: Colors.white,
+                                shadows: const [
+                                  Shadow(
+                                    color: Color(0x4D000000),
+                                    blurRadius: 10,
+                                    offset: Offset(2, -2),
+                                  ),
+                                ],
                               ),
                             ),
-                            const SizedBox(height: 12),
                             Text(
-                              'Fly through traffic, soar in efficiency.',
+                              'Sulit bawat litro.',
                               textAlign: TextAlign.center,
                               style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                                color: AppColors.textSecondary,
+                                color: Colors.white,
                                 fontStyle: FontStyle.italic,
-                                letterSpacing: 0.5,
+                                fontWeight: FontWeight.bold,
+                                letterSpacing: 2,
+                                shadows: const [
+                                  Shadow(
+                                    color: Color(0x4D000000),
+                                    blurRadius: 10,
+                                    offset: Offset(2, -2),
+                                  ),
+                                ],
                               ),
                             ),
                           ],
@@ -142,14 +157,25 @@ class _WelcomeScreenState extends State<WelcomeScreen> with SingleTickerProvider
                         opacity: _fadeAnimation,
                         child: Column(
                           children: [
-                            SizedBox(
-                              width: double.infinity,
-                              height: 60,
-                              child: FilledButton(
+                            Container(
+                              width: 220,
+                              height: 56,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(100),
+                                boxShadow: const [
+                                  BoxShadow(
+                                    color: Color(0x40000000),
+                                    blurRadius: 12,
+                                    offset: Offset(0, 4),
+                                  ),
+                                ],
+                              ),
+                              child: TextButton(
                                 onPressed: () {
                                   Navigator.of(context).pushReplacement(
                                     PageRouteBuilder(
-                                      pageBuilder: (context, animation, secondaryAnimation) => 
+                                      pageBuilder: (context, animation, secondaryAnimation) =>
                                           const OnboardingScreen(),
                                       transitionsBuilder: (context, animation, secondaryAnimation, child) {
                                         return FadeTransition(opacity: animation, child: child);
@@ -158,29 +184,28 @@ class _WelcomeScreenState extends State<WelcomeScreen> with SingleTickerProvider
                                     ),
                                   );
                                 },
-                                style: FilledButton.styleFrom(
-                                  backgroundColor: AppColors.primaryMain,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(16),
-                                  ),
-                                  elevation: 4,
-                                  shadowColor: AppColors.primaryMain.withOpacity(0.4),
+                                style: TextButton.styleFrom(
+                                  shape: const StadiumBorder(),
                                 ),
                                 child: const Text(
-                                  'Get Started',
+                                  'G E T   S T A R T E D',
                                   style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                    letterSpacing: 1,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w600,
+                                    letterSpacing: 2,
+                                    color: Color(0xFF3787BE),
                                   ),
                                 ),
                               ),
                             ),
-                            const SizedBox(height: 20),
+                            const SizedBox(height: 16),
                             Text(
-                              'Your Intelligent Roadtrip Assistant',
+                              'your intelligent\nroadtrip assistant.',
+                              textAlign: TextAlign.center,
                               style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                color: AppColors.textTertiary,
+                                color: Colors.white,
+                                fontStyle: FontStyle.italic,
+                                letterSpacing: 1,
                               ),
                             ),
                             const SizedBox(height: 20),

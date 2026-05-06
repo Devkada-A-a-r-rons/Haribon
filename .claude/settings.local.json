@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(Get-Item \"D:\\\\franc\\\\ruka_learns\\\\HACKATHON\\\\haribon\\\\assets\\\\images\\\\landing_page.png\")",
+      "Bash(Select-Object Name, Length)",
+      "PowerShell(Get-Item *)"
+    ]
+  }
+}

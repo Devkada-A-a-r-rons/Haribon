@@ -33,7 +33,7 @@ class ChatInput extends StatelessWidget {
               child: TextField(
                 controller: controller,
                 decoration: InputDecoration(
-                  hintText: 'Ask Agila AI anything...',
+                  hintText: 'Ask Haribon AI anything...',
                   hintStyle: GoogleFonts.inter(
                     color: AppColors.textTertiary.withValues(alpha: 0.6),
                     fontSize: 14,
