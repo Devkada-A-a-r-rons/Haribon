@@ -73,26 +73,31 @@ class EfficiencyTrendChart extends StatelessWidget {
                 final index = entry.key;
                 final value = entry.value;
                 final isLast = index == data.length - 1;
-                final days = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
+                final now = DateTime.now();
+                final dayDate = now.subtract(Duration(days: data.length - 1 - index));
+                final dayLabels = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
+                final label = dayLabels[dayDate.weekday % 7];
 
                 final maxVal = data.isEmpty
                     ? 15.0
                     : data.reduce((a, b) => a > b ? a : b).clamp(15.0, double.infinity);
+                
                 final normalizedHeight = (value / maxVal) * 100;
                 final isZero = value <= 0;
                 final displayHeight = isZero ? 6.0 : normalizedHeight.clamp(6.0, 100.0);
                 final ratio = maxVal > 0 ? value / maxVal : 0.0;
+                
                 final barColor = isZero
-                    ? AppColors.surfaceDim.withValues(alpha: 0.3)
+                    ? AppColors.surfaceDim.withOpacity(0.3)
                     : ratio >= 0.66
-                        ? const Color(0xFF4CAF50)  // green
+                        ? const Color(0xFF4CAF50)
                         : ratio >= 0.33
-                            ? const Color(0xFFFFC107)  // yellow
-                            : const Color(0xFFF44336); // red
+                            ? const Color(0xFFFFC107)
+                            : const Color(0xFFF44336);
 
                 return _ChartBar(
                   height: displayHeight,
-                  label: days[index],
+                  label: label,
                   isActive: isLast,
                   isZero: isZero,
                   value: value,
@@ -158,7 +163,7 @@ class EfficiencyTrendChart extends StatelessWidget {
               ),
               const SizedBox(height: 4),
               Text(
-                '12.4 km/L',
+                data.isEmpty ? '0.0 km/L' : '${data.reduce((a, b) => a > b ? a : b).toStringAsFixed(1)} km/L',
                 style: GoogleFonts.poppins(
                   fontSize: 20,
                   fontWeight: FontWeight.w800,
@@ -168,7 +173,7 @@ class EfficiencyTrendChart extends StatelessWidget {
               ),
               const SizedBox(height: 6),
               Text(
-                'Avoiding heavy traffic in Manila helped save approximately 2L of fuel.',
+                'Calculated from your actual driving history in the last 7 days.',
                 style: GoogleFonts.poppins(
                   fontSize: 11,
                   fontWeight: FontWeight.w500,

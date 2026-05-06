@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:haribon/theme/app_colors.dart';
+import '../../common/widgets/typing_text.dart';
 
 
 class InsightCard extends StatelessWidget {
@@ -35,18 +36,24 @@ class InsightCard extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 16),
-          ...insights.asMap().entries.map((entry) {
-            final index = entry.key;
-            final text = entry.value;
-            Color dotColor = AppColors.primaryMain;
-            if (index == 0) dotColor = AppColors.primaryMain;
-            if (text.toLowerCase().contains('budget') && text.toLowerCase().contains('over')) dotColor = AppColors.redDark;
-            
-            return Padding(
-              padding: EdgeInsets.only(bottom: index == insights.length - 1 ? 0 : 12.0),
-              child: _buildInsightRow(theme, dotColor, text),
-            );
-          }).toList(),
+          if (insights.isEmpty)
+            const Padding(
+              padding: EdgeInsets.symmetric(vertical: 20),
+              child: Center(child: ThinkingIndicator()),
+            )
+          else
+            ...insights.asMap().entries.map((entry) {
+              final index = entry.key;
+              final text = entry.value;
+              Color dotColor = AppColors.primaryMain;
+              if (index == 0) dotColor = AppColors.primaryMain;
+              if (text.toLowerCase().contains('budget') && text.toLowerCase().contains('over')) dotColor = AppColors.redDark;
+              
+              return Padding(
+                padding: EdgeInsets.only(bottom: index == insights.length - 1 ? 0 : 12.0),
+                child: _buildInsightRow(theme, dotColor, text),
+              );
+            }).toList(),
         ],
       ),
     );
@@ -66,8 +73,8 @@ class InsightCard extends StatelessWidget {
         ),
         const SizedBox(width: 12),
         Expanded(
-          child: Text(
-            text,
+          child: TypingText(
+            text: text,
             style: theme.textTheme.bodySmall?.copyWith(
               color: AppColors.textPrimary,
               height: 1.4,

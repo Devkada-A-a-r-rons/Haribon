@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../theme/app_colors.dart';
+import '../../common/widgets/typing_text.dart';
 
 /// MODULE: AI PRO INSIGHT CARD
 class AiInsightCard extends StatelessWidget {
@@ -63,14 +64,16 @@ class AiInsightCard extends StatelessWidget {
                       const SizedBox(height: 4),
                       
                       // Insight body text
-                      Text(
-                        insight,
-                        style: GoogleFonts.poppins(
-                          fontSize: 14,
-                          height: 1.4,
-                          color: AppColors.textSecondary,
-                        ),
-                      ),
+                      insight.isEmpty 
+                        ? const ThinkingIndicator()
+                        : TypingText(
+                            text: insight,
+                            style: GoogleFonts.poppins(
+                              fontSize: 14,
+                              height: 1.4,
+                              color: AppColors.textSecondary,
+                            ),
+                          ),
                     ],
                   ),
                 ),

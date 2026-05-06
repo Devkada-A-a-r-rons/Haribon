@@ -1,9 +1,10 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import '../../../theme/app_colors.dart';
 import '../models/chat_message.dart';
+import '../../common/widgets/typing_text.dart';
 
 class ChatBubble extends StatelessWidget {
   final ChatMessage message;
@@ -44,27 +45,37 @@ class ChatBubble extends StatelessWidget {
                       )
                     ] : null,
                   ),
-                  child: MarkdownBody(
-                    data: message.text,
-                    styleSheet: MarkdownStyleSheet(
-                      p: GoogleFonts.poppins(
-                        fontSize: 15,
-                        height: 1.4,
-                        color: isAi ? AppColors.textPrimary : Colors.white,
-                        fontWeight: FontWeight.w500,
+                  child: isAi 
+                    ? TypingText(
+                        text: message.text,
+                        style: GoogleFonts.poppins(
+                          fontSize: 15,
+                          height: 1.4,
+                          color: AppColors.textPrimary,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      )
+                    : MarkdownBody(
+                        data: message.text,
+                        styleSheet: MarkdownStyleSheet(
+                          p: GoogleFonts.poppins(
+                            fontSize: 15,
+                            height: 1.4,
+                            color: Colors.white,
+                            fontWeight: FontWeight.w500,
+                          ),
+                          strong: GoogleFonts.poppins(
+                            fontSize: 15,
+                            height: 1.4,
+                            color: Colors.white,
+                            fontWeight: FontWeight.w800,
+                          ),
+                          listBullet: GoogleFonts.poppins(
+                            fontSize: 15,
+                            color: Colors.white,
+                          ),
+                        ),
                       ),
-                      strong: GoogleFonts.poppins(
-                        fontSize: 15,
-                        height: 1.4,
-                        color: isAi ? AppColors.textPrimary : Colors.white,
-                        fontWeight: FontWeight.w800,
-                      ),
-                      listBullet: GoogleFonts.poppins(
-                        fontSize: 15,
-                        color: isAi ? AppColors.textPrimary : Colors.white,
-                      ),
-                    ),
-                  ),
                 ),
                 const SizedBox(height: 6),
                 Text(

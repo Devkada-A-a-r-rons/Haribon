@@ -11,6 +11,7 @@ import '../../rag_pipeline/pipeline/rag_pipeline.dart';
 import '../../rag_pipeline/llm/llm_services.dart';
 import '../../core/database/database_service.dart';
 import 'dart:async';
+import '../common/widgets/typing_text.dart';
 
 class ChatbotScreen extends StatefulWidget {
   const ChatbotScreen({super.key});
@@ -136,8 +137,32 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
             child: ListView.builder(
               controller: _scrollController,
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-              itemCount: _messages.length,
-              itemBuilder: (context, index) => ChatBubble(message: _messages[index]),
+              itemCount: _messages.length + (_isTyping ? 1 : 0),
+              itemBuilder: (context, index) {
+                if (index < _messages.length) {
+                  return ChatBubble(message: _messages[index]);
+                } else {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 12),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Container(
+                          width: 40,
+                          height: 40,
+                          decoration: BoxDecoration(
+                            color: AppColors.blueAccent,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: const Icon(Icons.auto_awesome, color: Colors.white, size: 20),
+                        ),
+                        const SizedBox(width: 12),
+                        const ThinkingIndicator(),
+                      ],
+                    ),
+                  );
+                }
+              },
             ),
           ),
           if (_messages.length < 2) // Only show suggestions before the user's first message

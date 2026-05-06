@@ -12,6 +12,7 @@ import 'widgets/efficiency_loss_insights_card.dart';
 import 'widgets/optimization_tips_card.dart';
 import 'package:haribon/theme/app_colors.dart';
 import '../../rag_pipeline/llm/gemini_llm_service.dart';
+import '../common/widgets/typing_text.dart';
 import '../../core/database/database_service.dart';
 
 class FuelAndEmissionsScreen extends StatefulWidget {
@@ -132,9 +133,10 @@ class _FuelAndEmissionsScreenState extends State<FuelAndEmissionsScreen> {
           _totalCost = cost;
           _totalCO2 = co2;
           _trafficLiters = traffic;
+          _isLoading = false; // Show stats immediately
         });
 
-        // 3. Load Pro Insights for the latest journey
+        // 3. Load Pro Insights for the latest journey in background
         await _loadProInsights(allTrips.last);
       } else {
         setState(() => _isLoading = false);
@@ -275,11 +277,9 @@ class _FuelAndEmissionsScreenState extends State<FuelAndEmissionsScreen> {
                       ],
                     ),
                     const SizedBox(height: 16),
-                    if (_proInsights.isNotEmpty)
-                      EfficiencyLossInsightsCard(insights: _proInsights),
+                    EfficiencyLossInsightsCard(insights: _proInsights),
                     const SizedBox(height: 16),
-                    if (_proTips.isNotEmpty)
-                      OptimizationTipsCard(tips: _proTips),
+                    OptimizationTipsCard(tips: _proTips),
                     const SizedBox(height: 40),
                   ],
                 ),

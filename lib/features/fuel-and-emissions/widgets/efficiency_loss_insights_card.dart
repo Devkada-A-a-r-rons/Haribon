@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:haribon/theme/app_colors.dart';
+import '../../common/widgets/typing_text.dart';
 
 
 class EfficiencyLossInsightsCard extends StatelessWidget {
@@ -52,21 +53,27 @@ class EfficiencyLossInsightsCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 20),
-          ...insights.asMap().entries.map((entry) {
-            final idx = entry.key;
-            final text = entry.value;
-            return Padding(
-              padding: EdgeInsets.only(bottom: idx == insights.length - 1 ? 0 : 16),
-              child: _buildInsightItem(
-                textTheme: textTheme,
-                icon: getIcon(idx),
-                iconColor: getIconColor(idx),
-                bgColor: getBgColor(idx),
-                text: text,
-                hideDivider: idx == insights.length - 1,
-              ),
-            );
-          }).toList(),
+          if (insights.isEmpty)
+            const Padding(
+              padding: EdgeInsets.symmetric(vertical: 20),
+              child: Center(child: ThinkingIndicator()),
+            )
+          else
+            ...insights.asMap().entries.map((entry) {
+              final idx = entry.key;
+              final text = entry.value;
+              return Padding(
+                padding: EdgeInsets.only(bottom: idx == insights.length - 1 ? 0 : 16),
+                child: _buildInsightItem(
+                  textTheme: textTheme,
+                  icon: getIcon(idx),
+                  iconColor: getIconColor(idx),
+                  bgColor: getBgColor(idx),
+                  text: text,
+                  hideDivider: idx == insights.length - 1,
+                ),
+              );
+            }).toList(),
         ],
       ),
     );
@@ -94,8 +101,8 @@ class EfficiencyLossInsightsCard extends StatelessWidget {
             ),
             const SizedBox(width: 16),
             Expanded(
-              child: Text(
-                text,
+              child: TypingText(
+                text: text,
                 style: textTheme.bodySmall?.copyWith(color: AppColors.textPrimary, height: 1.4),
               ),
             ),

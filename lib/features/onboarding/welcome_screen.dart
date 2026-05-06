@@ -173,16 +173,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> with SingleTickerProvider
                               ),
                               child: TextButton(
                                 onPressed: () {
-                                  Navigator.of(context).pushReplacement(
-                                    PageRouteBuilder(
-                                      pageBuilder: (context, animation, secondaryAnimation) =>
-                                          const OnboardingScreen(),
-                                      transitionsBuilder: (context, animation, secondaryAnimation, child) {
-                                        return FadeTransition(opacity: animation, child: child);
-                                      },
-                                      transitionDuration: const Duration(milliseconds: 600),
-                                    ),
-                                  );
+                                  Navigator.of(context).pushReplacementNamed('/onboarding');
                                 },
                                 style: TextButton.styleFrom(
                                   shape: const StadiumBorder(),

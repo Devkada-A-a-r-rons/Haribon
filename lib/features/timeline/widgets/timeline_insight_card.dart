@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../theme/app_colors.dart';
+import '../../common/widgets/typing_text.dart';
 
 class TimelineInsightCard extends StatelessWidget {
   final String text;
@@ -50,15 +51,17 @@ class TimelineInsightCard extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 8),
-                Text(
-                  text,
-                  style: GoogleFonts.poppins(
-                    fontSize: 13,
-                    height: 1.6,
-                    fontStyle: FontStyle.italic,
-                    color: AppColors.textPrimary,
-                  ),
-                ),
+                text.isEmpty 
+                  ? const ThinkingIndicator()
+                  : TypingText(
+                      text: text,
+                      style: GoogleFonts.poppins(
+                        fontSize: 13,
+                        height: 1.6,
+                        fontStyle: FontStyle.italic,
+                        color: AppColors.textPrimary,
+                      ),
+                    ),
                 const SizedBox(height: 24),
                 // Bottom separator line
                 Container(

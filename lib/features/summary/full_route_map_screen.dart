@@ -37,7 +37,6 @@ class _FullRouteMapScreenState extends State<FullRouteMapScreen>
 
   RouteResult? _route;
   bool _isLoadingRoute = true;
-  bool _useHighway = true;
   bool _journeyStarted = false;
   StreamSubscription<JourneyState>? _journeySubscription;
   JourneyState? _journeyState;
@@ -63,7 +62,7 @@ class _FullRouteMapScreenState extends State<FullRouteMapScreen>
     final result = await _routeService.getRoute(
       origin: widget.origin,
       destination: widget.destination,
-      useHighway: _useHighway,
+      useHighway: true,
     );
     if (mounted) {
       setState(() {
@@ -79,36 +78,49 @@ class _FullRouteMapScreenState extends State<FullRouteMapScreen>
 
   void _fitMapToBounds(List<LatLng> points) {
     if (points.isEmpty) return;
+
     double minLat = points.first.latitude;
     double maxLat = points.first.latitude;
     double minLng = points.first.longitude;
     double maxLng = points.first.longitude;
+
     for (final p in points) {
       if (p.latitude < minLat) minLat = p.latitude;
       if (p.latitude > maxLat) maxLat = p.latitude;
       if (p.longitude < minLng) minLng = p.longitude;
       if (p.longitude > maxLng) maxLng = p.longitude;
     }
+
     final center = LatLng((minLat + maxLat) / 2, (minLng + maxLng) / 2);
-    // Calculate appropriate zoom
-    final latDiff = maxLat - minLat;
-    final lngDiff = maxLng - minLng;
+    final latDiff = (maxLat - minLat).abs();
+    final lngDiff = (maxLng - minLng).abs();
     final maxDiff = latDiff > lngDiff ? latDiff : lngDiff;
+
     double zoom = 10.0;
-    if (maxDiff < 0.1) zoom = 13.0;
-    else if (maxDiff < 0.5) zoom = 11.0;
-    else if (maxDiff < 2.0) zoom = 9.0;
-    else if (maxDiff < 5.0) zoom = 7.5;
-    else zoom = 6.5;
+    if (maxDiff < 0.001) {
+      zoom = 15.0;
+    } else if (maxDiff < 0.1) {
+      zoom = 13.0;
+    } else if (maxDiff < 0.5) {
+      zoom = 11.0;
+    } else if (maxDiff < 2.0) {
+      zoom = 9.0;
+    } else if (maxDiff < 5.0) {
+      zoom = 7.5;
+    } else {
+      zoom = 6.5;
+    }
 
-    _mapController.move(center, zoom);
+    // Ensure we don't move the map before it's ready or with invalid values
+    if (!center.latitude.isNaN && !center.longitude.isNaN) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) {
+          _mapController.move(center, zoom);
+        }
+      });
+    }
   }
 
-  void _toggleRouteType(bool useHighway) {
-    if (_useHighway == useHighway) return;
-    setState(() => _useHighway = useHighway);
-    _fetchRoute();
-  }
 
   Future<void> _startJourney() async {
     final config = widget.vehicleConfig ?? {
@@ -167,10 +179,11 @@ class _FullRouteMapScreenState extends State<FullRouteMapScreen>
           FlutterMap(
             mapController: _mapController,
             options: MapOptions(
-              initialCenter: LatLng(
-                (widget.origin.latitude + widget.destination.latitude) / 2,
-                (widget.origin.longitude + widget.destination.longitude) / 2,
-              ),
+              initialCenter: () {
+                final lat = (widget.origin.latitude + widget.destination.latitude) / 2;
+                final lng = (widget.origin.longitude + widget.destination.longitude) / 2;
+                return (lat.isNaN || lng.isNaN) ? const LatLng(14.5995, 120.9842) : LatLng(lat, lng);
+              }(),
               initialZoom: 9.0,
               interactionOptions: const InteractionOptions(
                 flags: InteractiveFlag.all,
@@ -193,9 +206,7 @@ class _FullRouteMapScreenState extends State<FullRouteMapScreen>
                     // Main route line
                     Polyline(
                       points: _route!.polyline,
-                      color: _useHighway
-                          ? AppColors.primaryMain
-                          : const Color(0xFF2ECC71),
+                      color: AppColors.primaryMain,
                       strokeWidth: 5.5,
                     ),
                   ],
@@ -343,18 +354,11 @@ class _FullRouteMapScreenState extends State<FullRouteMapScreen>
             mainAxisSize: MainAxisSize.min,
             children: [
               _routeToggleChip(
-                label: 'Highway',
+                label: 'Fastest Route',
                 icon: Icons.speed_rounded,
-                isSelected: _useHighway,
+                isSelected: true,
                 color: AppColors.primaryMain,
-                onTap: () => _toggleRouteType(true),
-              ),
-              _routeToggleChip(
-                label: 'Service Rd',
-                icon: Icons.park_outlined,
-                isSelected: !_useHighway,
-                color: const Color(0xFF2ECC71),
-                onTap: () => _toggleRouteType(false),
+                onTap: () {},
               ),
             ],
           ),
@@ -500,7 +504,7 @@ class _FullRouteMapScreenState extends State<FullRouteMapScreen>
     final litersPerKm = (widget.vehicleConfig?['liters_per_km'] as num?)?.toDouble() ?? 0.08;
     final estimatedFuelLiters = routeKm * litersPerKm;
     final estimatedFuelCost = estimatedFuelLiters * widget.fuelPricePerLiter;
-    final tollEstimate = _useHighway ? routeKm * 1.2 : 0.0; // ~₱1.20/km on expressways
+    final tollEstimate = routeKm * 1.2; // ~₱1.20/km on expressways
 
     return Container(
       decoration: const BoxDecoration(
@@ -538,34 +542,24 @@ class _FullRouteMapScreenState extends State<FullRouteMapScreen>
                         padding: const EdgeInsets.symmetric(
                             horizontal: 10, vertical: 4),
                         decoration: BoxDecoration(
-                          color: _useHighway
-                              ? AppColors.primaryMain.withOpacity(0.1)
-                              : const Color(0xFF2ECC71).withOpacity(0.1),
+                          color: AppColors.primaryMain.withOpacity(0.1),
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Icon(
-                              _useHighway
-                                  ? Icons.speed_rounded
-                                  : Icons.park_outlined,
+                            const Icon(
+                              Icons.speed_rounded,
                               size: 12,
-                              color: _useHighway
-                                  ? AppColors.primaryMain
-                                  : const Color(0xFF2ECC71),
+                              color: AppColors.primaryMain,
                             ),
                             const SizedBox(width: 4),
                             Text(
-                              _useHighway
-                                  ? 'Highway Route'
-                                  : 'Service Road (Toll-Free)',
+                              'Optimized Route',
                               style: TextStyle(
                                 fontSize: 11,
                                 fontWeight: FontWeight.w700,
-                                color: _useHighway
-                                    ? AppColors.primaryMain
-                                    : const Color(0xFF2ECC71),
+                                color: AppColors.primaryMain,
                               ),
                             ),
                           ],
@@ -616,7 +610,7 @@ class _FullRouteMapScreenState extends State<FullRouteMapScreen>
                       const SizedBox(width: 8),
                       Expanded(
                           child: _statChip(
-                              _useHighway
+                              true
                                   ? '₱${tollEstimate.toStringAsFixed(0)}'
                                   : '₱0 (Toll-Free)',
                               'Toll Estimate',

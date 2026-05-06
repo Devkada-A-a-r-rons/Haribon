@@ -49,6 +49,11 @@ class RouteMapCard extends StatelessWidget {
     
     final centerLat = (start.latitude + end.latitude) / 2;
     final centerLng = (start.longitude + end.longitude) / 2;
+    
+    // Safety check for valid coordinates
+    final safeCenter = (centerLat.isNaN || centerLng.isNaN) 
+        ? const LatLng(14.5995, 120.9842) 
+        : LatLng(centerLat, centerLng);
 
     return GestureDetector(
       onTap: () {
@@ -78,7 +83,7 @@ class RouteMapCard extends StatelessWidget {
             child: IgnorePointer(
               child: FlutterMap(
                 options: MapOptions(
-                  initialCenter: LatLng(centerLat, centerLng),
+                  initialCenter: safeCenter,
                   initialZoom: 7.5,
                 ),
                 children: [

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'models/monthly_report_model.dart';
 import 'widgets/monthly_report_header.dart';
 import 'widgets/monthly_stats_card.dart';
@@ -48,17 +49,29 @@ class _MonthlyReportScreenState extends State<MonthlyReportScreen> {
     try {
       setState(() => _isLoading = true);
 
-      // Get current month if not provided
       final now = DateTime.now();
       final month = widget.month ?? DateFormat('MMMM').format(now);
       final year = widget.year ?? now.year.toString();
 
-      // Mock data generation - in production, fetch from Supabase
-      // For now, we'll create realistic sample data
-      _report = _generateMockReport(month, year);
+      // Fetch trips for this month
+      final startOfMonth = DateTime(int.parse(year), _monthToNumber(month), 1);
+      final endOfMonth = DateTime(int.parse(year), _monthToNumber(month) + 1, 0, 23, 59, 59);
+
+      final response = await Supabase.instance.client
+          .from('smart_trips')
+          .select()
+          .gte('created_at', startOfMonth.toIso8601String())
+          .lte('created_at', endOfMonth.toIso8601String())
+          .order('created_at', ascending: true);
+
+      final List<dynamic> tripsData = response as List<dynamic>;
+
+      // Process data
+      _report = _processReportData(tripsData, month, year);
 
       setState(() => _isLoading = false);
     } catch (e) {
+      debugPrint('Error fetching monthly report: $e');
       setState(() {
         _errorMessage = 'Failed to load monthly report: $e';
         _isLoading = false;
@@ -66,141 +79,120 @@ class _MonthlyReportScreenState extends State<MonthlyReportScreen> {
     }
   }
 
-  MonthlyReport _generateMockReport(String month, String year) {
-    // Generate sample data for the month
-    final daysInMonth = DateFormat('d')
-        .parse('${DateTime.now().day}')
-        .add(Duration(days: 1))
-        .subtract(Duration(days: 1))
-        .day;
+  int _monthToNumber(String month) {
+    final months = [
+      'January', 'February', 'March', 'April', 'May', 'June',
+      'July', 'August', 'September', 'October', 'November', 'December'
+    ];
+    return months.indexOf(month) + 1;
+  }
 
-    final dailyTrips = _generateDailyTrips(daysInMonth);
-    final trends = _generateTrends(daysInMonth);
-    final vehicleUsage = _generateVehicleUsage(daysInMonth);
+  MonthlyReport _processReportData(List<dynamic> trips, String month, String year) {
+    double totalDistance = 0;
+    double totalCost = 0;
+    double totalLiters = 0;
+    double totalScore = 0;
+    
+    final List<DailyTripSummary> dailySummaries = [];
+    final List<TrendData> trends = [];
+    final List<VehicleUsageDay> usage = [];
+    
+    // Group by day
+    final Map<int, List<dynamic>> grouped = {};
+    for (var trip in trips) {
+      final date = DateTime.tryParse(trip['created_at'] ?? '') ?? DateTime.now();
+      grouped.putIfAbsent(date.day, () => []).add(trip);
+    }
 
-    final totalTrips = dailyTrips.fold<int>(0, (sum, d) => sum + d.trips.length);
-    final totalDistance =
-        dailyTrips.fold<double>(0, (sum, d) => sum + d.dailyTotalDistance);
-    final totalCost =
-        dailyTrips.fold<double>(0, (sum, d) => sum + d.dailyTotalCost);
-    final avgScore =
-        dailyTrips.fold<int>(0, (sum, d) => sum + d.dayEfficiencyScore) ~/
-            (dailyTrips.isEmpty ? 1 : dailyTrips.length);
+    // Process each day
+    final lastDay = DateTime(int.parse(year), _monthToNumber(month) + 1, 0).day;
+    for (int day = 1; day <= lastDay; day++) {
+      final dayTrips = grouped[day] ?? [];
+      final hasTrips = dayTrips.isNotEmpty;
+      
+      double dayDist = 0;
+      double dayCost = 0;
+      double dayScoreSum = 0;
+      
+      final List<TripEntry> entries = [];
+      for (var t in dayTrips) {
+        final dist = (t['distance_km'] ?? 0.0).toDouble();
+        final cost = (t['est_fuel_cost'] ?? 0.0).toDouble();
+        final liters = (t['est_fuel_liters'] ?? 0.0).toDouble();
+        final score = (t['efficiency_score'] ?? 85).toDouble();
+        
+        dayDist += dist;
+        dayCost += cost;
+        dayScoreSum += score;
+        totalLiters += liters;
+        
+        entries.add(TripEntry(
+          origin: t['origin_name'] ?? 'Unknown',
+          destination: t['destination_name'] ?? 'Unknown',
+          time: DateFormat('hh:mm a').format(DateTime.tryParse(t['created_at'] ?? '') ?? DateTime.now()),
+          distanceKm: dist,
+          costPhp: cost,
+          efficiencyScore: score.toInt(),
+        ));
+      }
 
-    // Calculate stats
-    final stats = MonthlyStats(
-      avgFuelCostPerTrip: totalTrips > 0 ? totalCost / totalTrips : 0,
-      avgDistancePerTrip: totalTrips > 0 ? totalDistance / totalTrips : 0,
-      avgEmissionsPerTrip: totalTrips > 0
-          ? (totalDistance * 0.115 / totalTrips)
-          : 0, // kg CO2
-      bestEfficiencyScore:
-          dailyTrips.fold<int>(0, (max, d) => d.dayEfficiencyScore > max ? d.dayEfficiencyScore : max),
-      worstEfficiencyScore:
-          dailyTrips.fold<int>(100, (min, d) => d.dayEfficiencyScore < min ? d.dayEfficiencyScore : min),
-      avgSpeedKmh: 65,
-      daysWithTrips: dailyTrips.where((d) => d.hasTrips).length,
-    );
+      if (hasTrips) {
+        totalDistance += dayDist;
+        totalCost += dayCost;
+        final dayAvgScore = dayScoreSum / dayTrips.length;
+        totalScore += dayAvgScore;
+
+        dailySummaries.add(DailyTripSummary(
+          date: day.toString(),
+          dayOfMonth: day,
+          dayName: DateFormat('E').format(DateTime(int.parse(year), _monthToNumber(month), day)),
+          trips: entries,
+          dailyTotalDistance: dayDist,
+          dailyTotalCost: dayCost,
+          dayEfficiencyScore: dayAvgScore.toInt(),
+        ));
+
+        trends.add(TrendData(
+          dayOfMonth: day,
+          efficiencyScore: dayAvgScore.toInt(),
+          dayLabel: day.toString(),
+        ));
+      }
+
+      usage.add(VehicleUsageDay(
+        dayOfMonth: day,
+        used: hasTrips,
+        tripsCount: dayTrips.length,
+      ));
+    }
+
+    final activeTripsCount = dailySummaries.length;
+    final avgScore = activeTripsCount > 0 ? (totalScore / activeTripsCount).toInt() : 0;
 
     return MonthlyReport(
       month: month,
       year: year,
-      totalTrips: totalTrips,
+      totalTrips: trips.length,
       totalDistanceKm: totalDistance,
       totalFuelCostPhp: totalCost,
       totalEmissionsCo2Kg: totalDistance * 0.115,
       averageEfficiencyScore: avgScore,
-      dailyTrips: dailyTrips,
-      stats: stats,
+      dailyTrips: dailySummaries,
+      stats: MonthlyStats(
+        avgFuelCostPerTrip: trips.isNotEmpty ? totalCost / trips.length : 0,
+        avgDistancePerTrip: trips.isNotEmpty ? totalDistance / trips.length : 0,
+        avgEmissionsPerTrip: trips.isNotEmpty ? (totalDistance * 0.115) / trips.length : 0,
+        bestEfficiencyScore: trends.isNotEmpty ? trends.map((t) => t.efficiencyScore).reduce((a, b) => a > b ? a : b) : 0,
+        worstEfficiencyScore: trends.isNotEmpty ? trends.map((t) => t.efficiencyScore).reduce((a, b) => a < b ? a : b) : 0,
+        avgSpeedKmh: 65,
+        daysWithTrips: activeTripsCount,
+      ),
       efficiencyTrend: trends,
-      vehicleUsage: vehicleUsage,
-      topInsight:
-          'Your driving on expressways improved by 8% this month. Keep maintaining steady speeds between 75-85 km/h for optimal fuel efficiency.',
+      vehicleUsage: usage,
+      topInsight: totalDistance > 500 
+          ? "You've covered significant ground this month. Great job maintaining an average efficiency score of $avgScore%!"
+          : 'Keep tracking your trips to unlock more detailed performance insights.',
     );
-  }
-
-  List<DailyTripSummary> _generateDailyTrips(int daysInMonth) {
-    final List<DailyTripSummary> trips = [];
-    final random = DateTime.now().millisecond % 7;
-
-    for (int i = 1; i <= daysInMonth; i++) {
-      final hasTrips = random % 3 != 0; // Roughly 66% of days have trips
-      final dayOfWeek = DateTime(DateTime.now().year, DateTime.now().month, i)
-          .toLocal()
-          .weekday;
-      final dayNames = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-
-      if (hasTrips) {
-        final tripCount = (random % 2) + 1;
-        final tripList = <TripEntry>[];
-
-        for (int j = 0; j < tripCount; j++) {
-          final distance = 25 + (random * 15).toDouble();
-          tripList.add(
-            TripEntry(
-              origin: j == 0 ? 'Home' : 'Office',
-              destination: j == 0 ? 'Office' : 'Home',
-              time: j == 0 ? '08:00 AM' : '05:30 PM',
-              distanceKm: distance,
-              costPhp: distance * 8,
-              efficiencyScore: 75 + (random % 20),
-            ),
-          );
-        }
-
-        trips.add(
-          DailyTripSummary(
-            date: '$i',
-            dayOfMonth: i,
-            dayName: dayNames[(dayOfWeek - 1) % 7],
-            trips: tripList,
-            dailyTotalDistance:
-                tripList.fold(0, (sum, t) => sum + t.distanceKm),
-            dailyTotalCost: tripList.fold(0, (sum, t) => sum + t.costPhp),
-            dayEfficiencyScore:
-                tripList.fold(0, (sum, t) => sum + t.efficiencyScore) ~/
-                    tripList.length,
-          ),
-        );
-      }
-    }
-
-    return trips;
-  }
-
-  List<TrendData> _generateTrends(int daysInMonth) {
-    final List<TrendData> trends = [];
-    final random = DateTime.now().millisecond % 7;
-
-    for (int i = 1; i <= daysInMonth; i += 3) {
-      trends.add(
-        TrendData(
-          dayOfMonth: i,
-          efficiencyScore: 70 + (random * 25).toInt(),
-          dayLabel: '$i',
-        ),
-      );
-    }
-
-    return trends;
-  }
-
-  List<VehicleUsageDay> _generateVehicleUsage(int daysInMonth) {
-    final List<VehicleUsageDay> usage = [];
-    final random = DateTime.now().millisecond % 7;
-
-    for (int i = 1; i <= daysInMonth; i++) {
-      final isUsed = random % 3 != 0;
-      usage.add(
-        VehicleUsageDay(
-          dayOfMonth: i,
-          used: isUsed,
-          tripsCount: isUsed ? (random % 3) + 1 : 0,
-        ),
-      );
-    }
-
-    return usage;
   }
 
   void _handleNavChange(int index) {

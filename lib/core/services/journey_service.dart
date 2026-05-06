@@ -107,11 +107,9 @@ class JourneyService {
   }
 
   void _startSimulation() {
-    // Simulates driving at 60 km/h — 1 km per minute, 1m tick per second
     _simulationTimer = Timer.periodic(const Duration(seconds: 1), (_) {
       if (_currentState == null || !_isActive) return;
 
-      // ~60km/h = 0.01667 km per second (simulation mode)
       const kmPerSecond = 60.0 / 3600.0;
       final fuelUsed = kmPerSecond * _litersPerKm;
       final newFuel = (_currentState!.currentFuelLiters - fuelUsed).clamp(0.0, 200.0);
@@ -119,15 +117,21 @@ class JourneyService {
       final newConsumed = _currentState!.fuelConsumedLiters + fuelUsed;
       final newCost = newConsumed * _fuelPricePerLiter;
 
+      LatLng? newPos = _currentState!.currentPosition;
+      if (_lastPosition != null) {
+        newPos = _currentState!.currentPosition;
+      }
+
       _currentState = _currentState!.copyWith(
         currentFuelLiters: newFuel,
         distanceTraveledKm: newDist,
         fuelConsumedLiters: newConsumed,
         fuelCostPhp: newCost,
+        currentPosition: newPos,
       );
+      
       _controller.add(_currentState!);
 
-      // Auto-stop if fuel reaches 0
       if (newFuel <= 0.1) {
         stopJourney();
       }

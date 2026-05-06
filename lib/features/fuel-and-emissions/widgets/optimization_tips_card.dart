@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:haribon/theme/app_colors.dart';
+import '../../common/widgets/typing_text.dart';
 
 
 class OptimizationTipsCard extends StatelessWidget {
@@ -33,14 +34,20 @@ class OptimizationTipsCard extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 20),
-          ...tips.asMap().entries.map((entry) {
-            final idx = entry.key;
-            final text = entry.value;
-            return Padding(
-              padding: EdgeInsets.only(bottom: idx == tips.length - 1 ? 0 : 16),
-              child: _buildBulletPoint(textTheme, text),
-            );
-          }).toList(),
+          if (tips.isEmpty)
+            const Padding(
+              padding: EdgeInsets.symmetric(vertical: 20),
+              child: Center(child: ThinkingIndicator()),
+            )
+          else
+            ...tips.asMap().entries.map((entry) {
+              final idx = entry.key;
+              final text = entry.value;
+              return Padding(
+                padding: EdgeInsets.only(bottom: idx == tips.length - 1 ? 0 : 16),
+                child: _buildBulletPoint(textTheme, text),
+              );
+            }).toList(),
         ],
       ),
     );
@@ -56,8 +63,8 @@ class OptimizationTipsCard extends StatelessWidget {
         ),
         const SizedBox(width: 12),
         Expanded(
-          child: Text(
-            text,
+          child: TypingText(
+            text: text,
             style: textTheme.bodySmall?.copyWith(
               color: AppColors.textPrimary,
               height: 1.5,

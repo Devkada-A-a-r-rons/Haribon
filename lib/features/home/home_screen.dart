@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:latlong2/latlong.dart';
+import '../chatbot/chatbot_screen.dart';
 import '../../core/database/database_service.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../theme/app_colors.dart';
@@ -43,6 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
     String userName = 'Driver';
     List<HomeStat> stats = [];
     double avgFuelPrice = 65.0;
+    List<double> trend = List.filled(7, 12.0);
 
     try {
       // 1. Fetch ALL trips for aggregation
@@ -148,7 +150,41 @@ class _HomeScreenState extends State<HomeScreen> {
         });
       }
 
-      // 4. Update Stats with Real Lifetime Totals
+      // 4. Calculate Efficiency Trend (last 7 days)
+      final now = DateTime.now();
+      
+      if (allTrips != null && (allTrips as List).isNotEmpty) {
+        for (int i = 0; i < 7; i++) {
+          final targetDate = now.subtract(Duration(days: 6 - i));
+          double dailyDist = 0;
+          double dailyLiters = 0;
+          
+          for (var trip in allTrips) {
+            final tripDate = DateTime.tryParse(trip['created_at'] ?? '') ?? now;
+            if (tripDate.year == targetDate.year && 
+                tripDate.month == targetDate.month && 
+                tripDate.day == targetDate.day) {
+              
+              final dist = (trip['distance_km'] ?? 0.0).toDouble();
+              final liters = (trip['est_fuel_liters'] ?? 0.0).toDouble();
+              
+              if (dist > 0 && liters > 0) {
+                dailyDist += dist;
+                dailyLiters += liters;
+              }
+            }
+          }
+          
+          if (dailyLiters > 0) {
+            trend[i] = dailyDist / dailyLiters;
+          } else {
+            // Fallback to vehicle's base efficiency if no trips that day
+            trend[i] = 12.0; 
+          }
+        }
+      }
+
+      // 5. Update Stats with Real Lifetime Totals
       stats = [
         HomeStat(
           label: 'Total Distance',
@@ -189,7 +225,7 @@ class _HomeScreenState extends State<HomeScreen> {
           userName: userName,
           weeklyCo2Saved: mockData.weeklyCo2Saved,
           stats: stats,
-          efficiencyTrend: mockData.efficiencyTrend,
+          efficiencyTrend: trend,
           activities: mockData.activities,
         );
         _isLoading = false;
@@ -333,4 +369,3 @@ class _HomeScreenState extends State<HomeScreen> {
     return const LatLng(14.5995, 120.9842); // Default Manila
   }
 }
-
