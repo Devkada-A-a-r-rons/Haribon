@@ -28,6 +28,8 @@ class _FuelAndEmissionsScreenState extends State<FuelAndEmissionsScreen> {
   double _totalCost = 0;
   double _totalCO2 = 0;
   double _trafficLiters = 0;
+  double _kmPerLiter = 12.0;  // real vehicle efficiency
+  double _fuelPricePerLiter = 65.0; // live market price
 
   @override
   void initState() {
@@ -37,6 +39,35 @@ class _FuelAndEmissionsScreenState extends State<FuelAndEmissionsScreen> {
 
   Future<void> _loadAllStats() async {
     try {
+      // 0. Fetch real vehicle efficiency
+      final vehicleConfig = await Supabase.instance.client
+          .from('vehicle_configurations')
+          .select()
+          .order('created_at', ascending: false)
+          .limit(1)
+          .maybeSingle();
+
+      if (vehicleConfig != null) {
+        final kml = (vehicleConfig['km_per_liter'] as num?)?.toDouble();
+        if (kml != null && kml > 0) _kmPerLiter = kml;
+      }
+
+      // 0b. Fetch live fuel prices
+      try {
+        final fuelPrices = await Supabase.instance.client
+            .from('fuel_prices')
+            .select()
+            .order('updated_at', ascending: false)
+            .limit(10);
+        if (fuelPrices != null && (fuelPrices as List).isNotEmpty) {
+          double total = 0;
+          for (var p in fuelPrices) {
+            total += (p['gasoline'] as num).toDouble();
+          }
+          _fuelPricePerLiter = total / (fuelPrices as List).length;
+        }
+      } catch (_) {}
+
       // 1. Fetch official saved trips
       final savedTrips = await Supabase.instance.client
           .from('smart_trips')
@@ -70,11 +101,23 @@ class _FuelAndEmissionsScreenState extends State<FuelAndEmissionsScreen> {
         double traffic = 0;
 
         for (var trip in allTrips) {
+          // Use stored liters if available; else compute from distance + real efficiency
+          final storedLiters = (trip['est_fuel_liters'] as num?)?.toDouble();
+          final distKm = (trip['distance_km'] ?? trip['route_distance_km'] ?? 0.0).toDouble();
           final tripCost = (trip['est_fuel_cost'] ?? trip['budget'] ?? 0.0).toDouble();
-          final tripLiters = tripCost > 0 ? (tripCost / 68.0) : 0.0;
+
+          double tripLiters;
+          if (storedLiters != null && storedLiters > 0) {
+            tripLiters = storedLiters;
+          } else if (distKm > 0 && _kmPerLiter > 0) {
+            tripLiters = distKm / _kmPerLiter;
+          } else {
+            tripLiters = tripCost > 0 ? (tripCost / _fuelPricePerLiter) : 0.0;
+          }
+
           liters += tripLiters;
           cost += tripCost;
-          co2 += tripLiters * 2.3;
+          co2 += tripLiters * 2.31;
           traffic += tripLiters * 0.15;
         }
 
