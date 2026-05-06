@@ -25,7 +25,7 @@ class ExpandableCard extends StatelessWidget {
     final theme = Theme.of(context);
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.containerLowest,
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(color: Colors.black.withOpacity(0.03), blurRadius: 10, offset: const Offset(0, 4)),
@@ -36,12 +36,12 @@ class ExpandableCard extends StatelessWidget {
         child: ExpansionTile(
           initiallyExpanded: initiallyExpanded,
           tilePadding: const EdgeInsets.all(16),
-          iconColor: AppColors.navyDarker,
-          collapsedIconColor: AppColors.navyDarker,
+          iconColor: AppColors.textPrimary,
+          collapsedIconColor: AppColors.textPrimary,
           title: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Icon(icon, color: AppColors.blueGreyDark, size: 20),
+              Icon(icon, color: AppColors.primaryMain, size: 20),
               const SizedBox(width: 16),
               Expanded(
                 child: Column(
@@ -50,7 +50,7 @@ class ExpandableCard extends StatelessWidget {
                     Text(
                       title,
                       style: theme.textTheme.titleMedium?.copyWith(
-                        color: AppColors.navyDarker,
+                        color: AppColors.textPrimary,
                         fontWeight: FontWeight.w700,
                         height: 1.2,
                       ),

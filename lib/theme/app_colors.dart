@@ -3,15 +3,15 @@ import 'package:flutter/material.dart';
 class AppColors {
   AppColors._();
 
-  static const primaryMain = Color(0xFF72C6EF);
+  static const primaryMain = Color(0xFF3787BE);
   static const primaryLight = Color(0xFFE1F5FE);
-  static const primaryDark = Color(0xFF4BA3D1);
+  static const primaryDark = Color(0xFF2A6A96);
 
   static const secondaryMain = Color(0xFFA8DADC);
   static const secondaryLight = Color(0xFFE0F2F1);
   static const secondaryDark = Color(0xFF7FB3B5);
 
-  static const surfaceMain = Color(0xFFF9F9FF);
+  static const surfaceMain = Color(0xFFFFFFFF);
   static const surfaceDim = Color(0xFFCFDAF1);
   static const surfaceBright = Color(0xFFF9F9FF);
 
@@ -27,14 +27,14 @@ class AppColors {
   static const success = Color(0xFF4CAF50);
   static const warning = Color(0xFFFFC107);
   static const error = Color(0xFFBA1A1A);
-  static const info = Color(0xFF72C6EF);
+  static const info = Color(0xFF3787BE);
 
   static const historyNavy = Color(0xFF1E3A8A);
   static const historyBlue = Color(0xFF2B52C3);
   static const historyDivider = Color(0xFFF0F0F0);
   static const historyBlueGray = Color(0xFF3B5B72);
   
-  static const brandHaribon = Color(0xFF72C6EF);
+  static const brandHaribon = Color(0xFF3787BE);
   static const brandAerovistaDark = Color(0xFF111827);
   static const brandAerovistaGreen = Color(0xFF065F46);
 

@@ -60,7 +60,6 @@ class _Step2PlanningState extends State<Step2Planning> {
             onTap: () => setState(() => _selectedOption = 'I decide along the way'),
           ),
           const SizedBox(height: 32),
-          // Bottom mock illustration
           Container(
             height: 120,
             padding: const EdgeInsets.all(16),

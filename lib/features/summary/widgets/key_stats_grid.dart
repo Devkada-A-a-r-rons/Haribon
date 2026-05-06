@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'summary_header.dart';
 import 'summary_shared.dart';
@@ -7,7 +7,7 @@ import 'package:haribon/theme/app_colors.dart';
 
 
 /// MODULE: KEY STATS GRID
-/// 2×2 grid of stat cards: fuel used, avg speed, CO₂ saved, cost vs estimate.
+/// 2Ã—2 grid of stat cards: fuel used, avg speed, COâ‚‚ saved, cost vs estimate.
 class KeyStatsGrid extends StatelessWidget {
   final TripStats stats;
 
@@ -20,33 +20,33 @@ class KeyStatsGrid extends StatelessWidget {
 
     final cards = [
       _StatData(
-        emoji: '🔥',
+        emoji: 'ðŸ”¥',
         label: 'Fuel Used',
         value: '${stats.fuelLiters.toStringAsFixed(1)} L',
-        subValue: '₱${stats.fuelCostPhp.toStringAsFixed(0)}',
+        subValue: 'â‚±${stats.fuelCostPhp.toStringAsFixed(0)}',
         valueColor: null,
       ),
       _StatData(
-        emoji: '⚡',
+        emoji: 'âš¡',
         label: 'Avg Speed',
         value: '${stats.avgSpeedKmh.toStringAsFixed(0)} km/h',
         subValue: 'highway average',
         valueColor: null,
       ),
       _StatData(
-        emoji: '🌿',
-        label: 'CO₂ Saved',
+        emoji: 'ðŸŒ¿',
+        label: 'COâ‚‚ Saved',
         value: '${stats.co2SavedKg.toStringAsFixed(1)} kg',
         subValue: 'vs. baseline route',
         valueColor: SummaryColors.eco,
       ),
       _StatData(
-        emoji: '💰',
+        emoji: 'ðŸ’°',
         label: 'vs. Estimate',
         value: underBudget
-            ? '₱${budgetAbs.toStringAsFixed(0)} under'
-            : '₱${budgetAbs.toStringAsFixed(0)} over',
-        subValue: underBudget ? 'under budget 🎉' : 'over budget',
+            ? 'â‚±${budgetAbs.toStringAsFixed(0)} under'
+            : 'â‚±${budgetAbs.toStringAsFixed(0)} over',
+        subValue: underBudget ? 'under budget ðŸŽ‰' : 'over budget',
         valueColor: underBudget ? SummaryColors.eco : Colors.red,
       ),
     ];
@@ -99,54 +99,38 @@ class _StatCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.containerLowest,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppColors.blueLightBg),
-        boxShadow: [
-          BoxShadow(
-            color: SummaryColors.primary.withValues(alpha: 0.05),
-            blurRadius: 10,
-            offset: const Offset(0, 3),
-          ),
-        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Row(
-            children: [
-              Text(data.emoji, style: const TextStyle(fontSize: 16)),
-              const SizedBox(width: 6),
-              Flexible(
-                child: Text(
-                  data.label,
-                  style: GoogleFonts.inter(
-                    fontSize: 11,
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.greyAccent,
-                    letterSpacing: 0.3,
-                  ),
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ),
-            ],
+          Text(
+            data.label,
+            style: GoogleFonts.poppins(
+              fontSize: 11,
+              fontWeight: FontWeight.w600,
+              color: AppColors.textTertiary,
+              letterSpacing: 0.3,
+            ),
+            overflow: TextOverflow.ellipsis,
           ),
           const SizedBox(height: 6),
           Text(
             data.value,
-            style: GoogleFonts.inter(
+            style: GoogleFonts.poppins(
               fontSize: 17,
               fontWeight: FontWeight.w800,
-              color: data.valueColor ?? SummaryColors.primary,
+              color: data.valueColor ?? AppColors.textPrimary,
               letterSpacing: -0.3,
             ),
           ),
           Text(
             data.subValue,
-            style: GoogleFonts.inter(
+            style: GoogleFonts.poppins(
               fontSize: 11,
-              color: AppColors.greyPale,
+              color: AppColors.textTertiary,
             ),
             overflow: TextOverflow.ellipsis,
           ),
@@ -155,3 +139,4 @@ class _StatCard extends StatelessWidget {
     );
   }
 }
+

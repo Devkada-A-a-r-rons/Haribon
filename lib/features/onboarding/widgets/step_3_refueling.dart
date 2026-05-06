@@ -66,14 +66,11 @@ class _Step3RefuelingState extends State<Step3Refueling> {
             iconBackgroundColor: Colors.blueGrey.withOpacity(0.1),
           ),
           const SizedBox(height: 32),
-          // Bottom mock map
           Container(
             height: 150,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
-              // Background image placeholder removed for Web compatibility
               color: AppColors.containerLow,
-
             ),
             child: Container(
               decoration: BoxDecoration(

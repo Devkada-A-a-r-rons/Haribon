@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../theme/app_colors.dart';
 
@@ -34,7 +34,7 @@ class ChatInput extends StatelessWidget {
                 controller: controller,
                 decoration: InputDecoration(
                   hintText: 'Ask Haribon AI anything...',
-                  hintStyle: GoogleFonts.inter(
+                  hintStyle: GoogleFonts.poppins(
                     color: AppColors.textTertiary.withValues(alpha: 0.6),
                     fontSize: 14,
                   ),
@@ -82,3 +82,4 @@ class ChatInput extends StatelessWidget {
     );
   }
 }
+

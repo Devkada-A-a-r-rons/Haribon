@@ -21,7 +21,7 @@ class _ExpensePlannerContentState extends State<ExpensePlannerContent> {
         // Food & Dining
         Row(
           children: [
-            const Icon(Icons.restaurant, size: 16, color: AppColors.blueGreyDark),
+            const Icon(Icons.restaurant, size: 16, color: AppColors.primaryMain),
             const SizedBox(width: 8),
             Text('Food & Dining', style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700)),
           ],
@@ -35,7 +35,7 @@ class _ExpensePlannerContentState extends State<ExpensePlannerContent> {
           ],
         ),
         const SizedBox(height: 12),
-        Text('Style', style: theme.textTheme.labelSmall?.copyWith(color: AppColors.blueGreySecondary)),
+        Text('Style', style: theme.textTheme.labelSmall?.copyWith(color: AppColors.textTertiary)),
         const SizedBox(height: 8),
         Row(
           children: [
@@ -54,7 +54,7 @@ class _ExpensePlannerContentState extends State<ExpensePlannerContent> {
           children: [
             Row(
               children: [
-                const Icon(Icons.bed, size: 16, color: AppColors.blueGreyDark),
+                const Icon(Icons.bed, size: 16, color: AppColors.primaryMain),
                 const SizedBox(width: 8),
                 Text('Accommodation', style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700)),
               ],
@@ -68,7 +68,7 @@ class _ExpensePlannerContentState extends State<ExpensePlannerContent> {
                     _accommodationEnabled = v;
                   });
                 }, 
-                activeColor: AppColors.tealDark
+                activeColor: AppColors.primaryMain
               ),
             ),
           ],
@@ -82,11 +82,11 @@ class _ExpensePlannerContentState extends State<ExpensePlannerContent> {
           ],
         ),
         const SizedBox(height: 12),
-        Text('Type', style: theme.textTheme.labelSmall?.copyWith(color: AppColors.blueGreySecondary)),
+        Text('Type', style: theme.textTheme.labelSmall?.copyWith(color: AppColors.textTertiary)),
         const SizedBox(height: 8),
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-          decoration: BoxDecoration(color: AppColors.greyLightest, borderRadius: BorderRadius.circular(8)),
+          decoration: BoxDecoration(color: AppColors.containerLow, borderRadius: BorderRadius.circular(8)),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -110,12 +110,12 @@ class _ExpensePlannerContentState extends State<ExpensePlannerContent> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(label, style: theme.textTheme.labelSmall?.copyWith(color: AppColors.blueGreySecondary)),
+        Text(label, style: theme.textTheme.labelSmall?.copyWith(color: AppColors.textTertiary)),
         const SizedBox(height: 4),
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
           decoration: BoxDecoration(
-            color: AppColors.greyLightest,
+            color: AppColors.containerLow,
             borderRadius: BorderRadius.circular(8),
           ),
           child: Text(value, style: theme.textTheme.bodySmall?.copyWith(fontWeight: FontWeight.bold)),
@@ -128,13 +128,13 @@ class _ExpensePlannerContentState extends State<ExpensePlannerContent> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
       decoration: BoxDecoration(
-        color: isSelected ? AppColors.blueGreyDark : AppColors.greyLightest,
+        color: isSelected ? AppColors.primaryMain : AppColors.containerLow,
         borderRadius: BorderRadius.circular(16),
       ),
       child: Text(
         label,
         style: theme.textTheme.labelSmall?.copyWith(
-          color: isSelected ? Colors.white : AppColors.blueGreySecondary,
+          color: isSelected ? Colors.white : AppColors.textTertiary,
         ),
       ),
     );
@@ -152,7 +152,7 @@ class _ExpensePlannerContentState extends State<ExpensePlannerContent> {
           Container(
             padding: const EdgeInsets.all(8),
             decoration: const BoxDecoration(color: AppColors.greySoftBg, shape: BoxShape.circle),
-            child: Icon(icon, size: 16, color: AppColors.blueGreyDark),
+            child: Icon(icon, size: 16, color: AppColors.primaryMain),
           ),
           const SizedBox(width: 12),
           Expanded(
@@ -160,7 +160,7 @@ class _ExpensePlannerContentState extends State<ExpensePlannerContent> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(title, style: theme.textTheme.bodySmall?.copyWith(fontWeight: FontWeight.bold)),
-                Text(subtitle, style: theme.textTheme.labelSmall?.copyWith(color: AppColors.blueGreySecondary)),
+                Text(subtitle, style: theme.textTheme.labelSmall?.copyWith(color: AppColors.textTertiary)),
               ],
             ),
           ),

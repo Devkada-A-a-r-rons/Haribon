@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'summary_header.dart';
 import 'summary_shared.dart';
@@ -64,7 +64,7 @@ class _FuelStopRow extends StatelessWidget {
           child: Center(
             child: Text(
               '${index + 1}',
-              style: GoogleFonts.inter(
+              style: GoogleFonts.poppins(
                 fontSize: 13,
                 fontWeight: FontWeight.w700,
                 color: stop.brandColor,
@@ -81,17 +81,17 @@ class _FuelStopRow extends StatelessWidget {
             children: [
               Text(
                 stop.stationName,
-                style: GoogleFonts.inter(
+                style: GoogleFonts.poppins(
                   fontSize: 14,
                   fontWeight: FontWeight.w600,
-                  color: AppColors.navyDarkest,
+                  color: AppColors.textPrimary,
                 ),
                 overflow: TextOverflow.ellipsis,
               ),
               const SizedBox(height: 3),
               Text(
-                '${stop.liters.toStringAsFixed(1)} L  ·  ₱${stop.pricePerLiter.toStringAsFixed(2)}/L',
-                style: GoogleFonts.inter(
+                '${stop.liters.toStringAsFixed(1)} L  Â·  â‚±${stop.pricePerLiter.toStringAsFixed(2)}/L',
+                style: GoogleFonts.poppins(
                   fontSize: 12,
                   color: AppColors.greyAccent,
                 ),
@@ -105,8 +105,8 @@ class _FuelStopRow extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             Text(
-              '₱${stop.totalCost.toStringAsFixed(0)}',
-              style: GoogleFonts.inter(
+              'â‚±${stop.totalCost.toStringAsFixed(0)}',
+              style: GoogleFonts.poppins(
                 fontSize: 15,
                 fontWeight: FontWeight.w700,
                 color: SummaryColors.primary,
@@ -114,7 +114,7 @@ class _FuelStopRow extends StatelessWidget {
             ),
             Text(
               stop.brand,
-              style: GoogleFonts.inter(
+              style: GoogleFonts.poppins(
                 fontSize: 11,
                 color: stop.brandColor,
                 fontWeight: FontWeight.w600,
@@ -126,3 +126,4 @@ class _FuelStopRow extends StatelessWidget {
     );
   }
 }
+

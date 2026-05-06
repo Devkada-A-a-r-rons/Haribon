@@ -17,150 +17,152 @@ class HomeLatestTripCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: AppColors.containerLowest,
-        borderRadius: BorderRadius.circular(24),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.05),
-            blurRadius: 15,
-            offset: const Offset(0, 5),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Stack(
-            children: [
-              ClipRRect(
-                borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
-                child: Image.asset(
-                  'assets/scenic_road_trip.png',
-                  height: 180,
-                  width: double.infinity,
-                  fit: BoxFit.cover,
-                  errorBuilder: (context, error, stackTrace) => Container(
-                    height: 180,
-                    color: AppColors.primaryLight,
-                    child: const Icon(Icons.image, size: 50, color: AppColors.primaryMain),
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(24),
+      child: SizedBox(
+        height: 260,
+        width: double.infinity,
+        child: Stack(
+          fit: StackFit.expand,
+          children: [
+            // Background image
+            Image.asset(
+              'assets/scenic_road_trip.png',
+              fit: BoxFit.cover,
+              errorBuilder: (context, error, stackTrace) => Container(
+                color: AppColors.primaryLight,
+                child: const Icon(Icons.image, size: 50, color: AppColors.primaryMain),
+              ),
+            ),
+
+            // Gradient overlay
+            Container(
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  stops: [0.0, 0.35, 1.0],
+                  colors: [
+                    Colors.transparent,
+                    Colors.transparent,
+                    Colors.black87,
+                  ],
+                ),
+              ),
+            ),
+
+            // Top badge
+            Positioned(
+              top: 16,
+              left: 16,
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                decoration: BoxDecoration(
+                  color: Colors.black.withOpacity(0.4),
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(color: Colors.white24),
+                ),
+                child: Text(
+                  summary.efficiencyRating == 'Active Plan' ? 'Active Plan' : 'Latest Trip',
+                  style: GoogleFonts.poppins(
+                    color: Colors.white,
+                    fontSize: 12,
+                    fontWeight: FontWeight.w700,
                   ),
                 ),
               ),
-              Positioned(
-                top: 16,
-                left: 16,
+            ),
+
+            // Map view button
+            Positioned(
+              top: 16,
+              right: 16,
+              child: GestureDetector(
+                onTap: onViewMap,
                 child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                  padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                    color: Colors.black.withValues(alpha: 0.4),
+                    color: Colors.black.withOpacity(0.4),
                     borderRadius: BorderRadius.circular(12),
                     border: Border.all(color: Colors.white24),
                   ),
-                  child: Text(
-                    summary.efficiencyRating == 'Active Plan' ? 'Active Plan' : 'Latest Trip',
-                    style: GoogleFonts.inter(
-                      color: Colors.white,
-                      fontSize: 12,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
+                  child: const Icon(Icons.map_rounded, color: Colors.white, size: 20),
                 ),
               ),
-              Positioned.fill(
-                child: GestureDetector(
-                  onTap: onViewMap,
-                  child: Center(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
+            ),
+
+            // Bottom info overlay
+            Positioned(
+              left: 0,
+              right: 0,
+              bottom: 0,
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(14, 0, 14, 14),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      '${summary.origin} to ${summary.destination}',
+                      style: GoogleFonts.poppins(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w800,
+                        color: Colors.white,
+                        height: 1.2,
+                        shadows: [
+                          Shadow(color: Colors.black54, blurRadius: 8, offset: Offset(0, 2)),
+                          Shadow(color: Colors.black38, blurRadius: 16, offset: Offset(0, 4)),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      summary.date,
+                      style: GoogleFonts.poppins(
+                        fontSize: 11,
+                        color: Colors.white70,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    Row(
                       children: [
-                        Container(
-                          padding: const EdgeInsets.all(12),
-                          decoration: BoxDecoration(
-                            color: Colors.white.withValues(alpha: 0.2),
-                            shape: BoxShape.rectangle,
-                            borderRadius: BorderRadius.circular(12),
-                            border: Border.all(color: Colors.white24),
-                          ),
-                          child: const Icon(Icons.map_rounded, color: Colors.white, size: 28),
-                        ),
-                        const SizedBox(height: 8),
-                        Text(
-                          'Map View',
-                          style: GoogleFonts.inter(
-                            color: Colors.white,
-                            fontSize: 12,
-                            fontWeight: FontWeight.w600,
-                          ),
+                        _TripStat(label: 'DISTANCE', value: '${summary.distanceKm.toInt()} km'),
+                        const SizedBox(width: 24),
+                        _TripStat(
+                          label: 'EFFICIENCY',
+                          value: '${summary.efficiencyScore}/100',
+                          valueColor: AppColors.success,
                         ),
                       ],
                     ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-          Padding(
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  '${summary.origin} to ${summary.destination}',
-                  style: GoogleFonts.inter(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w800,
-                    color: AppColors.textPrimary,
-                  ),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  summary.date,
-                  style: GoogleFonts.inter(
-                    fontSize: 14,
-                    color: AppColors.textTertiary,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                const SizedBox(height: 20),
-                Row(
-                  children: [
-                    _TripStat(label: 'DISTANCE', value: '${summary.distanceKm.toInt()} km'),
-                    const SizedBox(width: 40),
-                    _TripStat(
-                      label: 'EFFICIENCY', 
-                      value: '${summary.efficiencyScore}/100', 
-                      valueColor: AppColors.success,
+                    const SizedBox(height: 10),
+                    SizedBox(
+                      width: double.infinity,
+                      child: OutlinedButton(
+                        onPressed: onViewSummary,
+                        style: OutlinedButton.styleFrom(
+                          side: const BorderSide(color: Colors.white60, width: 1.5),
+                          shape: const StadiumBorder(),
+                          padding: const EdgeInsets.symmetric(vertical: 10),
+                          backgroundColor: Colors.transparent,
+                        ),
+                        child: Text(
+                          'View Full Summary',
+                          style: GoogleFonts.poppins(
+                            fontSize: 13,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 24),
-                SizedBox(
-                  width: double.infinity,
-                  child: FilledButton(
-                    onPressed: onViewSummary,
-                    style: FilledButton.styleFrom(
-                      backgroundColor: AppColors.blueAccent,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(50),
-                      ),
-                      padding: const EdgeInsets.symmetric(vertical: 16),
-                    ),
-                    child: Text(
-                      'View Full Summary',
-                      style: GoogleFonts.inter(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -171,11 +173,7 @@ class _TripStat extends StatelessWidget {
   final String value;
   final Color? valueColor;
 
-  const _TripStat({
-    required this.label,
-    required this.value,
-    this.valueColor,
-  });
+  const _TripStat({required this.label, required this.value, this.valueColor});
 
   @override
   Widget build(BuildContext context) {
@@ -184,20 +182,20 @@ class _TripStat extends StatelessWidget {
       children: [
         Text(
           label,
-          style: GoogleFonts.inter(
-            fontSize: 11,
-            fontWeight: FontWeight.w700,
-            color: AppColors.textTertiary,
+          style: GoogleFonts.poppins(
+            fontSize: 9,
+            fontWeight: FontWeight.w600,
+            color: Colors.white60,
             letterSpacing: 0.5,
           ),
         ),
-        const SizedBox(height: 4),
+        const SizedBox(height: 1),
         Text(
           value,
-          style: GoogleFonts.inter(
-            fontSize: 18,
+          style: GoogleFonts.poppins(
+            fontSize: 14,
             fontWeight: FontWeight.w800,
-            color: valueColor ?? AppColors.textPrimary,
+            color: valueColor ?? Colors.white,
           ),
         ),
       ],

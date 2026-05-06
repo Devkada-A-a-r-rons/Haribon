@@ -1,4 +1,4 @@
-import 'dart:math' as math;
+﻿import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'summary_header.dart';
@@ -69,7 +69,7 @@ class _EfficiencyScoreGaugeState extends State<EfficiencyScoreGauge>
               children: [
                 Text(
                   widget.rating,
-                  style: GoogleFonts.inter(
+                  style: GoogleFonts.poppins(
                     fontSize: 18,
                     fontWeight: FontWeight.w700,
                     color: SummaryColors.eco,
@@ -78,7 +78,7 @@ class _EfficiencyScoreGaugeState extends State<EfficiencyScoreGauge>
                 const SizedBox(height: 4),
                 Text(
                   widget.percentileLabel,
-                  style: GoogleFonts.inter(
+                  style: GoogleFonts.poppins(
                     fontSize: 13,
                     color: AppColors.greyAccent,
                   ),
@@ -111,7 +111,7 @@ class _ScoreRing extends StatelessWidget {
             children: [
               Text(
                 '${(score * progress).round()}',
-                style: GoogleFonts.inter(
+                style: GoogleFonts.poppins(
                   fontSize: 42,
                   fontWeight: FontWeight.w800,
                   color: SummaryColors.primary,
@@ -120,7 +120,7 @@ class _ScoreRing extends StatelessWidget {
               ),
               Text(
                 'out of 100',
-                style: GoogleFonts.inter(
+                style: GoogleFonts.poppins(
                   fontSize: 11,
                   color: AppColors.greyAccent,
                   fontWeight: FontWeight.w500,
@@ -151,7 +151,7 @@ class _RingPainter extends CustomPainter {
       center,
       radius,
       Paint()
-        ..color = AppColors.blueSoftBg
+        ..color = AppColors.primaryLight
         ..style = PaintingStyle.stroke
         ..strokeWidth = strokeWidth
         ..strokeCap = StrokeCap.round,
@@ -163,8 +163,8 @@ class _RingPainter extends CustomPainter {
       ..shader = const SweepGradient(
         startAngle: -math.pi / 2,
         endAngle: 3 * math.pi / 2,
-        colors: [AppColors.bluePrimary, AppColors.greenPrimary, AppColors.greenDark],
-        stops: [0.0, 0.65, 1.0],
+        colors: [AppColors.primaryMain, AppColors.success],
+        stops: [0.0, 1.0],
       ).createShader(rect)
       ..style = PaintingStyle.stroke
       ..strokeWidth = strokeWidth
@@ -178,3 +178,4 @@ class _RingPainter extends CustomPainter {
   bool shouldRepaint(_RingPainter old) =>
       old.progress != progress || old.score != score;
 }
+

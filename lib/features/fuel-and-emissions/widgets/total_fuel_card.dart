@@ -16,7 +16,7 @@ class TotalFuelCard extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.containerLowest,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(color: Colors.black.withOpacity(0.02), blurRadius: 10, offset: const Offset(0, 4)),
@@ -30,7 +30,7 @@ class TotalFuelCard extends StatelessWidget {
             style: textTheme.labelSmall?.copyWith(
               fontWeight: FontWeight.w800,
               letterSpacing: 1.2,
-              color: AppColors.navyDarker,
+              color: AppColors.textPrimary,
               fontSize: 10,
             ),
           ),
@@ -39,17 +39,17 @@ class TotalFuelCard extends StatelessWidget {
             '${liters.toStringAsFixed(1)}L',
             style: textTheme.headlineLarge?.copyWith(
               fontWeight: FontWeight.w900,
-              color: AppColors.blueGreyDark,
+              color: AppColors.primaryMain,
               fontSize: 40,
             ),
           ),
           const SizedBox(height: 12),
           RichText(
             text: TextSpan(
-              style: textTheme.bodySmall?.copyWith(color: AppColors.blueGreySecondary),
+              style: textTheme.bodySmall?.copyWith(color: AppColors.textTertiary),
               children: [
                 const TextSpan(text: 'Base Fuel '),
-                TextSpan(text: '${baseLiters.toStringAsFixed(1)}L', style: textTheme.bodySmall?.copyWith(color: AppColors.blueGreyDark, fontWeight: FontWeight.bold)),
+                TextSpan(text: '${baseLiters.toStringAsFixed(1)}L', style: textTheme.bodySmall?.copyWith(color: AppColors.primaryMain, fontWeight: FontWeight.bold)),
                 const TextSpan(text: ' | Extra Fuel '),
                 TextSpan(text: '+${extraLiters.toStringAsFixed(1)}L', style: textTheme.bodySmall?.copyWith(color: AppColors.redDark, fontWeight: FontWeight.bold)),
               ],

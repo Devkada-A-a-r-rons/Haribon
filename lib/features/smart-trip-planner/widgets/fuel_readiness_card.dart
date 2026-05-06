@@ -29,7 +29,7 @@ class FuelReadinessCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.containerLowest,
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(color: Colors.black.withOpacity(0.03), blurRadius: 10, offset: const Offset(0, 4)),
@@ -41,7 +41,7 @@ class FuelReadinessCard extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Icon(Icons.local_gas_station_outlined, color: AppColors.blueGreyDark),
+              const Icon(Icons.local_gas_station_outlined, color: AppColors.primaryMain),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                 decoration: BoxDecoration(
@@ -64,17 +64,17 @@ class FuelReadinessCard extends StatelessWidget {
           const SizedBox(height: 2),
           Text(
             'Current Tank: ${currentLiters.toStringAsFixed(1)}L (${currentRange.toStringAsFixed(0)}km range)',
-            style: textTheme.bodySmall?.copyWith(color: AppColors.blueGreySecondary),
+            style: textTheme.bodySmall?.copyWith(color: AppColors.textTertiary),
           ),
           const SizedBox(height: 16),
           Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: AppColors.greyLightest,
+              color: AppColors.containerLow,
               borderRadius: BorderRadius.circular(8),
               border: Border(
                 left: BorderSide(
-                  color: isReady ? AppColors.tealPrimary : AppColors.redDark,
+                  color: isReady ? AppColors.primaryMain : AppColors.redDark,
                   width: 3,
                 ),
               ),
@@ -83,7 +83,7 @@ class FuelReadinessCard extends StatelessWidget {
               isReady
                   ? 'You have enough fuel for the ${distanceKm.toStringAsFixed(0)}km trip to $destination.'
                   : 'Warning: ${deficit.toStringAsFixed(1)}L more needed for the ${distanceKm.toStringAsFixed(0)}km trip to $destination.',
-              style: textTheme.bodySmall?.copyWith(color: AppColors.navyDarker, fontWeight: FontWeight.w500),
+              style: textTheme.bodySmall?.copyWith(color: AppColors.textPrimary, fontWeight: FontWeight.w500),
             ),
           ),
         ],

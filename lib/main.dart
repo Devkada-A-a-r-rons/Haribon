@@ -107,7 +107,9 @@ class _MainScreenState extends State<MainScreen> {
                   _currentIndex = 6; // Switch to Chatbot
                 });
               },
-              backgroundColor: AppColors.blueAccent,
+              backgroundColor: AppColors.blueAccent.withValues(alpha: 0.5),
+              elevation: 0,
+              shape: const CircleBorder(),
               child: const Icon(Icons.auto_awesome, color: Colors.white),
             ),
           ),

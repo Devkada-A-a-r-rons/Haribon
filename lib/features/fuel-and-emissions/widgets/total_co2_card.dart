@@ -15,7 +15,7 @@ class TotalCo2Card extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.containerLowest,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(color: Colors.black.withOpacity(0.02), blurRadius: 10, offset: const Offset(0, 4)),
@@ -29,7 +29,7 @@ class TotalCo2Card extends StatelessWidget {
             style: textTheme.labelSmall?.copyWith(
               fontWeight: FontWeight.w800,
               letterSpacing: 1.2,
-              color: AppColors.navyDarker,
+              color: AppColors.textPrimary,
               fontSize: 10,
             ),
           ),
@@ -38,19 +38,19 @@ class TotalCo2Card extends StatelessWidget {
             '${co2.toStringAsFixed(1)} kg',
             style: textTheme.headlineMedium?.copyWith(
               fontWeight: FontWeight.w800,
-              color: AppColors.tealDark,
+              color: AppColors.success,
               fontSize: 28,
             ),
           ),
           const SizedBox(height: 12),
           Row(
             children: [
-              const Icon(Icons.park, size: 16, color: AppColors.tealDark),
+              const Icon(Icons.park, size: 16, color: AppColors.success),
               const SizedBox(width: 8),
               Expanded(
                 child: Text(
                   'Equivalent to $trees tree${trees == 1 ? '' : 's'} needed to offset',
-                  style: textTheme.bodySmall?.copyWith(color: AppColors.tealDark),
+                  style: textTheme.bodySmall?.copyWith(color: AppColors.success),
                 ),
               ),
             ],

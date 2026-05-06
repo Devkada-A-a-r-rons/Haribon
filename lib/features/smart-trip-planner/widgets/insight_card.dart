@@ -12,7 +12,7 @@ class InsightCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.containerLowest,
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(color: Colors.black.withOpacity(0.03), blurRadius: 10, offset: const Offset(0, 4)),
@@ -23,12 +23,12 @@ class InsightCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              const Icon(Icons.lightbulb_outline, color: AppColors.blueGreyDark, size: 18),
+              const Icon(Icons.lightbulb_outline, color: AppColors.primaryMain, size: 18),
               const SizedBox(width: 8),
               Text(
                 'AI Budget Insights',
                 style: theme.textTheme.titleMedium?.copyWith(
-                  color: AppColors.blueGreyDark,
+                  color: AppColors.primaryMain,
                   fontWeight: FontWeight.w600,
                 ),
               ),
@@ -38,8 +38,8 @@ class InsightCard extends StatelessWidget {
           ...insights.asMap().entries.map((entry) {
             final index = entry.key;
             final text = entry.value;
-            Color dotColor = AppColors.blueGreyDark;
-            if (index == 0) dotColor = AppColors.tealDark;
+            Color dotColor = AppColors.primaryMain;
+            if (index == 0) dotColor = AppColors.primaryMain;
             if (text.toLowerCase().contains('budget') && text.toLowerCase().contains('over')) dotColor = AppColors.redDark;
             
             return Padding(
@@ -69,7 +69,7 @@ class InsightCard extends StatelessWidget {
           child: Text(
             text,
             style: theme.textTheme.bodySmall?.copyWith(
-              color: AppColors.navyDarker,
+              color: AppColors.textPrimary,
               height: 1.4,
             ),
           ),

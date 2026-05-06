@@ -47,7 +47,7 @@ class _VisualBreakdownCardState extends State<VisualBreakdownCard> {
       width: double.infinity,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.containerLowest,
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(color: Colors.black.withOpacity(0.03), blurRadius: 10, offset: const Offset(0, 4)),
@@ -69,7 +69,7 @@ class _VisualBreakdownCardState extends State<VisualBreakdownCard> {
                   child: CircularProgressIndicator(
                     value: largestPct,
                     backgroundColor: AppColors.greySoftBg,
-                    color: AppColors.blueGreyDark,
+                    color: AppColors.primaryMain,
                     strokeWidth: 16,
                     strokeCap: StrokeCap.round,
                   ),
@@ -78,7 +78,7 @@ class _VisualBreakdownCardState extends State<VisualBreakdownCard> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text('Largest', style: theme.textTheme.labelSmall?.copyWith(color: AppColors.greyLightAccent, fontSize: 8)),
-                    Text(largestCategory, style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold, color: AppColors.navyDarker, fontSize: 14)),
+                    Text(largestCategory, style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold, color: AppColors.textPrimary, fontSize: 14)),
                     Text('${(largestPct * 100).toStringAsFixed(0)}%', style: theme.textTheme.labelSmall?.copyWith(color: AppColors.greyLightAccent, fontSize: 10)),
                   ],
                 ),
@@ -92,7 +92,7 @@ class _VisualBreakdownCardState extends State<VisualBreakdownCard> {
               Text(
                 'Visual Breakdown',
                 style: theme.textTheme.titleMedium?.copyWith(
-                  color: AppColors.navyDarker,
+                  color: AppColors.textPrimary,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -100,16 +100,16 @@ class _VisualBreakdownCardState extends State<VisualBreakdownCard> {
                 onPressed: () => setState(() => _showDetails = !_showDetails),
                 icon: Icon(_showDetails ? Icons.visibility_off_outlined : Icons.calculate_outlined, size: 14),
                 label: Text(_showDetails ? 'Hide Detail' : 'Show Math', style: const TextStyle(fontSize: 10)),
-                style: TextButton.styleFrom(foregroundColor: AppColors.tealPrimary),
+                style: TextButton.styleFrom(foregroundColor: AppColors.primaryMain),
               ),
             ],
           ),
           const SizedBox(height: 8),
-          _buildLegendRow(theme, AppColors.blueGreyDark, 'Fuel', '₱${widget.fuelCost.toStringAsFixed(0)} (${(fuelPct * 100).toStringAsFixed(0)}%)'),
+          _buildLegendRow(theme, AppColors.primaryMain, 'Fuel', '₱${widget.fuelCost.toStringAsFixed(0)} (${(fuelPct * 100).toStringAsFixed(0)}%)'),
           const SizedBox(height: 12),
           _buildLegendRow(theme, AppColors.bluePale, 'Tolls', '₱${widget.tollCost.toStringAsFixed(0)} (${(tollPct * 100).toStringAsFixed(0)}%)'),
           const SizedBox(height: 12),
-          _buildLegendRow(theme, AppColors.tealDark, 'Food/Misc', '₱${widget.otherCost.toStringAsFixed(0)} (${(otherPct * 100).toStringAsFixed(0)}%)'),
+          _buildLegendRow(theme, AppColors.primaryMain, 'Food/Misc', '₱${widget.otherCost.toStringAsFixed(0)} (${(otherPct * 100).toStringAsFixed(0)}%)'),
           
           if (_showDetails) ...[
             const SizedBox(height: 20),
@@ -117,7 +117,7 @@ class _VisualBreakdownCardState extends State<VisualBreakdownCard> {
             const SizedBox(height: 12),
             Align(
               alignment: Alignment.centerLeft,
-              child: Text('Computation Breakdown', style: theme.textTheme.labelMedium?.copyWith(fontWeight: FontWeight.bold, color: AppColors.navyDarker)),
+              child: Text('Computation Breakdown', style: theme.textTheme.labelMedium?.copyWith(fontWeight: FontWeight.bold, color: AppColors.textPrimary)),
             ),
             const SizedBox(height: 8),
             _buildMathRow(theme, 'Fuel', '(${widget.distanceKm?.toStringAsFixed(0)}km ÷ ${widget.kmPerLiter?.toStringAsFixed(1)}km/L) × ₱${widget.fuelPrice?.toStringAsFixed(1)}'),
@@ -135,8 +135,8 @@ class _VisualBreakdownCardState extends State<VisualBreakdownCard> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(label, style: const TextStyle(fontSize: 9, fontWeight: FontWeight.bold, color: AppColors.blueGreySecondary)),
-          Text(formula, style: const TextStyle(fontSize: 10, color: AppColors.navyDarker, fontStyle: FontStyle.italic)),
+          Text(label, style: const TextStyle(fontSize: 9, fontWeight: FontWeight.bold, color: AppColors.textTertiary)),
+          Text(formula, style: const TextStyle(fontSize: 10, color: AppColors.textPrimary, fontStyle: FontStyle.italic)),
         ],
       ),
     );
@@ -148,9 +148,9 @@ class _VisualBreakdownCardState extends State<VisualBreakdownCard> {
         Container(width: 8, height: 8, decoration: BoxDecoration(color: dotColor, shape: BoxShape.circle)),
         const SizedBox(width: 12),
         Expanded(
-          child: Text(label, style: theme.textTheme.bodySmall?.copyWith(color: AppColors.blueGreySecondary)),
+          child: Text(label, style: theme.textTheme.bodySmall?.copyWith(color: AppColors.textTertiary)),
         ),
-        Text(amount, style: theme.textTheme.bodySmall?.copyWith(color: AppColors.navyDarker, fontWeight: FontWeight.bold)),
+        Text(amount, style: theme.textTheme.bodySmall?.copyWith(color: AppColors.textPrimary, fontWeight: FontWeight.bold)),
       ],
     );
   }

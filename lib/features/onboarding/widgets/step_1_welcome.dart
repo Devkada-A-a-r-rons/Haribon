@@ -41,34 +41,6 @@ class _Step1WelcomeState extends State<Step1Welcome> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            // Illustration mock
-            Container(
-              height: 180,
-              decoration: BoxDecoration(
-                color: AppColors.primaryLight.withOpacity(0.3),
-                borderRadius: BorderRadius.circular(24),
-              ),
-              child: Center(
-                child: Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    Positioned(
-                      top: 30,
-                      child: _buildMockCard("Cheapest gas stations near me", Icons.local_gas_station),
-                    ),
-                    Positioned(
-                      top: 70,
-                      child: _buildMockCard("Current fuel price in Baguio", Icons.monetization_on, isPrimary: true),
-                    ),
-                    Positioned(
-                      top: 110,
-                      child: _buildMockCard("How to improve my efficiency?", Icons.trending_up),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            const SizedBox(height: 24),
             RichText(
               textAlign: TextAlign.center,
               text: TextSpan(
@@ -77,9 +49,9 @@ class _Step1WelcomeState extends State<Step1Welcome> {
                       color: AppColors.textPrimary,
                     ),
                 children: [
-                  const TextSpan(text: 'Welcome to '),
+                  const TextSpan(text: 'welcome to '),
                   TextSpan(
-                    text: 'Haribon',
+                    text: 'haribon',
                     style: TextStyle(color: AppColors.primaryMain),
                   ),
                 ],
@@ -94,17 +66,22 @@ class _Step1WelcomeState extends State<Step1Welcome> {
                   ),
             ),
             const SizedBox(height: 32),
-            
+
             // Name Question
             _buildQuestionLabel('What should we call you?'),
             const SizedBox(height: 8),
-            TextField(
-              controller: _nameController,
-              decoration: InputDecoration(
-                hintText: 'Enter your name',
-                suffixIcon: const Padding(
-                  padding: EdgeInsets.all(12.0),
-                  child: Icon(Icons.face_outlined, color: AppColors.textTertiary, size: 20),
+            _buildShadowBox(
+              child: TextField(
+                controller: _nameController,
+                style: const TextStyle(fontSize: 13),
+                decoration: InputDecoration(
+                  hintText: 'Enter your name',
+                  hintStyle: const TextStyle(fontSize: 13),
+                  fillColor: Colors.white,
+                  suffixIcon: const Padding(
+                    padding: EdgeInsets.all(10.0),
+                    child: Icon(Icons.face_outlined, color: AppColors.textTertiary, size: 18),
+                  ),
                 ),
               ),
             ),
@@ -122,33 +99,37 @@ class _Step1WelcomeState extends State<Step1Welcome> {
             // Vehicle Question
             _buildQuestionLabel('What vehicle do you drive?'),
             const SizedBox(height: 8),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              decoration: BoxDecoration(
-                color: AppColors.containerLow,
-                borderRadius: BorderRadius.circular(16),
-              ),
-              child: DropdownButtonHideUnderline(
-                child: DropdownButton<String>(
-                  value: _selectedVehicle,
-                  isExpanded: true,
-                  icon: const Icon(Icons.keyboard_arrow_down, color: AppColors.textTertiary),
-                  items: _vehicles.map((String vehicle) {
-                    return DropdownMenuItem<String>(
-                      value: vehicle,
-                      child: Text(
-                        vehicle,
-                        style: TextStyle(
-                          color: vehicle == 'Select vehicle type' ? AppColors.textTertiary : AppColors.textPrimary,
+            _buildShadowBox(
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(24),
+                ),
+                child: DropdownButtonHideUnderline(
+                  child: DropdownButton<String>(
+                    value: _selectedVehicle,
+                    isExpanded: true,
+                    icon: const Icon(Icons.keyboard_arrow_down, color: AppColors.textTertiary, size: 18),
+                    style: const TextStyle(fontSize: 13, color: AppColors.textPrimary),
+                    items: _vehicles.map((String vehicle) {
+                      return DropdownMenuItem<String>(
+                        value: vehicle,
+                        child: Text(
+                          vehicle,
+                          style: TextStyle(
+                            fontSize: 13,
+                            color: vehicle == 'Select vehicle type' ? AppColors.textTertiary : AppColors.textPrimary,
+                          ),
                         ),
-                      ),
-                    );
-                  }).toList(),
-                  onChanged: (String? newValue) {
-                    if (newValue != null) {
-                      setState(() => _selectedVehicle = newValue);
-                    }
-                  },
+                      );
+                    }).toList(),
+                    onChanged: (String? newValue) {
+                      if (newValue != null) {
+                        setState(() => _selectedVehicle = newValue);
+                      }
+                    },
+                  ),
                 ),
               ),
             ),
@@ -171,18 +152,22 @@ class _Step1WelcomeState extends State<Step1Welcome> {
             // Cost Question
             _buildQuestionLabel('Average refueling cost?'),
             const SizedBox(height: 8),
-            TextField(
-              controller: _costController,
-              keyboardType: const TextInputType.numberWithOptions(decimal: true),
-              decoration: const InputDecoration(
-                prefixIcon: Padding(
-                  padding: EdgeInsets.all(14.0),
-                  child: Text(
-                    '₱',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.textSecondary,
+            _buildShadowBox(
+              child: TextField(
+                controller: _costController,
+                style: const TextStyle(fontSize: 13),
+                keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                decoration: const InputDecoration(
+                  fillColor: Colors.white,
+                  prefixIcon: Padding(
+                    padding: EdgeInsets.all(12.0),
+                    child: Text(
+                      '₱',
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.textSecondary,
+                      ),
                     ),
                   ),
                 ),
@@ -213,13 +198,29 @@ class _Step1WelcomeState extends State<Step1Welcome> {
     );
   }
 
+  Widget _buildShadowBox({required Widget child}) {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(24),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.08),
+            blurRadius: 8,
+            offset: const Offset(0, 3),
+          ),
+        ],
+      ),
+      child: child,
+    );
+  }
+
   Widget _buildQuestionLabel(String label) {
     return Center(
       child: Text(
         label,
         style: Theme.of(context).textTheme.titleSmall?.copyWith(
               fontWeight: FontWeight.bold,
-              color: const Color(0xFF2E59D1), // Specific blue from image
+              color: const Color(0xFF2E59D1),
             ),
       ),
     );
@@ -232,7 +233,7 @@ class _Step1WelcomeState extends State<Step1Welcome> {
         onTap: () => setState(() => _travelFrequency = title),
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 200),
-          padding: const EdgeInsets.symmetric(vertical: 12),
+          padding: const EdgeInsets.symmetric(vertical: 8),
           decoration: BoxDecoration(
             color: isSelected ? Colors.white : Colors.transparent,
             borderRadius: BorderRadius.circular(12),

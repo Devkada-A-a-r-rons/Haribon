@@ -3,7 +3,10 @@
     "allow": [
       "Bash(Get-Item \"D:\\\\franc\\\\ruka_learns\\\\HACKATHON\\\\haribon\\\\assets\\\\images\\\\landing_page.png\")",
       "Bash(Select-Object Name, Length)",
-      "PowerShell(Get-Item *)"
+      "PowerShell(Get-Item *)",
+      "Bash(Get-ChildItem -Path \"D:\\\\franc\\\\ruka_learns\\\\HACKATHON\\\\haribon\\\\lib\" -Recurse -File -Filter \"*.dart\")",
+      "Bash(Select-Object -ExpandProperty FullName)",
+      "Bash(grep -E \"\\\\\\\\\\\\$|summary\\\\.|widget\\\\.\")"
     ]
   }
 }

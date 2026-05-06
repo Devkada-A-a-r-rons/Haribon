@@ -74,14 +74,14 @@ class _RefuelingPlannerContentState extends State<RefuelingPlannerContent> {
             'title': recommended['properties']['name'],
             'subtitle': 'Recommended ${_widgetFuelVolume()}L @ ₱63/L',
             'icon': Icons.local_gas_station,
-            'color': AppColors.tealPrimary,
+            'color': AppColors.primaryMain,
             'highlight': 'Optimal\nPrice'
           },
           {
             'title': backup['properties']['name'],
             'subtitle': 'Backup Station',
             'icon': Icons.circle,
-            'color': AppColors.blueGreyDark,
+            'color': AppColors.primaryMain,
           },
           {
             'title': widget.destination,
@@ -139,7 +139,7 @@ class _RefuelingPlannerContentState extends State<RefuelingPlannerContent> {
                 Container(
                   padding: const EdgeInsets.all(4),
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: AppColors.containerLowest,
                     shape: BoxShape.circle,
                     border: Border.all(color: iconColor, width: 2),
                   ),
@@ -160,8 +160,8 @@ class _RefuelingPlannerContentState extends State<RefuelingPlannerContent> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(title, style: theme.textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold, color: AppColors.navyDarker)),
-                        Text(subtitle, style: theme.textTheme.labelSmall?.copyWith(color: isRed ? AppColors.redDark : AppColors.blueGreySecondary)),
+                        Text(title, style: theme.textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold, color: AppColors.textPrimary)),
+                        Text(subtitle, style: theme.textTheme.labelSmall?.copyWith(color: isRed ? AppColors.redDark : AppColors.textTertiary)),
                       ],
                     ),
                   ),
@@ -169,7 +169,7 @@ class _RefuelingPlannerContentState extends State<RefuelingPlannerContent> {
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                       decoration: BoxDecoration(
-                        color: AppColors.blueGreyDark,
+                        color: AppColors.primaryMain,
                         borderRadius: BorderRadius.circular(4),
                       ),
                       child: Text(

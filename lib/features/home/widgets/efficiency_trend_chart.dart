@@ -1,21 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../theme/app_colors.dart';
+import '../models/home_data_model.dart';
 
 class EfficiencyTrendChart extends StatelessWidget {
   final List<double> data;
   final String trendLabel;
+  final List<HomeStat> stats;
 
   const EfficiencyTrendChart({
-    super.key, 
+    super.key,
     required this.data,
     this.trendLabel = '+5% this month',
+    this.stats = const [],
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(20),
+      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: AppColors.containerLowest,
         borderRadius: BorderRadius.circular(24),
@@ -31,16 +34,16 @@ class EfficiencyTrendChart extends StatelessWidget {
                 children: [
                   Text(
                     'Travel Efficiency',
-                    style: GoogleFonts.inter(
+                    style: GoogleFonts.poppins(
                       fontSize: 18,
                       fontWeight: FontWeight.w800,
-                      color: AppColors.textPrimary,
+                      color: AppColors.primaryMain,
                     ),
                   ),
                   const SizedBox(height: 2),
                   Text(
                     '(km/L based on recent trips)',
-                    style: GoogleFonts.inter(
+                    style: GoogleFonts.poppins(
                       fontSize: 11,
                       fontWeight: FontWeight.w500,
                       color: AppColors.textTertiary,
@@ -49,7 +52,7 @@ class EfficiencyTrendChart extends StatelessWidget {
                   const SizedBox(height: 4),
                   Text(
                     trendLabel,
-                    style: GoogleFonts.inter(
+                    style: GoogleFonts.poppins(
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
                       color: AppColors.success,
@@ -60,68 +63,120 @@ class EfficiencyTrendChart extends StatelessWidget {
               const Icon(Icons.trending_up, color: AppColors.textTertiary, size: 20),
             ],
           ),
-          const SizedBox(height: 24),
+          const SizedBox(height: 12),
           SizedBox(
-            height: 160, // increased height to prevent overflow
+            height: 130,
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.end,
               children: data.asMap().entries.map((entry) {
                 final index = entry.key;
                 final value = entry.value;
                 final isLast = index == data.length - 1;
                 final days = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
-                
-                // Find max value to scale the bars dynamically (minimum scale of 15 km/L)
-                final maxVal = data.isEmpty ? 15.0 : data.reduce((a, b) => a > b ? a : b).clamp(15.0, double.infinity);
-                
-                // Normalize height relative to max value (max height = 100px)
+
+                final maxVal = data.isEmpty
+                    ? 15.0
+                    : data.reduce((a, b) => a > b ? a : b).clamp(15.0, double.infinity);
                 final normalizedHeight = (value / maxVal) * 100;
-                
-                // Handle zero values for days with no driving
                 final isZero = value <= 0;
                 final displayHeight = isZero ? 6.0 : normalizedHeight.clamp(6.0, 100.0);
-                
+                final ratio = maxVal > 0 ? value / maxVal : 0.0;
+                final barColor = isZero
+                    ? AppColors.surfaceDim.withValues(alpha: 0.3)
+                    : ratio >= 0.66
+                        ? const Color(0xFF4CAF50)  // green
+                        : ratio >= 0.33
+                            ? const Color(0xFFFFC107)  // yellow
+                            : const Color(0xFFF44336); // red
+
                 return _ChartBar(
                   height: displayHeight,
                   label: days[index],
                   isActive: isLast,
                   isZero: isZero,
                   value: value,
-                  color: isZero 
-                    ? AppColors.surfaceDim.withValues(alpha: 0.3)
-                    : isLast 
-                      ? AppColors.primaryMain 
-                      : value >= 10.0 ? AppColors.blueAccent.withValues(alpha: 0.6) : AppColors.blueLighterBg,
+                  color: barColor,
                 );
               }).toList(),
             ),
           ),
-          const SizedBox(height: 20),
-          Container(
-            padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              color: AppColors.success.withValues(alpha: 0.1),
-              borderRadius: BorderRadius.circular(16),
-            ),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Icon(Icons.auto_awesome, color: AppColors.success, size: 18),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: Text(
-                    'Your travel efficiency peaked at 12.4 km/L! Avoiding heavy traffic in Manila helped save approximately 2L of fuel.',
-                    style: GoogleFonts.inter(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600,
-                      color: AppColors.success,
-                      height: 1.4,
+          if (stats.isNotEmpty) ...[
+            const SizedBox(height: 16),
+            Row(
+              children: stats.asMap().entries.map((e) {
+                final stat = e.value;
+                final isLast = e.key == stats.length - 1;
+                return Expanded(
+                  child: Padding(
+                    padding: EdgeInsets.only(right: isLast ? 0 : 8),
+                    child: Row(
+                      children: [
+                        Icon(stat.icon, color: Colors.black, size: 14),
+                        const SizedBox(width: 6),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                stat.value,
+                                style: GoogleFonts.poppins(
+                                  fontSize: 11,
+                                  fontWeight: FontWeight.w800,
+                                  color: Colors.black,
+                                ),
+                              ),
+                              Text(
+                                stat.label,
+                                style: GoogleFonts.poppins(
+                                  fontSize: 8,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.black54,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                ),
-              ],
+                );
+              }).toList(),
             ),
+          ],
+          const SizedBox(height: 20),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Peak Efficiency',
+                style: GoogleFonts.poppins(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.textTertiary,
+                ),
+              ),
+              const SizedBox(height: 4),
+              Text(
+                '12.4 km/L',
+                style: GoogleFonts.poppins(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w800,
+                  color: AppColors.textPrimary,
+                  height: 1.1,
+                ),
+              ),
+              const SizedBox(height: 6),
+              Text(
+                'Avoiding heavy traffic in Manila helped save approximately 2L of fuel.',
+                style: GoogleFonts.poppins(
+                  fontSize: 11,
+                  fontWeight: FontWeight.w500,
+                  color: AppColors.textTertiary,
+                  height: 1.4,
+                ),
+              ),
+            ],
           ),
         ],
       ),
@@ -138,8 +193,8 @@ class _ChartBar extends StatelessWidget {
   final Color color;
 
   const _ChartBar({
-    required this.height, 
-    required this.label, 
+    required this.height,
+    required this.label,
     required this.value,
     required this.isActive,
     required this.isZero,
@@ -148,14 +203,15 @@ class _ChartBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Flexible(
+    return SizedBox(
+      width: 40,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           if (isActive) ...[
             Text(
               isZero ? '-' : value.toStringAsFixed(1),
-              style: GoogleFonts.inter(
+              style: GoogleFonts.poppins(
                 fontSize: 10,
                 fontWeight: FontWeight.w800,
                 color: AppColors.primaryMain,
@@ -165,17 +221,17 @@ class _ChartBar extends StatelessWidget {
           ],
           Container(
             margin: const EdgeInsets.symmetric(horizontal: 4),
-            width: double.infinity,
+            width: 16,
             height: height,
             decoration: BoxDecoration(
               color: color,
-              borderRadius: BorderRadius.circular(6),
+              borderRadius: BorderRadius.circular(20),
             ),
           ),
           const SizedBox(height: 8),
           Text(
             label,
-            style: GoogleFonts.inter(
+            style: GoogleFonts.poppins(
               fontSize: 11,
               fontWeight: isActive ? FontWeight.w800 : FontWeight.w600,
               color: isActive ? AppColors.textPrimary : AppColors.textTertiary,

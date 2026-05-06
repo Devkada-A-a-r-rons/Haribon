@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../../theme/app_colors.dart';
 
@@ -10,7 +10,7 @@ class ConsumptionBreakdown extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 20),
       decoration: BoxDecoration(
-        color: AppColors.surfaceBright,
+        color: AppColors.containerLowest,
         borderRadius: BorderRadius.circular(12),
         border: Border.all(color: AppColors.surfaceDim.withOpacity(0.3)),
       ),
@@ -33,11 +33,11 @@ class ConsumptionBreakdown extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Icon(icon, size: 20, color: AppColors.historyBlueGray),
+        Icon(icon, size: 20, color: AppColors.textSecondary),
         const SizedBox(height: 8),
         Text(
           label,
-          style: GoogleFonts.inter(
+          style: GoogleFonts.poppins(
             fontSize: 9,
             fontWeight: FontWeight.w600,
             color: AppColors.textTertiary,
@@ -47,7 +47,7 @@ class ConsumptionBreakdown extends StatelessWidget {
         const SizedBox(height: 4),
         Text(
           value,
-          style: GoogleFonts.inter(
+          style: GoogleFonts.poppins(
             fontSize: 14,
             fontWeight: FontWeight.w800,
             color: AppColors.textPrimary,
@@ -65,3 +65,4 @@ class ConsumptionBreakdown extends StatelessWidget {
     );
   }
 }
+

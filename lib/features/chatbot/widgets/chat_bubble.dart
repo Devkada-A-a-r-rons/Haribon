@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
@@ -47,19 +47,19 @@ class ChatBubble extends StatelessWidget {
                   child: MarkdownBody(
                     data: message.text,
                     styleSheet: MarkdownStyleSheet(
-                      p: GoogleFonts.inter(
+                      p: GoogleFonts.poppins(
                         fontSize: 15,
                         height: 1.4,
                         color: isAi ? AppColors.textPrimary : Colors.white,
                         fontWeight: FontWeight.w500,
                       ),
-                      strong: GoogleFonts.inter(
+                      strong: GoogleFonts.poppins(
                         fontSize: 15,
                         height: 1.4,
                         color: isAi ? AppColors.textPrimary : Colors.white,
                         fontWeight: FontWeight.w800,
                       ),
-                      listBullet: GoogleFonts.inter(
+                      listBullet: GoogleFonts.poppins(
                         fontSize: 15,
                         color: isAi ? AppColors.textPrimary : Colors.white,
                       ),
@@ -69,7 +69,7 @@ class ChatBubble extends StatelessWidget {
                 const SizedBox(height: 6),
                 Text(
                   DateFormat('h:mm a').format(message.timestamp),
-                  style: GoogleFonts.inter(
+                  style: GoogleFonts.poppins(
                     fontSize: 12,
                     color: AppColors.textTertiary,
                     fontWeight: FontWeight.w500,
@@ -109,3 +109,4 @@ class ChatBubble extends StatelessWidget {
     );
   }
 }
+

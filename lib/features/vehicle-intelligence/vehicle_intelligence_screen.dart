@@ -367,13 +367,12 @@ class _VehicleIntelligenceScreenState extends State<VehicleIntelligenceScreen> {
     }
 
     return Scaffold(
-      backgroundColor: AppColors.greyLightest,
+      backgroundColor: AppColors.surfaceMain,
       appBar: const CommonAppBar(title: 'Setup'),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding:
-                const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -417,11 +416,11 @@ class _VehicleIntelligenceScreenState extends State<VehicleIntelligenceScreen> {
                       children: [
                         Container(width: 1, height: 20, color: Colors.grey.withOpacity(0.3)),
                         const SizedBox(width: 12),
-                        const Icon(Icons.route, size: 14, color: AppColors.tealPrimary),
+                        const Icon(Icons.route, size: 14, color: AppColors.primaryMain),
                         const SizedBox(width: 6),
                         Text(
                           '${_routeDistanceKm!.toStringAsFixed(1)} km · ${_routeDurationHrs! < 1 ? (_routeDurationHrs! * 60).toInt().toString() + ' min' : _routeDurationHrs!.toStringAsFixed(1) + ' hrs'}',
-                          style: const TextStyle(fontSize: 10, fontWeight: FontWeight.w600, color: AppColors.tealPrimary),
+                          style: const TextStyle(fontSize: 10, fontWeight: FontWeight.w600, color: AppColors.primaryMain),
                         ),
                       ],
                     ),
@@ -507,7 +506,7 @@ class _VehicleIntelligenceScreenState extends State<VehicleIntelligenceScreen> {
                         Text(
                           '${(_fuelLevel * 100).toInt()}%',
                           style: const TextStyle(
-                            color: AppColors.blueGreyDark,
+                            color: AppColors.primaryMain,
                             fontWeight: FontWeight.w700,
                             fontSize: 22,
                           ),
@@ -550,38 +549,50 @@ class _VehicleIntelligenceScreenState extends State<VehicleIntelligenceScreen> {
                               left / (constraints.maxWidth - 16.0);
                         });
                       },
-                      child: Container(
+                      child: SizedBox(
                         height: 24,
-                        alignment: Alignment.centerLeft,
+                        width: constraints.maxWidth,
                         child: Stack(
-                          alignment: Alignment.centerLeft,
+                          clipBehavior: Clip.none,
                           children: [
-                            Container(
-                              width: constraints.maxWidth,
-                              height: 6,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(3),
-                                gradient: LinearGradient(
-                                  colors: [
-                                    AppColors.redDark,
-                                    AppColors.beigePrimary,
-                                    AppColors.tealDark,
-                                  ],
+                            // Track
+                            Positioned(
+                              top: 9,
+                              left: 0,
+                              right: 0,
+                              child: Container(
+                                height: 6,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(3),
+                                  gradient: const LinearGradient(
+                                    colors: [
+                                      AppColors.redDark,
+                                      AppColors.beigePrimary,
+                                      AppColors.success,
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
+                            // Thumb circle
                             Positioned(
-                              left: _fuelLevel *
-                                  (constraints.maxWidth - 16.0),
+                              top: 0,
+                              left: _fuelLevel * (constraints.maxWidth - 24.0),
                               child: Container(
-                                width: 16,
-                                height: 16,
+                                width: 24,
+                                height: 24,
                                 decoration: BoxDecoration(
                                   color: Colors.white,
                                   shape: BoxShape.circle,
                                   border: Border.all(
-                                      color: AppColors.blueGreyDark,
-                                      width: 2),
+                                      color: AppColors.success, width: 2.5),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black.withValues(alpha: 0.15),
+                                      blurRadius: 4,
+                                      offset: const Offset(0, 2),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),
@@ -615,7 +626,7 @@ class _VehicleIntelligenceScreenState extends State<VehicleIntelligenceScreen> {
                   child: FilledButton.icon(
                     onPressed: _saveConfiguration,
                     style: FilledButton.styleFrom(
-                      backgroundColor: AppColors.tealPrimary,
+                      backgroundColor: AppColors.primaryMain,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
                       ),
@@ -751,7 +762,7 @@ class _VehicleIntelligenceScreenState extends State<VehicleIntelligenceScreen> {
       return const Padding(
         padding: EdgeInsets.symmetric(vertical: 20),
         child: Center(
-          child: CircularProgressIndicator(strokeWidth: 2, color: AppColors.tealPrimary),
+          child: CircularProgressIndicator(strokeWidth: 2, color: AppColors.primaryMain),
         ),
       );
     }
@@ -776,7 +787,7 @@ class _VehicleIntelligenceScreenState extends State<VehicleIntelligenceScreen> {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.containerLowest,
         borderRadius: BorderRadius.circular(12),
       ),
       child: Column(
@@ -831,7 +842,7 @@ class _VehicleIntelligenceScreenState extends State<VehicleIntelligenceScreen> {
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
                       colors: canComplete 
-                        ? [AppColors.tealPrimary, AppColors.tealDark]
+                        ? [AppColors.primaryMain, AppColors.primaryMain]
                         : [Colors.orange, Colors.red],
                     ),
                     borderRadius: BorderRadius.circular(4),
@@ -869,18 +880,18 @@ class _VehicleIntelligenceScreenState extends State<VehicleIntelligenceScreen> {
             Container(
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
-                color: AppColors.tealPrimary.withOpacity(0.05),
+                color: AppColors.primaryMain.withOpacity(0.05),
                 borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: AppColors.tealPrimary.withOpacity(0.1)),
+                border: Border.all(color: AppColors.primaryMain.withOpacity(0.1)),
               ),
               child: Row(
                 children: [
-                  const Icon(Icons.tips_and_updates_outlined, size: 14, color: AppColors.tealDark),
+                  const Icon(Icons.tips_and_updates_outlined, size: 14, color: AppColors.primaryMain),
                   const SizedBox(width: 8),
                   Expanded(
                     child: Text(
                       'Gasoline Insight: High-quality fuels can improve your ${(_kmPerLiter).toStringAsFixed(1)} km/L efficiency for this journey.',
-                      style: const TextStyle(fontSize: 9, color: AppColors.blueGreyDark, height: 1.3),
+                      style: const TextStyle(fontSize: 9, color: AppColors.primaryMain, height: 1.3),
                     ),
                   ),
                 ],

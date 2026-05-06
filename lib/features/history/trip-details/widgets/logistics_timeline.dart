@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../../theme/app_colors.dart';
 
@@ -31,7 +31,7 @@ class _LogisticsTimelineState extends State<LogisticsTimeline> {
               children: [
                 Text(
                   'Logistics Timeline',
-                  style: GoogleFonts.inter(
+                  style: GoogleFonts.poppins(
                     fontSize: 18,
                     fontWeight: FontWeight.w600,
                     color: AppColors.textPrimary,
@@ -59,9 +59,9 @@ class _LogisticsTimelineState extends State<LogisticsTimeline> {
                       _buildTimelineItem(
                         time: '08:15',
                         location: 'ANGELES',
-                        title: 'Shell Angeles • 12L',
-                        trailingText: '₱756',
-                        trailingColor: AppColors.carbonGreenDark,
+                        title: 'Shell Angeles â€¢ 12L',
+                        trailingText: 'â‚±756',
+                        trailingColor: AppColors.success,
                         isFirst: true,
                         isLast: false,
                         isPassed: true,
@@ -95,8 +95,8 @@ class _LogisticsTimelineState extends State<LogisticsTimeline> {
     required bool isLast,
     required bool isPassed,
   }) {
-    final dotColor = isPassed ? AppColors.historyBlueGray : AppColors.surfaceDim;
-    final lineColor = isPassed ? AppColors.historyBlueGray.withOpacity(0.5) : AppColors.surfaceDim;
+    final dotColor = isPassed ? AppColors.textSecondary : AppColors.surfaceDim;
+    final lineColor = isPassed ? AppColors.textSecondary.withOpacity(0.5) : AppColors.surfaceDim;
 
     return IntrinsicHeight(
       child: Row(
@@ -149,17 +149,17 @@ class _LogisticsTimelineState extends State<LogisticsTimeline> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        '$time • $location',
-                        style: GoogleFonts.inter(
+                        '$time â€¢ $location',
+                        style: GoogleFonts.poppins(
                           fontSize: 9,
                           fontWeight: FontWeight.w800,
-                          color: AppColors.historyNavy,
+                          color: AppColors.textPrimary,
                           letterSpacing: 1,
                         ),
                       ),
                       Text(
                         trailingText,
-                        style: GoogleFonts.inter(
+                        style: GoogleFonts.poppins(
                           fontSize: 10,
                           fontWeight: FontWeight.w700,
                           color: trailingColor,
@@ -171,7 +171,7 @@ class _LogisticsTimelineState extends State<LogisticsTimeline> {
                   const SizedBox(height: 8),
                   Text(
                     title,
-                    style: GoogleFonts.inter(
+                    style: GoogleFonts.poppins(
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
                       color: isPassed ? AppColors.textPrimary : AppColors.textSecondary,
@@ -186,3 +186,4 @@ class _LogisticsTimelineState extends State<LogisticsTimeline> {
     );
   }
 }
+

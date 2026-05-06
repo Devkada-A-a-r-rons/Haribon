@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:haribon/theme/app_colors.dart';
 
@@ -11,7 +11,7 @@ class HaribonImageWidget extends StatelessWidget {
       height: 140,
       width: double.infinity,
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.containerLowest,
         borderRadius: BorderRadius.circular(12),
         border: Border.all(color: AppColors.surfaceDim, width: 1),
       ),
@@ -22,7 +22,7 @@ class HaribonImageWidget extends StatelessWidget {
             const Icon(Icons.directions_car, size: 64, color: AppColors.brandHaribon),
             Text(
               'HARIBON',
-              style: GoogleFonts.inter(
+              style: GoogleFonts.poppins(
                 fontSize: 24,
                 fontWeight: FontWeight.w900,
                 color: AppColors.brandHaribon,
@@ -45,15 +45,14 @@ class BirdGradientImageWidget extends StatelessWidget {
       height: 140,
       width: double.infinity,
       decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          colors: [AppColors.historyBlue, AppColors.historyNavy],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
+        color: AppColors.primaryLight,
         borderRadius: BorderRadius.circular(12),
       ),
-      child: const Center(
-        child: Icon(Icons.flutter_dash, size: 80, color: Colors.white),
+      child: Center(
+        child: ColorFiltered(
+          colorFilter: const ColorFilter.mode(AppColors.primaryMain, BlendMode.srcIn),
+          child: Image.asset('assets/images/haribon_logo.png', height: 80, fit: BoxFit.contain),
+        ),
       ),
     );
   }
@@ -68,24 +67,20 @@ class AerovistaImageWidget extends StatelessWidget {
       height: 140,
       width: double.infinity,
       decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          colors: [AppColors.brandAerovistaDark, AppColors.brandAerovistaGreen],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
+        color: AppColors.containerLow,
         borderRadius: BorderRadius.circular(12),
       ),
       child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-             const Icon(Icons.sports_motorsports_outlined, size: 64, color: Colors.white),
-             Text(
+            Icon(Icons.sports_motorsports_outlined, size: 64, color: AppColors.primaryMain),
+            Text(
               'AEROVISTA',
-              style: GoogleFonts.inter(
+              style: GoogleFonts.poppins(
                 fontSize: 20,
                 fontWeight: FontWeight.w900,
-                color: Colors.white,
+                color: AppColors.primaryMain,
                 letterSpacing: 3,
               ),
             ),
@@ -95,3 +90,4 @@ class AerovistaImageWidget extends StatelessWidget {
     );
   }
 }
+

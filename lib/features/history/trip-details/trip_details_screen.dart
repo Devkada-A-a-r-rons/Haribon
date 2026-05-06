@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import '../../../theme/app_colors.dart';
@@ -25,7 +25,7 @@ class TripDetailsScreen extends StatelessWidget {
           children: [
             Text(
               'HISTORICAL ROUTE',
-              style: GoogleFonts.inter(
+              style: GoogleFonts.poppins(
                 fontSize: 10,
                 fontWeight: FontWeight.w700,
                 color: AppColors.textTertiary,
@@ -34,8 +34,8 @@ class TripDetailsScreen extends StatelessWidget {
             ),
             const SizedBox(height: 4),
             Text(
-              '${tripData['origin_name']} → ${tripData['destination_name']}',
-              style: GoogleFonts.inter(
+              '${tripData['origin_name']} â†’ ${tripData['destination_name']}',
+              style: GoogleFonts.poppins(
                 fontSize: 24,
                 fontWeight: FontWeight.w600,
                 color: AppColors.textPrimary,
@@ -43,8 +43,8 @@ class TripDetailsScreen extends StatelessWidget {
             ),
             const SizedBox(height: 4),
             Text(
-              '${DateFormat('MMM d, yyyy').format(DateTime.parse(tripData['created_at']))} • ${(tripData['distance_km'] ?? tripData['route_distance_km'] ?? 0).toStringAsFixed(0)} km',
-              style: GoogleFonts.inter(
+              '${DateFormat('MMM d, yyyy').format(DateTime.parse(tripData['created_at']))} â€¢ ${(tripData['distance_km'] ?? tripData['route_distance_km'] ?? 0).toStringAsFixed(0)} km',
+              style: GoogleFonts.poppins(
                 fontSize: 14,
                 fontWeight: FontWeight.w500,
                 color: AppColors.textSecondary,
@@ -59,7 +59,7 @@ class TripDetailsScreen extends StatelessWidget {
             // Consumption Breakdown
             Text(
               'Consumption Breakdown',
-              style: GoogleFonts.inter(
+              style: GoogleFonts.poppins(
                 fontSize: 18,
                 fontWeight: FontWeight.w600,
                 color: AppColors.textPrimary,
@@ -86,3 +86,4 @@ class TripDetailsScreen extends StatelessWidget {
     );
   }
 }
+

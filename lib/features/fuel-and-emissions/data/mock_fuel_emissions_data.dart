@@ -14,7 +14,7 @@ class MockFuelEmissionsData {
     treesEquivalent: 156,
     consumptionBreakdown: [
       FuelBreakdownItem(category: 'Highway', percentage: '45%', label: '653 L', color: AppColors.brandHaribon),
-      FuelBreakdownItem(category: 'City', percentage: '35%', label: '508 L', color: AppColors.historyBlue),
+      FuelBreakdownItem(category: 'City', percentage: '35%', label: '508 L', color: AppColors.primaryMain),
       FuelBreakdownItem(category: 'Idle', percentage: '15%', label: '217 L', color: AppColors.insightRed),
       FuelBreakdownItem(category: 'Other', percentage: '5%', label: '74 L', color: AppColors.greyLight),
     ],
