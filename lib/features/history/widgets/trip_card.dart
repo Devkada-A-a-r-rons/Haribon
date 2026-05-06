@@ -36,7 +36,6 @@ class TripCard extends StatelessWidget {
         child: Stack(
           fit: StackFit.expand,
           children: [
-            // Fixed background image - Copy style
             Image.asset(
               'assets/scenic_road_trip.png',
               fit: BoxFit.cover,
@@ -45,8 +44,6 @@ class TripCard extends StatelessWidget {
                 child: const Icon(Icons.image, size: 50, color: AppColors.primaryMain),
               ),
             ),
-
-            // Gradient overlay for text readability
             Container(
               decoration: const BoxDecoration(
                 gradient: LinearGradient(
@@ -61,8 +58,6 @@ class TripCard extends StatelessWidget {
                 ),
               ),
             ),
-
-            // Top left badge
             Positioned(
               top: 16,
               left: 16,
@@ -83,10 +78,6 @@ class TripCard extends StatelessWidget {
                 ),
               ),
             ),
-
-            // Map feature - REMOVED, as per user's request.
-
-            // Bottom info overlay containing all the data
             Positioned(
               left: 0,
               right: 0,
@@ -97,7 +88,6 @@ class TripCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    // Route information
                     Text(
                       route,
                       style: GoogleFonts.poppins(
@@ -112,7 +102,6 @@ class TripCard extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 4),
-                    // Date or current journey information
                     Text(
                       date,
                       style: GoogleFonts.poppins(
@@ -122,7 +111,6 @@ class TripCard extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 10),
-                    // Statistics Row
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
@@ -134,7 +122,6 @@ class TripCard extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(height: 10),
-                    // "VIEW DETAILS" button
                     SizedBox(
                       width: double.infinity,
                       child: OutlinedButton(
@@ -146,7 +133,7 @@ class TripCard extends StatelessWidget {
                           backgroundColor: Colors.transparent,
                         ),
                         child: Text(
-                          'VIEW DETAILS', // Use original button text
+                          'VIEW DETAILS', 
                           style: GoogleFonts.poppins(
                             fontSize: 13,
                             fontWeight: FontWeight.w600,
@@ -165,7 +152,6 @@ class TripCard extends StatelessWidget {
     );
   }
 
-  // Helper function to build a statistic column with specific styling.
   Widget _buildStatItem(String label, String value) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -173,7 +159,7 @@ class TripCard extends StatelessWidget {
         Text(
           label,
           style: GoogleFonts.poppins(
-            fontSize: 9, // Small font size
+            fontSize: 9,
             fontWeight: FontWeight.w600,
             color: Colors.white60,
             letterSpacing: 0.5,
@@ -185,9 +171,8 @@ class TripCard extends StatelessWidget {
           style: GoogleFonts.poppins(
             fontSize: 14,
             fontWeight: FontWeight.w800,
-            color: Colors.white, // No specific color, just white
+            color: Colors.white,
             shadows: [
-              // Use text shadows for readability on complex background
               Shadow(color: Colors.black45, blurRadius: 6, offset: Offset(0, 1)),
             ],
           ),
