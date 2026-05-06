@@ -12,6 +12,7 @@ import './features/settings/settings_screen.dart';
 import './features/onboarding/onboarding_screen.dart';
 import './features/onboarding/welcome_screen.dart';
 import './features/history/history_screen.dart';
+import './features/chatbot/widgets/draggable_fab.dart';
 import 'package:haribon/theme/app_colors.dart';
 import 'package:flutter/foundation.dart';
 import 'package:device_preview/device_preview.dart';
@@ -81,31 +82,36 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: IndexedStack(
-        index: _currentIndex,
-        children: _screens,
-      ),
-      bottomNavigationBar: CommonNavBar(
-        activeIndex: _currentIndex,
-        onTabSelected: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
-        },
-      ),
-      floatingActionButton: _currentIndex == 6 
-        ? null 
-        : FloatingActionButton(
-            heroTag: 'main_chatbot_fab',
-            onPressed: () {
+    return Stack(
+      children: [
+        Scaffold(
+          body: IndexedStack(
+            index: _currentIndex,
+            children: _screens,
+          ),
+          bottomNavigationBar: CommonNavBar(
+            activeIndex: _currentIndex,
+            onTabSelected: (index) {
               setState(() {
-                _currentIndex = 6; // Switch to Chatbot
+                _currentIndex = index;
               });
             },
-            backgroundColor: AppColors.blueAccent,
-            child: const Icon(Icons.auto_awesome, color: Colors.white),
           ),
+        ),
+        if (_currentIndex == 0)
+          DraggableFab(
+            child: FloatingActionButton(
+              heroTag: 'main_chatbot_fab',
+              onPressed: () {
+                setState(() {
+                  _currentIndex = 6; // Switch to Chatbot
+                });
+              },
+              backgroundColor: AppColors.blueAccent,
+              child: const Icon(Icons.auto_awesome, color: Colors.white),
+            ),
+          ),
+      ],
     );
   }
 }
