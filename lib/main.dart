@@ -26,7 +26,7 @@ void main() async {
     anonKey: dotenv.env['SUPABASE_ANON_KEY'] ?? '',
   );
 
-  runApp(DevicePreview(enabled: !kReleaseMode, builder: (context) => const MyApp()));
+  runApp(DevicePreview(enabled: true, builder: (context) => const MyApp()));
 }
 
 final RouteObserver<ModalRoute<void>> routeObserver = RouteObserver<ModalRoute<void>>();
