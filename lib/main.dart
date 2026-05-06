@@ -68,16 +68,12 @@ class _MainScreenState extends State<MainScreen> {
   int _currentIndex = 0; // Default to Home
 
   List<Widget> get _screens => [
-    const HomeScreen(),
-    const VehicleIntelligenceScreen(),
-    const SmartTripPlanner(),
-    MainSummaryScreen(
-      onPlanNext: () => setState(() => _currentIndex = 1),
-      onViewAnalysis: () => setState(() => _currentIndex = 5),
-    ),
-    const HistoryScreen(),
-    const FuelAndEmissionsScreen(),
-    const ChatbotScreen(),
+    const HomeScreen(),              // 0 - Home
+    const VehicleIntelligenceScreen(), // 1 - Planner
+    const SmartTripPlanner(),        // 2 - Smart Trip
+    const HistoryScreen(),           // 3 - History
+    const FuelAndEmissionsScreen(),  // 4 - Analysis
+    const ChatbotScreen(),           // 5 - Chatbot (hidden)
   ];
 
   @override
@@ -104,7 +100,7 @@ class _MainScreenState extends State<MainScreen> {
               heroTag: 'main_chatbot_fab',
               onPressed: () {
                 setState(() {
-                  _currentIndex = 6; // Switch to Chatbot
+                  _currentIndex = 5; // Switch to Chatbot
                 });
               },
               backgroundColor: AppColors.blueAccent.withValues(alpha: 0.5),

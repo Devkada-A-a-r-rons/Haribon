@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:latlong2/latlong.dart';
 import '../../core/database/database_service.dart';
@@ -12,6 +12,8 @@ import './models/home_data_model.dart';
 import './widgets/home_greeting.dart';
 import './widgets/home_latest_trip_card.dart';
 import './widgets/efficiency_trend_chart.dart';
+import '../monthly-report/monthly_report_screen.dart';
+import '../timeline/timeline_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -218,14 +220,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 userName: _dashboardData.userName,
                 weeklyCo2Saved: _dashboardData.weeklyCo2Saved,
               ),
-              const SizedBox(height: 16),
-              Row(
-                children: [
-                  _buildShortcutButton(context, icon: Icons.map_outlined, label: 'Plan Trip', color: AppColors.primaryMain, onTap: () {}),
-                  _buildShortcutButton(context, icon: Icons.insert_chart_outlined, label: 'Monthly', color: AppColors.tealDark, onTap: () {}),
-                  _buildShortcutButton(context, icon: Icons.timeline_rounded, label: 'Timeline', color: AppColors.orangeDark, onTap: () {}),
-                ],
-              ),
+
+            
               const SizedBox(height: 16),
               HomeLatestTripCard(
                 summary: _latestTrip,
@@ -260,40 +256,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 stats: _dashboardData.stats,
               ),
               const SizedBox(height: 10),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildShortcutButton(BuildContext context, {required IconData icon, required String label, required Color color, required VoidCallback onTap}) {
-    return Expanded(
-      child: GestureDetector(
-        onTap: onTap,
-        child: Container(
-          margin: const EdgeInsets.symmetric(horizontal: 4),
-          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-          decoration: BoxDecoration(
-            color: color.withValues(alpha: 0.10),
-            borderRadius: BorderRadius.circular(50),
-          ),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(icon, color: color, size: 16),
-              const SizedBox(width: 6),
-              Flexible(
-                child: Text(
-                  label,
-                  overflow: TextOverflow.ellipsis,
-                  style: GoogleFonts.poppins(
-                    fontSize: 11,
-                    fontWeight: FontWeight.w600,
-                    color: color,
-                  ),
-                ),
-              ),
             ],
           ),
         ),

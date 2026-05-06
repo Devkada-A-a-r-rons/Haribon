@@ -16,6 +16,8 @@ import '../../core/services/toll_service.dart';
 import '../../rag_pipeline/llm/gemini_llm_service.dart';
 import 'models/smart_trip_planner_model.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:google_fonts/google_fonts.dart';
+import '../summary/main_summary_screen.dart';
 
 
 class SmartTripPlanner extends StatefulWidget {

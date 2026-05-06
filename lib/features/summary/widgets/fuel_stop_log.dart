@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'summary_header.dart';
 import 'summary_shared.dart';
@@ -20,21 +20,41 @@ class FuelStopLog extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SectionLabel(label: 'FUEL STOPS'),
-          const SizedBox(height: 16),
-          ListView.separated(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemCount: stops.length,
-            separatorBuilder: (_, __) => Padding(
-              padding: const EdgeInsets.only(left: 40),
-              child: Divider(
-                height: 24,
-                color: AppColors.blueSoftBg,
-                thickness: 1,
+          const SizedBox(height: 12),
+          if (stops.isEmpty)
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 12),
+              child: Row(
+                children: [
+                  Icon(Icons.local_gas_station_outlined, color: AppColors.greyAccent, size: 20),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: Text(
+                      'No fuel stops recorded for this trip.',
+                      style: GoogleFonts.poppins(
+                        fontSize: 12,
+                        color: AppColors.greyAccent,
+                      ),
+                    ),
+                  ),
+                ],
               ),
+            )
+          else
+            ListView.separated(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: stops.length,
+              separatorBuilder: (_, __) => Padding(
+                padding: const EdgeInsets.only(left: 40),
+                child: Divider(
+                  height: 24,
+                  color: AppColors.blueSoftBg,
+                  thickness: 1,
+                ),
+              ),
+              itemBuilder: (_, i) => _FuelStopRow(stop: stops[i], index: i),
             ),
-            itemBuilder: (_, i) => _FuelStopRow(stop: stops[i], index: i),
-          ),
         ],
       ),
     );
