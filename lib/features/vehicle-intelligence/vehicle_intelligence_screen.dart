@@ -368,7 +368,7 @@ class _VehicleIntelligenceScreenState extends State<VehicleIntelligenceScreen> {
 
     return Scaffold(
       backgroundColor: AppColors.surfaceMain,
-      appBar: const CommonAppBar(title: 'Setup'),
+      appBar: const CommonAppBar(),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
@@ -382,7 +382,7 @@ class _VehicleIntelligenceScreenState extends State<VehicleIntelligenceScreen> {
                   style: textTheme.headlineMedium?.copyWith(
                     color: Colors.black,
                     fontWeight: FontWeight.w900,
-                    fontSize: 28,
+                    fontSize: 20,
                     height: 1.1,
                   ),
                 ),
@@ -390,7 +390,6 @@ class _VehicleIntelligenceScreenState extends State<VehicleIntelligenceScreen> {
                 Text(
                   'Configure your vehicle\'s specifications to enable precision range estimation and efficiency tracking.',
                   style: textTheme.bodyMedium?.copyWith(
-                    color: Colors.black54,
                     fontSize: 11,
                   ),
                 ),
@@ -628,7 +627,7 @@ class _VehicleIntelligenceScreenState extends State<VehicleIntelligenceScreen> {
                     style: FilledButton.styleFrom(
                       backgroundColor: AppColors.primaryMain,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
+                        borderRadius: BorderRadius.circular(30),
                       ),
                     ),
                     icon: const Text('Save Configuration',
@@ -638,6 +637,14 @@ class _VehicleIntelligenceScreenState extends State<VehicleIntelligenceScreen> {
                   ),
                 ),
                 const SizedBox(height: 16),
+
+                           EfficiencyCard(
+                  kmPerLiter: _kmPerLiter,
+                  litersPerKm: _litersPerKm,
+                  fullTankRangeKm: _fullTankRange,
+                  efficiencyCategory: _efficiencyCategory,
+                ),
+                const SizedBox(height: 12),
 
                 // ── Info Cards ──
                 InfoCard(
@@ -659,7 +666,7 @@ class _VehicleIntelligenceScreenState extends State<VehicleIntelligenceScreen> {
                           Text(
                             '(${_currentLiters.toStringAsFixed(1)} Liters)',
                             style: const TextStyle(
-                                fontSize: 12, color: Colors.black54),
+                                fontSize: 12),
                           ),
                         ],
                       ),
@@ -670,13 +677,11 @@ class _VehicleIntelligenceScreenState extends State<VehicleIntelligenceScreen> {
                             : 'Select a vehicle to see fuel details.',
                         style: const TextStyle(
                             fontSize: 11,
-                            color: Colors.black54,
                             height: 1.2),
                       ),
                     ],
                   ),
                 ),
-                const SizedBox(height: 12),
 
                 InfoCard(
                   icon: Icons.location_on_outlined,
@@ -698,7 +703,7 @@ class _VehicleIntelligenceScreenState extends State<VehicleIntelligenceScreen> {
                         children: [
                           const Text('City Range',
                               style: TextStyle(
-                                  fontSize: 11, color: Colors.black54)),
+                                  fontSize: 11)),
                           Text(
                             _selectedVehicle != null
                                 ? '${_cityRange.toStringAsFixed(0)} km'
@@ -716,7 +721,7 @@ class _VehicleIntelligenceScreenState extends State<VehicleIntelligenceScreen> {
                         children: [
                           const Text('Highway Range',
                               style: TextStyle(
-                                  fontSize: 11, color: Colors.black54)),
+                                  fontSize: 11)),
                           Text(
                             _selectedVehicle != null
                                 ? '${_highwayRange.toStringAsFixed(0)} km'
@@ -730,16 +735,8 @@ class _VehicleIntelligenceScreenState extends State<VehicleIntelligenceScreen> {
                     ],
                   ),
                 ),
-                const SizedBox(height: 12),
 
-                EfficiencyCard(
-                  kmPerLiter: _kmPerLiter,
-                  litersPerKm: _litersPerKm,
-                  fullTankRangeKm: _fullTankRange,
-                  efficiencyCategory: _efficiencyCategory,
-                ),
-                const SizedBox(height: 12),
-
+     
                 // Trip Readiness
                 InfoCard(
                   icon: Icons.route_outlined,
@@ -773,7 +770,7 @@ class _VehicleIntelligenceScreenState extends State<VehicleIntelligenceScreen> {
         child: Text(
           'Enter a route and select a vehicle to check trip readiness.',
           textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 11, fontStyle: FontStyle.italic, color: Colors.black54),
+          style: TextStyle(fontSize: 11, fontStyle: FontStyle.italic),
         ),
       );
     }
