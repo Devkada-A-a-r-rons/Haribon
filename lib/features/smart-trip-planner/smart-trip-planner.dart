@@ -450,9 +450,7 @@ class _SmartTripPlannerState extends State<SmartTripPlanner> {
 
     return Scaffold(
       backgroundColor: AppColors.surfaceMain,
-      appBar: CommonAppBar(
-        title: 'Smart Trip Planner',
-      ),
+      appBar: CommonAppBar(),
       body: RefreshIndicator(
         onRefresh: _loadData,
         child: SingleChildScrollView(

@@ -97,7 +97,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.surfaceMain,
-      appBar: const CommonAppBar(title: 'History'),
+      appBar: const CommonAppBar(),
       body: RefreshIndicator(
         onRefresh: _fetchHistory,
         child: SingleChildScrollView(
@@ -152,14 +152,10 @@ class _HistoryScreenState extends State<HistoryScreen> {
                     child: TripCard(
                       route: '${trip['origin_name'] ?? 'Pampanga'} â†’ ${trip['destination_name'] ?? 'Baguio'}',
                       badgeText: isActive ? 'ACTIVE PLAN' : '$score ${score > 85 ? 'EXCELLENT' : 'GOOD'}',
-                      badgeColor: isActive ? AppColors.primaryMain.withValues(alpha: 0.1) : (score > 85 ? AppColors.badgeExcellentBg : AppColors.badgeGoodBg),
-                      badgeTextColor: isActive ? AppColors.primaryMain : (score > 85 ? AppColors.badgeExcellentText : AppColors.textTertiary),
-                      badgeIcon: isActive ? Icons.rocket_launch_outlined : (score > 85 ? Icons.auto_awesome : Icons.eco_outlined),
                       date: DateFormat('MMM d, yyyy â€¢ hh:mm a').format(DateTime.parse(trip['created_at'])),
                       distance: '${(trip['distance_km'] ?? trip['route_distance_km'] ?? 0).toStringAsFixed(0)} km',
                       fuelUsed: '${((fuelCost / 68.0)).toStringAsFixed(1)} L',
                       cost: 'â‚±${fuelCost.toStringAsFixed(0)}',
-                      imageWidget: _getRandomImage(trip['id']?.hashCode ?? trip['created_at'].hashCode),
                       onTap: () {
                         Navigator.push(
                           context,
@@ -169,7 +165,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                     ),
                   );
                 }),
-              const SizedBox(height: 48),
+              const SizedBox(height: 40),
             ],
           ),
         ),
