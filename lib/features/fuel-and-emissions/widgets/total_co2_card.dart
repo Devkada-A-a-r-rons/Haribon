@@ -49,7 +49,7 @@ class TotalCo2Card extends StatelessWidget {
               const SizedBox(width: 8),
               Expanded(
                 child: Text(
-                  'Equivalent to $trees tree${trees == 1 ? '' : 's'} needed to offset',
+                  '$trees tree${trees == 1 ? '' : 's'} to offset',
                   style: textTheme.bodySmall?.copyWith(color: AppColors.success),
                 ),
               ),

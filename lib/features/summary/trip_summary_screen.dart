@@ -12,6 +12,7 @@ import 'widgets/route_breakdown_chart.dart';
 import 'widgets/route_map_card.dart';
 import '../monthly-report/monthly_report_screen.dart';
 
+
 TripSummary _buildMockSummary() => TripSummary(
   origin: 'Manila',
   destination: 'Baguio City',
@@ -98,6 +99,9 @@ class TripSummaryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final textTheme = theme.textTheme;
+
     return Container(
       color: AppColors.surfaceMain,
       child: SafeArea(
@@ -110,6 +114,23 @@ class TripSummaryScreen extends StatelessWidget {
               padding: const EdgeInsets.fromLTRB(16, 20, 16, 0),
               sliver: SliverList(
                 delegate: SliverChildListDelegate([
+                       Text(
+                  'Trip Summary',
+                  style: textTheme.headlineMedium?.copyWith(
+                    color: Colors.black,
+                    fontWeight: FontWeight.w900,
+                    fontSize: 20,
+                    height: 1.1,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  'Here\'s what happened during your trip.',
+                  style: textTheme.bodyMedium?.copyWith(
+                    fontSize: 11,
+                  ),
+                ),
+                const SizedBox(height: 8),
                   HeroTripCard(
                     origin: summary.origin,
                     destination: summary.destination,
@@ -121,6 +142,7 @@ class TripSummaryScreen extends StatelessWidget {
                     originName: summary.origin,
                     destinationName: summary.destination,
                   ),
+               
                   const SizedBox(height: 16),
                   EfficiencyScoreGauge(
                     score: summary.efficiencyScore,
@@ -151,7 +173,7 @@ class TripSummaryScreen extends StatelessWidget {
                         side: const BorderSide(color: AppColors.primaryMain, width: 1.5),
                         padding: const EdgeInsets.symmetric(vertical: 12),
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
+                          borderRadius: BorderRadius.circular(30),
                         ),
                       ),
                     ),

@@ -10,7 +10,9 @@ import './widgets/compact_text_field.dart';
 import './widgets/info_card.dart';
 import './widgets/efficiency_card.dart';
 import 'package:haribon/theme/app_colors.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../../core/database/database_service.dart';
+import '../summary/main_summary_screen.dart';
 
 class VehicleIntelligenceScreen extends StatefulWidget {
   const VehicleIntelligenceScreen({super.key});
@@ -742,6 +744,47 @@ class _VehicleIntelligenceScreenState extends State<VehicleIntelligenceScreen> {
                   icon: Icons.route_outlined,
                   title: 'Trip Readiness',
                   child: _buildTripReadiness(),
+                ),
+
+                const SizedBox(height: 16),
+
+                // VIEW TRIP SUMMARY
+                SizedBox(
+                  width: double.infinity,
+                  height: 48,
+                  child: ElevatedButton.icon(
+                    onPressed: (_routeDistanceKm == null || _selectedVehicle == null)
+                        ? null
+                        : () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => MainSummaryScreen(
+                                  onPlanNext: () => Navigator.pop(context),
+                                ),
+                              ),
+                            );
+                          },
+                    icon: const Icon(Icons.flag_rounded, size: 18),
+                    label: Text(
+                      'VIEW TRIP SUMMARY',
+                      style: GoogleFonts.poppins(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w700,
+                        letterSpacing: 1.1,
+                      ),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.primaryMain,
+                      foregroundColor: Colors.white,
+                      disabledBackgroundColor: AppColors.surfaceDim,
+                      disabledForegroundColor: AppColors.textTertiary,
+                      elevation: 0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                    ),
+                  ),
                 ),
 
                 const SizedBox(height: 24),

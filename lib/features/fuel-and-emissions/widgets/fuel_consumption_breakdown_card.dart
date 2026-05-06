@@ -65,18 +65,13 @@ class FuelConsumptionBreakdownCard extends StatelessWidget {
           const SizedBox(height: 24),
           // Grid
           Row(
-            children: [
-              Expanded(child: _buildLegendItem(textTheme, Icons.local_gas_station, AppColors.primaryMain, 'Base', '${base.toStringAsFixed(1)}L')),
-              Expanded(child: _buildLegendItem(textTheme, Icons.directions_car, AppColors.orangePrimary, 'Traffic', '+${traffic.toStringAsFixed(1)}L')),
-            ],
-          ),
-          const SizedBox(height: 16),
-          Row(
-            children: [
-              Expanded(child: _buildLegendItem(textTheme, Icons.terrain, AppColors.redDark, 'Terrain', '+${terrain.toStringAsFixed(1)}L')),
-              Expanded(child: _buildLegendItem(textTheme, Icons.timer, AppColors.surfaceDim, 'Idle', '+${idle.toStringAsFixed(1)}L')),
-            ],
-          ),
+  children: [
+    Expanded(child: _buildLegendItem(textTheme, Icons.local_gas_station, AppColors.primaryMain, 'Base', '${base.toStringAsFixed(1)}L')),
+    Expanded(child: _buildLegendItem(textTheme, Icons.directions_car, AppColors.orangePrimary, 'Traffic', '+${traffic.toStringAsFixed(1)}L')),
+    Expanded(child: _buildLegendItem(textTheme, Icons.terrain, AppColors.redDark, 'Terrain', '+${terrain.toStringAsFixed(1)}L')),
+    Expanded(child: _buildLegendItem(textTheme, Icons.timer, AppColors.surfaceDim, 'Idle', '+${idle.toStringAsFixed(1)}L')),
+  ],
+),
         ],
       ),
     );

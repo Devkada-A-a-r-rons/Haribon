@@ -33,48 +33,45 @@ class _SegmentedToggleState extends State<SegmentedToggle> {
       padding: const EdgeInsets.all(4),
       decoration: BoxDecoration(
         color: AppColors.greySoftBg,
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(30),
       ),
-      child: Row(
-        children: List.generate(widget.options.length, (index) {
-          final isSelected = _selectedIndex == index;
-          return Expanded(
-            child: GestureDetector(
-              onTap: () {
-                setState(() {
-                  _selectedIndex = index;
-                });
-                widget.onChanged(index);
-              },
-              behavior: HitTestBehavior.opaque,
-              child: Container(
-                padding: const EdgeInsets.symmetric(vertical: 12),
-                decoration: BoxDecoration(
-                  color: isSelected ? Colors.white : Colors.transparent,
-                  borderRadius: BorderRadius.circular(6),
-                  boxShadow: isSelected
-                      ? [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.05),
-                            blurRadius: 4,
-                            offset: const Offset(0, 2),
-                          ),
-                        ]
-                      : null,
-                ),
-                alignment: Alignment.center,
-                child: Text(
-                  widget.options[index],
-                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: isSelected ? AppColors.blueAccent : AppColors.blueGreySecondary, // Use primary blue for selected text
-                        fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
-                      ),
-                ),
+      child: IntrinsicHeight(
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.stretch, // add this
+          children: List.generate(widget.options.length, (index) {
+            final isSelected = _selectedIndex == index;
+            return Expanded(
+              child: GestureDetector(
+          onTap: () {
+            setState(() => _selectedIndex = index);
+            widget.onChanged(index);
+          },
+          behavior: HitTestBehavior.opaque,
+          child: Container(
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            decoration: BoxDecoration(
+              color: isSelected ? Colors.white : Colors.transparent,
+              borderRadius: BorderRadius.circular(30), // your updated radius
+              boxShadow: isSelected
+                  ? [BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 4, offset: const Offset(0, 2))]
+                  : null,
+            ),
+            alignment: Alignment.center,
+            child: Text(
+              widget.options[index],
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                color: isSelected ? AppColors.blueAccent : AppColors.blueGreySecondary,
+                fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
+                fontSize: 11,
               ),
             ),
-          );
-        }),
-      ),
+          ),
+        ),
+      );
+    }),
+  ),
+),
     );
   }
 }

@@ -10,48 +10,39 @@ class ProfileHeader extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+Widget build(BuildContext context) {
+  final textTheme = Theme.of(context).textTheme;
+  return Container(
+    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+    decoration: BoxDecoration(
+      color: AppColors.containerLow,
+      borderRadius: BorderRadius.circular(12),
+      border: Border.all(color: AppColors.blueGreySecondary.withOpacity(0.2)),
+    ),
+    child: Row(
       children: [
-        Row(
-          children: [
-            Expanded(
-              child: TextField(
-                controller: controller,
-                style: textTheme.headlineMedium?.copyWith(
-                  fontWeight: FontWeight.w800,
-                  color: AppColors.navyDarker,
-                  fontSize: 24,
-                  fontFeatures: [],
-                ),
-                decoration: const InputDecoration(
-                  border: InputBorder.none,
-                  enabledBorder: InputBorder.none,
-                  focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: AppColors.tealDark),
-                  ),
-                  isDense: true,
-                  contentPadding: EdgeInsets.zero,
-                ),
-              ),
+        Expanded(
+          child: TextField(
+            controller: controller,
+            style: textTheme.bodyLarge?.copyWith(
+              fontWeight: FontWeight.w700,
+              color: AppColors.navyDarker,
+              fontSize: 16,
             ),
-            const SizedBox(width: 8),
-            const Icon(Icons.edit_outlined, size: 20, color: AppColors.blueGreySecondary),
-          ],
-        ),
-        const SizedBox(height: 8),
-        Text(
-          'Pro Driver',
-          style: textTheme.labelSmall?.copyWith(
-            fontWeight: FontWeight.w800,
-            letterSpacing: 1.2,
-            color: AppColors.blueGreyDark,
-            fontSize: 10,
+            decoration: const InputDecoration(
+              border: InputBorder.none,
+              enabledBorder: InputBorder.none,
+              focusedBorder: InputBorder.none,
+              isDense: true,
+              contentPadding: EdgeInsets.zero,
+              hintText: 'Your name',
+            ),
           ),
         ),
+        const SizedBox(width: 8),
+        const Icon(Icons.edit_outlined, size: 18, color: AppColors.blueGreySecondary),
       ],
-    );
+    ),
+  );
   }
 }
