@@ -9,8 +9,8 @@ class MockSmartTripPlannerData {
     balance: '-₱180',
     isOverBudget: true,
     aiInsights: [
-      PlannerInsight(text: 'Refuel at Shell Angeles to save\n₱60', dotColor: AppColors.tealDark),
-      PlannerInsight(text: 'Food is your 2nd biggest\nexpense', dotColor: AppColors.blueGreyDark),
+      PlannerInsight(text: 'Refuel at Shell Angeles to save\n₱60', dotColor: AppColors.primaryMain),
+      PlannerInsight(text: 'Food is your 2nd biggest\nexpense', dotColor: AppColors.primaryMain),
       PlannerInsight(text: 'Over budget by ₱180', dotColor: AppColors.redDark),
     ],
     fuelReadiness: FuelReadiness(
@@ -32,7 +32,7 @@ class MockSmartTripPlannerData {
         title: 'Shell Angeles',
         subtitle: 'Recommended 12L @ P63/L',
         icon: Icons.close,
-        iconColor: AppColors.blueGreyDark,
+        iconColor: AppColors.primaryMain,
         highlight: 'Optimal\nPrice',
       ),
       RefuelingStep(
@@ -72,8 +72,8 @@ class MockSmartTripPlannerData {
       categories: [
         BreakdownCategory(name: 'Fuel', amount: '₱1,200', color: AppColors.blueLightAccent, percentage: '45%'),
         BreakdownCategory(name: 'Tolls', amount: '₱780', color: AppColors.olivePrimary, percentage: '29%'),
-        BreakdownCategory(name: 'Food', amount: '₱400', color: AppColors.tealDark, percentage: '15%'),
-        BreakdownCategory(name: 'Parking', amount: '₱300', color: AppColors.blueGreySecondary, percentage: '11%'),
+        BreakdownCategory(name: 'Food', amount: '₱400', color: AppColors.primaryMain, percentage: '15%'),
+        BreakdownCategory(name: 'Parking', amount: '₱300', color: AppColors.textTertiary, percentage: '11%'),
       ],
     ),
   );

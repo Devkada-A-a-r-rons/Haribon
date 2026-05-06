@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../theme/app_colors.dart';
 import '../widgets/app_bar.dart';
@@ -18,7 +18,7 @@ class AppInformationScreen extends StatelessWidget {
           children: [
             Text(
               'How Haribon Works',
-              style: GoogleFonts.inter(
+              style: GoogleFonts.poppins(
                 fontSize: 24,
                 fontWeight: FontWeight.w800,
                 color: AppColors.textPrimary,
@@ -27,7 +27,7 @@ class AppInformationScreen extends StatelessWidget {
             const SizedBox(height: 8),
             Text(
               'Haribon helps you track your fuel consumption, estimate travel costs, and minimize your carbon footprint.',
-              style: GoogleFonts.inter(
+              style: GoogleFonts.poppins(
                 fontSize: 14,
                 color: AppColors.textSecondary,
               ),
@@ -67,7 +67,7 @@ class AppInformationScreen extends StatelessWidget {
             const SizedBox(height: 32),
             Text(
               'How to Use the App',
-              style: GoogleFonts.inter(
+              style: GoogleFonts.poppins(
                 fontSize: 20,
                 fontWeight: FontWeight.w800,
                 color: AppColors.textPrimary,
@@ -127,7 +127,7 @@ class AppInformationScreen extends StatelessWidget {
               children: [
                 Text(
                   title,
-                  style: GoogleFonts.inter(
+                  style: GoogleFonts.poppins(
                     fontSize: 16,
                     fontWeight: FontWeight.w700,
                     color: AppColors.textPrimary,
@@ -136,7 +136,7 @@ class AppInformationScreen extends StatelessWidget {
                 const SizedBox(height: 4),
                 Text(
                   description,
-                  style: GoogleFonts.inter(
+                  style: GoogleFonts.poppins(
                     fontSize: 13,
                     color: AppColors.textSecondary,
                     height: 1.4,
@@ -164,7 +164,7 @@ class AppInformationScreen extends StatelessWidget {
           ),
           child: Text(
             number,
-            style: GoogleFonts.inter(
+            style: GoogleFonts.poppins(
               fontSize: 14,
               fontWeight: FontWeight.w800,
               color: Colors.white,
@@ -178,7 +178,7 @@ class AppInformationScreen extends StatelessWidget {
             children: [
               Text(
                 title,
-                style: GoogleFonts.inter(
+                style: GoogleFonts.poppins(
                   fontSize: 16,
                   fontWeight: FontWeight.w700,
                   color: AppColors.textPrimary,
@@ -187,7 +187,7 @@ class AppInformationScreen extends StatelessWidget {
               const SizedBox(height: 4),
               Text(
                 description,
-                style: GoogleFonts.inter(
+                style: GoogleFonts.poppins(
                   fontSize: 13,
                   color: AppColors.textSecondary,
                   height: 1.4,
@@ -200,3 +200,4 @@ class AppInformationScreen extends StatelessWidget {
     );
   }
 }
+

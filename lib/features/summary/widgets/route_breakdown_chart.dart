@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'summary_header.dart';
 import 'summary_shared.dart';
@@ -81,7 +81,7 @@ class _SegmentRow extends StatelessWidget {
             width: 110,
             child: Text(
               segment.label,
-              style: GoogleFonts.inter(
+              style: GoogleFonts.poppins(
                 fontSize: 12,
                 fontWeight: FontWeight.w500,
                 color: AppColors.greyPrimary,
@@ -120,7 +120,7 @@ class _SegmentRow extends StatelessWidget {
             child: Text(
               segment.durationLabel,
               textAlign: TextAlign.right,
-              style: GoogleFonts.inter(
+              style: GoogleFonts.poppins(
                 fontSize: 12,
                 fontWeight: FontWeight.w600,
                 color: segment.color,
@@ -132,3 +132,4 @@ class _SegmentRow extends StatelessWidget {
     );
   }
 }
+

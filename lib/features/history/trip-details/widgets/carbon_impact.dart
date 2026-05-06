@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:haribon/theme/app_colors.dart';
 
@@ -10,7 +10,7 @@ class CarbonImpact extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppColors.carbonGreenBg, // Light greenish background
+        color: AppColors.containerLowest,
         borderRadius: BorderRadius.circular(12),
       ),
       child: Row(
@@ -18,12 +18,12 @@ class CarbonImpact extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: AppColors.carbonGreenCircle,
+              color: AppColors.containerLow,
               shape: BoxShape.circle,
             ),
             child: const Icon(
               Icons.park,
-              color: AppColors.carbonGreenDark, // Dark green tree
+              color: AppColors.success, // Dark green tree
               size: 24,
             ),
           ),
@@ -34,17 +34,17 @@ class CarbonImpact extends StatelessWidget {
               children: [
                 Text(
                   'CARBON IMPACT',
-                  style: GoogleFonts.inter(
+                  style: GoogleFonts.poppins(
                     fontSize: 9,
                     fontWeight: FontWeight.w800,
-                    color: AppColors.carbonGreenDark,
+                    color: AppColors.success,
                     letterSpacing: 1,
                   ),
                 ),
                 const SizedBox(height: 4),
                 RichText(
                   text: TextSpan(
-                    style: GoogleFonts.inter(
+                    style: GoogleFonts.poppins(
                       fontSize: 16,
                     ),
                     children: [
@@ -52,14 +52,14 @@ class CarbonImpact extends StatelessWidget {
                         text: '53.6 kg CO2 ',
                         style: const TextStyle(
                           fontWeight: FontWeight.w800,
-                          color: AppColors.carbonGreenDark,
+                          color: AppColors.success,
                         ),
                       ),
                       TextSpan(
                         text: '/ 2 Trees',
                         style: const TextStyle(
                           fontWeight: FontWeight.w600,
-                          color: AppColors.carbonGreenText,
+                          color: AppColors.textTertiary,
                         ),
                       ),
                     ],
@@ -73,3 +73,4 @@ class CarbonImpact extends StatelessWidget {
     );
   }
 }
+

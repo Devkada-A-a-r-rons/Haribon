@@ -13,7 +13,7 @@ class OptimizationTipsCard extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: AppColors.tealSoftBg, // light teal/blue tint
+        color: AppColors.containerLowest,
         borderRadius: BorderRadius.circular(16),
       ),
       child: Column(
@@ -21,13 +21,13 @@ class OptimizationTipsCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              const Icon(Icons.lightbulb_outline, color: AppColors.blueGreyDark, size: 22),
+              const Icon(Icons.lightbulb_outline, color: AppColors.primaryMain, size: 22),
               const SizedBox(width: 12),
               Text(
                 'Optimization Tips',
                 style: textTheme.titleMedium?.copyWith(
                   fontWeight: FontWeight.w800,
-                  color: AppColors.blueGreyDark,
+                  color: AppColors.primaryMain,
                 ),
               ),
             ],
@@ -52,14 +52,14 @@ class OptimizationTipsCard extends StatelessWidget {
       children: [
         const Padding(
           padding: EdgeInsets.only(top: 6.0),
-          child: Icon(Icons.circle, size: 6, color: AppColors.blueGreyDark),
+          child: Icon(Icons.circle, size: 6, color: AppColors.primaryMain),
         ),
         const SizedBox(width: 12),
         Expanded(
           child: Text(
             text,
             style: textTheme.bodySmall?.copyWith(
-              color: AppColors.navyDarker,
+              color: AppColors.textPrimary,
               height: 1.5,
             ),
           ),

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../theme/app_colors.dart';
 import '../screens/information_screen.dart';
@@ -31,12 +31,14 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
       title: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          // Using flutter_dash as a placeholder for the eagle logo
-          Icon(Icons.flutter_dash, color: AppColors.primaryMain, size: 28),
+          ColorFiltered(
+            colorFilter: const ColorFilter.mode(AppColors.primaryMain, BlendMode.srcIn),
+            child: Image.asset('assets/images/haribon_logo.png', height: 36, width: 36, fit: BoxFit.contain),
+          ),
           const SizedBox(width: 8),
           Text(
             'Haribon',
-            style: GoogleFonts.inter(
+            style: GoogleFonts.poppins(
               color: AppColors.primaryMain,
               fontWeight: FontWeight.w800,
               fontSize: 20,
@@ -58,7 +60,7 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
               child: Text(
                 title!,
                 overflow: TextOverflow.ellipsis,
-                style: GoogleFonts.inter(
+                style: GoogleFonts.poppins(
                   color: AppColors.textPrimary,
                   fontWeight: FontWeight.w600,
                   fontSize: 16,
@@ -94,3 +96,4 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
+

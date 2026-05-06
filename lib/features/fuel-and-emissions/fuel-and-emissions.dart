@@ -168,7 +168,7 @@ class _FuelAndEmissionsScreenState extends State<FuelAndEmissionsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.greyLightest,
+      backgroundColor: AppColors.surfaceMain,
       appBar: CommonAppBar(
         title: 'Fuel & Emissions',
       ),

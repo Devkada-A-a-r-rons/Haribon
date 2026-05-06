@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../theme/app_colors.dart';
 import '../models/chat_suggestion.dart';
@@ -40,7 +40,7 @@ class ChatSuggestions extends StatelessWidget {
               Expanded(
                 child: Text(
                   suggestion.text,
-                  style: GoogleFonts.inter(
+                  style: GoogleFonts.poppins(
                     fontSize: 14,
                     fontWeight: FontWeight.w600,
                     color: AppColors.navyPrimary,
@@ -54,3 +54,4 @@ class ChatSuggestions extends StatelessWidget {
     );
   }
 }
+

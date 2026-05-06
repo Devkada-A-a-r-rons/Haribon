@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:latlong2/latlong.dart';
 import '../../core/database/database_service.dart';
@@ -11,7 +11,6 @@ import '../summary/full_route_map_screen.dart';
 import './models/home_data_model.dart';
 import './widgets/home_greeting.dart';
 import './widgets/home_latest_trip_card.dart';
-import './widgets/home_stat_grid.dart';
 import './widgets/efficiency_trend_chart.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -139,7 +138,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         HomeStat(
           label: 'Total Spent',
-          value: '₱${totalCost.toStringAsFixed(0)}',
+          value: 'â‚±${totalCost.toStringAsFixed(0)}',
           icon: Icons.payments_rounded,
           color: AppColors.orangeSoftBg,
           iconColor: AppColors.orangeDark,
@@ -219,7 +218,15 @@ class _HomeScreenState extends State<HomeScreen> {
                 userName: _dashboardData.userName,
                 weeklyCo2Saved: _dashboardData.weeklyCo2Saved,
               ),
-              const SizedBox(height: 24),
+              const SizedBox(height: 16),
+              Row(
+                children: [
+                  _buildShortcutButton(context, icon: Icons.map_outlined, label: 'Plan Trip', color: AppColors.primaryMain, onTap: () {}),
+                  _buildShortcutButton(context, icon: Icons.insert_chart_outlined, label: 'Monthly', color: AppColors.tealDark, onTap: () {}),
+                  _buildShortcutButton(context, icon: Icons.timeline_rounded, label: 'Timeline', color: AppColors.orangeDark, onTap: () {}),
+                ],
+              ),
+              const SizedBox(height: 16),
               HomeLatestTripCard(
                 summary: _latestTrip,
                 onViewSummary: () {
@@ -233,7 +240,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 onViewMap: () {
                   final originCoords = _getCoords(_latestTrip.origin);
                   final destCoords = _getCoords(_latestTrip.destination);
-                  
+
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -247,64 +254,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   );
                 },
               ),
-              const SizedBox(height: 24),
-              Text(
-                'SHORTCUTS',
-                style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                  fontWeight: FontWeight.w800,
-                  letterSpacing: 1.2,
-                  color: AppColors.navyDarker,
-                  fontSize: 10,
-                ),
-              ),
               const SizedBox(height: 16),
-              Row(
-                children: [
-                  Expanded(
-                    child: _buildShortcutButton(
-                      context,
-                      icon: Icons.map_outlined,
-                      label: 'Plan Trip',
-                      color: AppColors.primaryMain,
-                      onTap: () {},
-                    ),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: _buildShortcutButton(
-                      context,
-                      icon: Icons.insert_chart_outlined,
-                      label: 'Monthly',
-                      color: AppColors.tealDark,
-                      onTap: () {},
-                    ),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: _buildShortcutButton(
-                      context,
-                      icon: Icons.timeline_rounded,
-                      label: 'Timeline',
-                      color: AppColors.orangeDark,
-                      onTap: () {},
-                    ),
-                  ),
-                ],
+              EfficiencyTrendChart(
+                data: _dashboardData.efficiencyTrend,
+                stats: _dashboardData.stats,
               ),
-              const SizedBox(height: 24),
-              Text(
-                'OVERALL STATS',
-                style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                  fontWeight: FontWeight.w800,
-                  letterSpacing: 1.2,
-                  color: AppColors.navyDarker,
-                  fontSize: 10,
-                ),
-              ),
-              const SizedBox(height: 16),
-              HomeStatGrid(stats: _dashboardData.stats),
-              const SizedBox(height: 24),
-              EfficiencyTrendChart(data: _dashboardData.efficiencyTrend),
               const SizedBox(height: 10),
             ],
           ),
@@ -314,40 +268,34 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildShortcutButton(BuildContext context, {required IconData icon, required String label, required Color color, required VoidCallback onTap}) {
-    return InkWell(
-      onTap: onTap,
-      borderRadius: BorderRadius.circular(16),
-      child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
-        decoration: BoxDecoration(
-          color: AppColors.containerLowest,
-          borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: AppColors.surfaceDim.withValues(alpha: 0.3)),
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: color.withValues(alpha: 0.1),
-                shape: BoxShape.circle,
+    return Expanded(
+      child: GestureDetector(
+        onTap: onTap,
+        child: Container(
+          margin: const EdgeInsets.symmetric(horizontal: 4),
+          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+          decoration: BoxDecoration(
+            color: color.withValues(alpha: 0.10),
+            borderRadius: BorderRadius.circular(50),
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(icon, color: color, size: 16),
+              const SizedBox(width: 6),
+              Flexible(
+                child: Text(
+                  label,
+                  overflow: TextOverflow.ellipsis,
+                  style: GoogleFonts.poppins(
+                    fontSize: 11,
+                    fontWeight: FontWeight.w600,
+                    color: color,
+                  ),
+                ),
               ),
-              child: Icon(icon, color: color, size: 24),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              label,
-              textAlign: TextAlign.center,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: GoogleFonts.inter(
-                fontSize: 12,
-                fontWeight: FontWeight.w700,
-                color: AppColors.textPrimary,
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -362,3 +310,4 @@ class _HomeScreenState extends State<HomeScreen> {
     return const LatLng(14.5995, 120.9842); // Default Manila
   }
 }
+

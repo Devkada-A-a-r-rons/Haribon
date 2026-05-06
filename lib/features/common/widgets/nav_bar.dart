@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../theme/app_colors.dart';
 
@@ -89,7 +89,7 @@ class _NavItem extends StatelessWidget {
             const SizedBox(height: 3),
             Text(
               tab.label,
-              style: GoogleFonts.inter(
+              style: GoogleFonts.poppins(
                 fontSize: 10,
                 fontWeight: isActive ? FontWeight.w700 : FontWeight.w500,
                 color: color,
@@ -114,3 +114,4 @@ class _NavItem extends StatelessWidget {
     );
   }
 }
+

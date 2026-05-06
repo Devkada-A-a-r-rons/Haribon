@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../theme/app_colors.dart';
 
@@ -18,30 +18,26 @@ class HomeGreeting extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Good Morning, $userName!',
-          style: GoogleFonts.inter(
-            fontSize: 28,
-            fontWeight: FontWeight.w800,
-            color: AppColors.textPrimary,
-            letterSpacing: -0.5,
+          'Hi $userName,',
+          style: GoogleFonts.poppins(
+            fontSize: 14,
+            fontWeight: FontWeight.w500,
+            color: AppColors.textSecondary,
           ),
         ),
-        const SizedBox(height: 8),
-        Row(
-          children: [
-            const Icon(Icons.eco, color: AppColors.success, size: 20),
-            const SizedBox(width: 8),
-            Text(
-              'You saved ${weeklyCo2Saved.toStringAsFixed(1)}kg of CO2 this week.',
-              style: GoogleFonts.inter(
-                fontSize: 15,
-                fontWeight: FontWeight.w600,
-                color: AppColors.success,
-              ),
-            ),
-          ],
+        const SizedBox(height: 2),
+        Text(
+          'Where do you\nwanna go?',
+          style: GoogleFonts.poppins(
+            fontSize: 28,
+            fontWeight: FontWeight.w800,
+            color: AppColors.primaryMain,
+            letterSpacing: 1.5,
+            height: 1.15,
+          ),
         ),
       ],
     );
   }
 }
+

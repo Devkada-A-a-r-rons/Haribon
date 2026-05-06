@@ -312,7 +312,7 @@ class _SmartTripPlannerState extends State<SmartTripPlanner> {
       backgroundColor: Colors.transparent,
       builder: (context) => Container(
         decoration: const BoxDecoration(
-          color: Colors.white,
+          color: AppColors.containerLowest,
           borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
         ),
         padding: EdgeInsets.only(
@@ -341,27 +341,27 @@ class _SmartTripPlannerState extends State<SmartTripPlanner> {
                 Container(
                   padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                    color: AppColors.tealPrimary.withOpacity(0.1),
+                    color: AppColors.primaryMain.withOpacity(0.1),
                     shape: BoxShape.circle,
                   ),
-                  child: const Icon(Icons.account_balance_wallet_outlined, color: AppColors.tealPrimary, size: 20),
+                  child: const Icon(Icons.account_balance_wallet_outlined, color: AppColors.primaryMain, size: 20),
                 ),
                 const SizedBox(width: 16),
                 Text(
                   'Edit Trip Budget',
-                  style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w900, color: AppColors.navyDarker),
+                  style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w900, color: AppColors.textPrimary),
                 ),
               ],
             ),
             const SizedBox(height: 16),
             Text(
               'Set your maximum spending limit for this trip. We\'ll use this to calibrate your AI budget insights.',
-              style: theme.textTheme.bodySmall?.copyWith(color: AppColors.blueGreySecondary, height: 1.4),
+              style: theme.textTheme.bodySmall?.copyWith(color: AppColors.textTertiary, height: 1.4),
             ),
             const SizedBox(height: 24),
             Container(
               decoration: BoxDecoration(
-                color: AppColors.greyLightest,
+                color: AppColors.containerLow,
                 borderRadius: BorderRadius.circular(16),
                 border: Border.all(color: AppColors.greySoftBg),
               ),
@@ -370,11 +370,11 @@ class _SmartTripPlannerState extends State<SmartTripPlanner> {
                 controller: controller,
                 keyboardType: TextInputType.number,
                 autofocus: true,
-                style: theme.textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold, color: AppColors.navyDarker),
+                style: theme.textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold, color: AppColors.textPrimary),
                 decoration: InputDecoration(
                   border: InputBorder.none,
                   prefixText: '₱ ',
-                  prefixStyle: theme.textTheme.headlineSmall?.copyWith(color: AppColors.tealPrimary, fontWeight: FontWeight.bold),
+                  prefixStyle: theme.textTheme.headlineSmall?.copyWith(color: AppColors.primaryMain, fontWeight: FontWeight.bold),
                   hintText: '0',
                 ),
               ),
@@ -390,7 +390,7 @@ class _SmartTripPlannerState extends State<SmartTripPlanner> {
                       side: const BorderSide(color: AppColors.greySoftBg),
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
                     ),
-                    child: const Text('Cancel', style: TextStyle(color: AppColors.blueGreySecondary, fontWeight: FontWeight.bold)),
+                    child: const Text('Cancel', style: TextStyle(color: AppColors.textTertiary, fontWeight: FontWeight.bold)),
                   ),
                 ),
                 const SizedBox(width: 12),
@@ -416,7 +416,7 @@ class _SmartTripPlannerState extends State<SmartTripPlanner> {
                       await _saveSmartTrip();
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.tealPrimary,
+                      backgroundColor: AppColors.primaryMain,
                       foregroundColor: Colors.white,
                       padding: const EdgeInsets.symmetric(vertical: 16),
                       elevation: 0,
@@ -443,11 +443,11 @@ class _SmartTripPlannerState extends State<SmartTripPlanner> {
     final textTheme = theme.textTheme;
 
     if (_isLoading) {
-      return const Scaffold(body: Center(child: CircularProgressIndicator(color: AppColors.tealPrimary)));
+      return const Scaffold(body: Center(child: CircularProgressIndicator(color: AppColors.primaryMain)));
     }
 
     return Scaffold(
-      backgroundColor: AppColors.greyLightest,
+      backgroundColor: AppColors.surfaceMain,
       appBar: CommonAppBar(
         title: 'Smart Trip Planner',
       ),
@@ -469,7 +469,7 @@ class _SmartTripPlannerState extends State<SmartTripPlanner> {
                       Text(
                         'CURRENT BUDGET STATUS',
                         style: textTheme.labelSmall?.copyWith(
-                          color: AppColors.blueGreyDark,
+                          color: AppColors.primaryMain,
                           fontWeight: FontWeight.w800,
                           letterSpacing: 1.2,
                           fontSize: 10,
@@ -477,7 +477,7 @@ class _SmartTripPlannerState extends State<SmartTripPlanner> {
                       ),
                       GestureDetector(
                         onTap: _showBudgetDialog,
-                        child: const Icon(Icons.edit_outlined, size: 14, color: AppColors.tealPrimary),
+                        child: const Icon(Icons.edit_outlined, size: 14, color: AppColors.primaryMain),
                       ),
                     ],
                   ),
@@ -490,7 +490,7 @@ class _SmartTripPlannerState extends State<SmartTripPlanner> {
                     Text(
                       '₱${_budget.toStringAsFixed(0)}',
                       style: textTheme.headlineMedium?.copyWith(
-                        color: AppColors.navyDarker,
+                        color: AppColors.textPrimary,
                         fontWeight: FontWeight.w900,
                         fontSize: 36,
                       ),
@@ -499,7 +499,7 @@ class _SmartTripPlannerState extends State<SmartTripPlanner> {
                     Text(
                       'Total Budget',
                       style: textTheme.bodyMedium?.copyWith(
-                        color: AppColors.blueGreySecondary,
+                        color: AppColors.textTertiary,
                         fontSize: 12,
                       ),
                     ),
@@ -526,7 +526,7 @@ class _SmartTripPlannerState extends State<SmartTripPlanner> {
                           gradient: LinearGradient(
                             colors: _balance < 0 
                               ? [AppColors.redDark, Colors.redAccent]
-                              : [AppColors.bluePale, AppColors.tealPrimary],
+                              : [AppColors.bluePale, AppColors.primaryMain],
                           ),
                         ),
                       ),
@@ -540,14 +540,14 @@ class _SmartTripPlannerState extends State<SmartTripPlanner> {
                     Text(
                       'Est. Cost: ₱${_totalEst.toStringAsFixed(0)}',
                       style: textTheme.bodySmall?.copyWith(
-                        color: _balance < 0 ? AppColors.redDark : AppColors.tealDark,
+                        color: _balance < 0 ? AppColors.redDark : AppColors.primaryMain,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
                     Text(
                       'Balance: ${_balance < 0 ? '-' : ''}₱${_balance.abs().toStringAsFixed(0)}',
                       style: textTheme.bodySmall?.copyWith(
-                        color: _balance < 0 ? AppColors.redDark : AppColors.blueGreySecondary,
+                        color: _balance < 0 ? AppColors.redDark : AppColors.textTertiary,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
@@ -580,7 +580,7 @@ class _SmartTripPlannerState extends State<SmartTripPlanner> {
                   icon: Icons.map_outlined,
                   title: 'Smart Refueling\nPlanner',
                   subtitle: 'Optimized pitstops',
-                  subtitleColor: AppColors.blueGreySecondary,
+                  subtitleColor: AppColors.textTertiary,
                   content: RefuelingPlannerContent(
                     origin: _origin,
                     destination: _destination,

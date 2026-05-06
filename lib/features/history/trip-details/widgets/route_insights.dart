@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../../theme/app_colors.dart';
 
@@ -12,11 +12,11 @@ class RouteInsights extends StatelessWidget {
       children: [
         Row(
           children: [
-            Icon(Icons.lightbulb_outline, color: AppColors.historyNavy),
+            Icon(Icons.lightbulb_outline, color: AppColors.primaryMain),
             const SizedBox(width: 8),
             Text(
               'Route Insights',
-              style: GoogleFonts.inter(
+              style: GoogleFonts.poppins(
                 fontSize: 18,
                 fontWeight: FontWeight.w600,
                 color: AppColors.textPrimary,
@@ -30,7 +30,7 @@ class RouteInsights extends StatelessWidget {
           description: 'You saved 0.4L by maintaining steady highway distance behind larger vehicles.',
           icon: Icons.trending_down,
           iconBackgroundColor: AppColors.insightBlueBg,
-          iconColor: AppColors.historyBlueGray,
+          iconColor: AppColors.textSecondary,
         ),
         const SizedBox(height: 12),
         _buildInsightCard(
@@ -38,12 +38,12 @@ class RouteInsights extends StatelessWidget {
           description: 'Taking Marcos Highway added 2.4L in climb consumption but saved 15m in traffic.',
           icon: Icons.terrain,
           iconBackgroundColor: AppColors.insightYellowBg, // light yellow background
-          iconColor: AppColors.insightOlive, // olive icon
+          iconColor: AppColors.textTertiary, // olive icon
         ),
         const SizedBox(height: 12),
         _buildInsightCard(
           title: 'Optimization Tip',
-          description: 'Hard braking detected 12 times. Smoothing deceleration can save up to ₱45 on this route.',
+          description: 'Hard braking detected 12 times. Smoothing deceleration can save up to â‚±45 on this route.',
           icon: Icons.energy_savings_leaf_outlined,
           iconBackgroundColor: AppColors.insightRedBg, // light red background
           iconColor: AppColors.insightRed, // red icon
@@ -62,7 +62,7 @@ class RouteInsights extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppColors.surfaceBright,
+        color: AppColors.containerLowest,
         borderRadius: BorderRadius.circular(12),
         border: Border.all(color: AppColors.surfaceDim.withOpacity(0.3)),
       ),
@@ -84,7 +84,7 @@ class RouteInsights extends StatelessWidget {
               children: [
                 Text(
                   title,
-                  style: GoogleFonts.inter(
+                  style: GoogleFonts.poppins(
                     fontSize: 14,
                     fontWeight: FontWeight.w700,
                     color: AppColors.textPrimary,
@@ -93,7 +93,7 @@ class RouteInsights extends StatelessWidget {
                 const SizedBox(height: 4),
                 Text(
                   description,
-                  style: GoogleFonts.inter(
+                  style: GoogleFonts.poppins(
                     fontSize: 13,
                     color: AppColors.textSecondary,
                     height: 1.4,
@@ -107,3 +107,4 @@ class RouteInsights extends StatelessWidget {
     );
   }
 }
+

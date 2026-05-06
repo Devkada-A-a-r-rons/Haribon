@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../theme/app_colors.dart';
 class SummaryHeader extends StatelessWidget {
@@ -43,7 +43,7 @@ class SummaryHeader extends StatelessWidget {
               children: [
                 Text(
                   'Trip Summary',
-                  style: GoogleFonts.inter(
+                  style: GoogleFonts.poppins(
                     fontSize: 18,
                     fontWeight: FontWeight.w700,
                     color: AppColors.textPrimary,
@@ -52,8 +52,8 @@ class SummaryHeader extends StatelessWidget {
                 ),
                 const SizedBox(height: 2),
                 Text(
-                  '$destination · $date',
-                  style: GoogleFonts.inter(
+                  '$destination Â· $date',
+                  style: GoogleFonts.poppins(
                     fontSize: 13,
                     fontWeight: FontWeight.w400,
                     color: AppColors.textTertiary,
@@ -70,10 +70,11 @@ class SummaryHeader extends StatelessWidget {
 
 /// Shared summary-specific color constants used across widgets.
 abstract class SummaryColors {
-  static const primary = AppColors.bluePrimary;
-  static const eco = AppColors.greenDark;
+  static const primary = AppColors.primaryMain;
+  static const eco = AppColors.success;
   static const amber = AppColors.amberPrimary;
-  static const surface = AppColors.blueGreyWhite;
-  static const container = AppColors.blueSoftBg;
+  static const surface = AppColors.surfaceMain;
+  static const container = AppColors.containerLowest;
   static const white = AppColors.whitePrimary;
 }
+

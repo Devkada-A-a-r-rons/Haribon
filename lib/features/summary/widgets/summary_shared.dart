@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'summary_header.dart';
 import 'package:haribon/theme/app_colors.dart';
@@ -17,16 +17,8 @@ class SectionCard extends StatelessWidget {
       width: double.infinity,
       padding: padding ?? const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.containerLowest,
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: AppColors.blueLightBg),
-        boxShadow: [
-          BoxShadow(
-            color: SummaryColors.primary.withValues(alpha: 0.06),
-            blurRadius: 16,
-            offset: const Offset(0, 4),
-          ),
-        ],
       ),
       child: child,
     );
@@ -42,7 +34,7 @@ class SectionLabel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       label,
-      style: GoogleFonts.inter(
+      style: GoogleFonts.poppins(
         fontSize: 11,
         fontWeight: FontWeight.w700,
         color: SummaryColors.primary,
@@ -51,3 +43,4 @@ class SectionLabel extends StatelessWidget {
     );
   }
 }
+

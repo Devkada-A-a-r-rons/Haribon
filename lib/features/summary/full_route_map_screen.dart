@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -27,7 +27,7 @@ class FullRouteMapScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           'Route Details',
-          style: GoogleFonts.inter(fontWeight: FontWeight.w700, fontSize: 18),
+          style: GoogleFonts.poppins(fontWeight: FontWeight.w700, fontSize: 18),
         ),
         backgroundColor: Colors.white,
         foregroundColor: AppColors.textPrimary,
@@ -121,7 +121,7 @@ class FullRouteMapScreen extends StatelessWidget {
             child: Text(
               text,
               overflow: TextOverflow.ellipsis,
-              style: GoogleFonts.inter(
+              style: GoogleFonts.poppins(
                 fontSize: 12,
                 fontWeight: FontWeight.w700,
                 color: AppColors.textPrimary,
@@ -133,3 +133,4 @@ class FullRouteMapScreen extends StatelessWidget {
     );
   }
 }
+

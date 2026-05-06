@@ -11,7 +11,7 @@ class AppColors {
   static const secondaryLight = Color(0xFFE0F2F1);
   static const secondaryDark = Color(0xFF7FB3B5);
 
-  static const surfaceMain = Color(0xFFF9F9FF);
+  static const surfaceMain = Color(0xFFFFFFFF);
   static const surfaceDim = Color(0xFFCFDAF1);
   static const surfaceBright = Color(0xFFF9F9FF);
 

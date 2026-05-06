@@ -115,15 +115,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
     if (_isLoading) {
       return const Scaffold(
-        backgroundColor: AppColors.greyLightest,
+        backgroundColor: AppColors.surfaceMain,
         body: Center(child: CircularProgressIndicator(color: AppColors.blueAccent)),
       );
     }
 
     return Scaffold(
-      backgroundColor: AppColors.greyLightest,
+      backgroundColor: AppColors.surfaceMain,
       appBar: AppBar(
-        backgroundColor: AppColors.greyLightest,
+        backgroundColor: AppColors.surfaceMain,
         elevation: 0,
         centerTitle: true,
         title: Text(

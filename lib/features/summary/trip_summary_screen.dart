@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:haribon/features/summary/widgets/summary_header.dart';
 import '../../theme/app_colors.dart';
@@ -46,7 +46,7 @@ TripSummary _buildMockSummary() => TripSummary(
   aiInsight:
       'Maintaining a steady 80 km/h on TPLEX improved your fuel efficiency '
       'by 12% vs. your last trip. Avoiding the Baguio traffic window at 4 PM '
-      'saved you approximately ₱45 in fuel.',
+      'saved you approximately â‚±45 in fuel.',
   routeSegments: [
     RouteSegment(
       label: 'SLEX / C5',
@@ -98,7 +98,7 @@ class TripSummaryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: SummaryColors.surface,
+      color: AppColors.surfaceMain,
       child: SafeArea(
         bottom: false,
         child: CustomScrollView(
@@ -139,7 +139,7 @@ class TripSummaryScreen extends StatelessWidget {
                       icon: const Icon(Icons.timeline_rounded, size: 18),
                       label: Text(
                         'SEE TRIP TIMELINE',
-                        style: GoogleFonts.inter(
+                        style: GoogleFonts.poppins(
                           fontSize: 14,
                           fontWeight: FontWeight.w700,
                           letterSpacing: 1.1,
@@ -190,7 +190,7 @@ class _CtaFooter extends StatelessWidget {
             icon: const Icon(Icons.map_rounded, size: 18),
             label: Text(
               'Plan Next Trip',
-              style: GoogleFonts.inter(fontSize: 15, fontWeight: FontWeight.w700),
+              style: GoogleFonts.poppins(fontSize: 15, fontWeight: FontWeight.w700),
             ),
             style: FilledButton.styleFrom(
               backgroundColor: SummaryColors.primary,
@@ -210,7 +210,7 @@ class _CtaFooter extends StatelessWidget {
             icon: const Icon(Icons.bar_chart_rounded, size: 18),
             label: Text(
               'View Monthly Report',
-              style: GoogleFonts.inter(fontSize: 15, fontWeight: FontWeight.w600),
+              style: GoogleFonts.poppins(fontSize: 15, fontWeight: FontWeight.w600),
             ),
             style: OutlinedButton.styleFrom(
               foregroundColor: SummaryColors.primary,
@@ -227,3 +227,4 @@ class _CtaFooter extends StatelessWidget {
     );
   }
 }
+

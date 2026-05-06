@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:haribon/theme/app_colors.dart';
 
 class CompactDropdown extends StatelessWidget {
   final String label;
@@ -28,43 +29,39 @@ class CompactDropdown extends StatelessWidget {
         Text(
           label,
           style: textTheme.labelSmall?.copyWith(
-            color: colorScheme.onSurface.withOpacity(0.6),
+            color: AppColors.primaryMain,
             fontSize: 10,
+            fontWeight: FontWeight.w600,
           ),
         ),
         const SizedBox(height: 6),
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 0),
           decoration: BoxDecoration(
-            color: colorScheme.secondaryContainer,
-            borderRadius: BorderRadius.circular(8),
+            color: AppColors.containerLowest,
+            borderRadius: BorderRadius.circular(30),
+            border: Border.all(color: AppColors.primaryMain, width: 1.2),
           ),
           child: DropdownButtonHideUnderline(
             child: DropdownButton<String>(
               value: value,
               isExpanded: true,
               isDense: true,
-              icon: Icon(
-                Icons.keyboard_arrow_down,
-                size: 16,
-                color: colorScheme.onSecondaryContainer.withOpacity(0.6),
-              ),
+              icon: const Icon(Icons.keyboard_arrow_down, size: 16, color: AppColors.primaryMain),
               hint: Text(
                 hintText ?? 'Select $label',
                 style: textTheme.bodySmall?.copyWith(
-                  color: colorScheme.onSecondaryContainer.withOpacity(0.4),
+                  color: AppColors.primaryMain.withValues(alpha: 0.5),
                   fontWeight: FontWeight.w400,
                   fontSize: 12,
-                  fontFeatures: [],
                 ),
               ),
               style: textTheme.bodySmall?.copyWith(
-                color: colorScheme.onSecondaryContainer,
-                fontWeight: FontWeight.w500,
+                color: AppColors.primaryMain,
+                fontWeight: FontWeight.w600,
                 fontSize: 12,
-                fontFeatures: [],
               ),
-              dropdownColor: Colors.white,
+              dropdownColor: AppColors.containerLowest,
               padding: const EdgeInsets.symmetric(vertical: 6),
               items: items.map((item) {
                 return DropdownMenuItem<String>(

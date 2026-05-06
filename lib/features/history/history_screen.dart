@@ -1,4 +1,4 @@
-import 'dart:convert';
+﻿import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -108,7 +108,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
             children: [
               Text(
                 'Trip History',
-                style: GoogleFonts.inter(
+                style: GoogleFonts.poppins(
                   fontSize: 28,
                   fontWeight: FontWeight.w800,
                   color: AppColors.textPrimary,
@@ -118,7 +118,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
               const SizedBox(height: 8),
               Text(
                 'Review your past journeys and\nefficiency insights at a glance.',
-                style: GoogleFonts.inter(
+                style: GoogleFonts.poppins(
                   fontSize: 14,
                   color: AppColors.textSecondary,
                   height: 1.5,
@@ -135,7 +135,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                       const SizedBox(height: 40),
                       Icon(Icons.history_outlined, size: 64, color: AppColors.textTertiary.withValues(alpha: 0.3)),
                       const SizedBox(height: 16),
-                      Text('No trips found yet.', style: GoogleFonts.inter(color: AppColors.textSecondary)),
+                      Text('No trips found yet.', style: GoogleFonts.poppins(color: AppColors.textSecondary)),
                     ],
                   ),
                 )
@@ -150,15 +150,15 @@ class _HistoryScreenState extends State<HistoryScreen> {
                   return Padding(
                     padding: const EdgeInsets.only(bottom: 24.0),
                     child: TripCard(
-                      route: '${trip['origin_name'] ?? 'Pampanga'} → ${trip['destination_name'] ?? 'Baguio'}',
+                      route: '${trip['origin_name'] ?? 'Pampanga'} â†’ ${trip['destination_name'] ?? 'Baguio'}',
                       badgeText: isActive ? 'ACTIVE PLAN' : '$score ${score > 85 ? 'EXCELLENT' : 'GOOD'}',
-                      badgeColor: isActive ? AppColors.historyBlue.withValues(alpha: 0.1) : (score > 85 ? AppColors.badgeExcellentBg : AppColors.badgeGoodBg),
-                      badgeTextColor: isActive ? AppColors.historyBlue : (score > 85 ? AppColors.badgeExcellentText : AppColors.insightOlive),
+                      badgeColor: isActive ? AppColors.primaryMain.withValues(alpha: 0.1) : (score > 85 ? AppColors.badgeExcellentBg : AppColors.badgeGoodBg),
+                      badgeTextColor: isActive ? AppColors.primaryMain : (score > 85 ? AppColors.badgeExcellentText : AppColors.textTertiary),
                       badgeIcon: isActive ? Icons.rocket_launch_outlined : (score > 85 ? Icons.auto_awesome : Icons.eco_outlined),
-                      date: DateFormat('MMM d, yyyy • hh:mm a').format(DateTime.parse(trip['created_at'])),
+                      date: DateFormat('MMM d, yyyy â€¢ hh:mm a').format(DateTime.parse(trip['created_at'])),
                       distance: '${(trip['distance_km'] ?? trip['route_distance_km'] ?? 0).toStringAsFixed(0)} km',
                       fuelUsed: '${((fuelCost / 68.0)).toStringAsFixed(1)} L',
-                      cost: '₱${fuelCost.toStringAsFixed(0)}',
+                      cost: 'â‚±${fuelCost.toStringAsFixed(0)}',
                       imageWidget: _getRandomImage(trip['id']?.hashCode ?? trip['created_at'].hashCode),
                       onTap: () {
                         Navigator.push(
@@ -186,3 +186,4 @@ class _HistoryScreenState extends State<HistoryScreen> {
     return images[seed % images.length];
   }
 }
+

@@ -305,7 +305,7 @@ class _CompactTextFieldState extends State<CompactTextField> {
           Text(
             widget.label,
             style: textTheme.labelSmall?.copyWith(
-              color: colorScheme.onSurface.withOpacity(0.6),
+              color: AppColors.primaryMain,
               fontSize: 10,
               fontWeight: FontWeight.w600,
               letterSpacing: 0.3,
@@ -316,15 +316,13 @@ class _CompactTextFieldState extends State<CompactTextField> {
             duration: const Duration(milliseconds: 200),
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 0),
             decoration: BoxDecoration(
-              color: _locationSelected
-                  ? AppColors.tealSoftBg
-                  : colorScheme.secondaryContainer,
-              borderRadius: BorderRadius.circular(8),
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(30),
               border: Border.all(
-                color: _locationSelected
-                    ? AppColors.tealDark.withOpacity(0.4)
-                    : Colors.transparent,
-                width: 1,
+                color: _locationSelected || _controller.text.isNotEmpty
+                    ? AppColors.primaryMain
+                    : AppColors.primaryMain.withValues(alpha: 0.5),
+                width: 1.2,
               ),
             ),
             child: Row(
@@ -332,9 +330,7 @@ class _CompactTextFieldState extends State<CompactTextField> {
                 Icon(
                   _locationSelected ? Icons.check_circle_outline : widget.prefixIcon,
                   size: 16,
-                  color: _locationSelected
-                      ? AppColors.tealDark
-                      : colorScheme.onSecondaryContainer.withOpacity(0.6),
+                  color: AppColors.primaryMain,
                 ),
                 const SizedBox(width: 8),
                 Expanded(
@@ -344,38 +340,39 @@ class _CompactTextFieldState extends State<CompactTextField> {
                     decoration: InputDecoration(
                       hintText: widget.hintText,
                       hintStyle: textTheme.bodySmall?.copyWith(
-                        color: colorScheme.onSecondaryContainer.withOpacity(0.4),
+                        color: AppColors.primaryMain.withValues(alpha: 0.4),
                         fontWeight: FontWeight.w400,
                         fontSize: 12,
-                        fontFeatures: [],
                       ),
                       isDense: true,
+                      filled: true,
+                      fillColor: Colors.white,
                       contentPadding: const EdgeInsets.symmetric(vertical: 10),
                       border: InputBorder.none,
+                      enabledBorder: InputBorder.none,
+                      focusedBorder: InputBorder.none,
                       suffixIcon: _isSearching
                           ? const Padding(
                               padding: EdgeInsets.all(8),
                               child: SizedBox(
                                 width: 14,
                                 height: 14,
-                                child: CircularProgressIndicator(strokeWidth: 2),
+                                child: CircularProgressIndicator(strokeWidth: 2, color: AppColors.primaryMain),
                               ),
                             )
                           : _locationSelected || _controller.text.isNotEmpty
                               ? GestureDetector(
                                   onTap: _clearSelection,
-                                  child: const Icon(Icons.close,
-                                      size: 15, color: Colors.black38),
+                                  child: const Icon(Icons.close, size: 15, color: AppColors.primaryMain),
                                 )
                               : null,
                       suffixIconConstraints:
                           const BoxConstraints(maxWidth: 30, maxHeight: 30),
                     ),
                     style: textTheme.bodySmall?.copyWith(
-                      color: colorScheme.onSecondaryContainer,
-                      fontWeight: FontWeight.w500,
+                      color: AppColors.primaryMain,
+                      fontWeight: FontWeight.w600,
                       fontSize: 12,
-                      fontFeatures: [],
                     ),
                     onChanged:
                         widget.onLocationSelected != null ? _onTextChanged : null,

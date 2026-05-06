@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../../theme/app_colors.dart';
 
@@ -55,42 +55,35 @@ class TripCard extends StatelessWidget {
               Expanded(
                 child: Text(
                   route,
-                  style: GoogleFonts.inter(
+                  style: GoogleFonts.poppins(
                     fontSize: 18,
                     fontWeight: FontWeight.w600,
-                    color: AppColors.historyNavy,
+                    color: AppColors.textPrimary,
                   ),
                 ),
               ),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-                decoration: BoxDecoration(
-                  color: badgeColor,
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(badgeIcon, size: 12, color: badgeTextColor),
-                    const SizedBox(width: 4),
-                    Text(
-                      badgeText,
-                      style: GoogleFonts.inter(
-                        fontSize: 10,
-                        fontWeight: FontWeight.w800,
-                        color: badgeTextColor,
-                        letterSpacing: 0.5,
-                      ),
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(badgeIcon, size: 12, color: AppColors.textTertiary),
+                  const SizedBox(width: 4),
+                  Text(
+                    badgeText,
+                    style: GoogleFonts.poppins(
+                      fontSize: 10,
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.textTertiary,
+                      letterSpacing: 0.5,
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ],
           ),
           const SizedBox(height: 4),
           Text(
             date,
-            style: GoogleFonts.inter(
+            style: GoogleFonts.poppins(
               fontSize: 12,
               fontWeight: FontWeight.w600,
               color: AppColors.textTertiary,
@@ -122,15 +115,15 @@ class TripCard extends StatelessWidget {
                   children: [
                     Text(
                       'VIEW DETAILS',
-                      style: GoogleFonts.inter(
+                      style: GoogleFonts.poppins(
                         fontSize: 12,
                         fontWeight: FontWeight.w700,
-                        color: AppColors.historyNavy,
+                        color: AppColors.textPrimary,
                         letterSpacing: 1,
                       ),
                     ),
                     const SizedBox(width: 4),
-                    const Icon(Icons.chevron_right, size: 16, color: AppColors.historyNavy),
+                    const Icon(Icons.chevron_right, size: 16, color: AppColors.textPrimary),
                   ],
                 ),
               ),
@@ -146,7 +139,7 @@ class TripCard extends StatelessWidget {
       children: [
         Text(
           label,
-          style: GoogleFonts.inter(
+          style: GoogleFonts.poppins(
             fontSize: 10,
             fontWeight: FontWeight.w700,
             color: AppColors.textTertiary,
@@ -156,7 +149,7 @@ class TripCard extends StatelessWidget {
         const SizedBox(height: 4),
         Text(
           value,
-          style: GoogleFonts.inter(
+          style: GoogleFonts.poppins(
             fontSize: 16,
             fontWeight: FontWeight.w800,
             color: AppColors.textPrimary,
@@ -166,3 +159,4 @@ class TripCard extends StatelessWidget {
     );
   }
 }
+
