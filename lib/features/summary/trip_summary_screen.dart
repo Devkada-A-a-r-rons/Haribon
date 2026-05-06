@@ -187,6 +187,7 @@ class TripSummaryScreen extends StatelessWidget {
                     onPlanNext: onPlanNext,
                     onViewAnalysis: onViewAnalysis,
                   ),
+                  const SizedBox(height: 40),
                 ]),
               ),
             ),

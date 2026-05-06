@@ -5,6 +5,7 @@ import 'dart:convert';
 import '../common/widgets/app_bar.dart';
 import 'widgets/total_fuel_card.dart';
 import 'widgets/fuel_consumption_breakdown_card.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'widgets/total_fuel_cost_card.dart';
 import 'widgets/total_co2_card.dart';
 import 'widgets/efficiency_loss_insights_card.dart';
@@ -49,13 +50,14 @@ class _FuelAndEmissionsScreenState extends State<FuelAndEmissionsScreen> {
 
       final List<dynamic> allTrips = [];
       if (savedTrips != null) allTrips.addAll(savedTrips);
-      
+
       // Add unique active configs that aren't saved yet
       if (activeConfigs != null) {
         for (var config in activeConfigs) {
-          final isAlreadySaved = allTrips.any((t) => 
-            t['origin_name'] == config['origin_name'] && 
-            t['destination_name'] == config['destination_name']
+          final isAlreadySaved = allTrips.any(
+            (t) =>
+                t['origin_name'] == config['origin_name'] &&
+                t['destination_name'] == config['destination_name'],
           );
           if (!isAlreadySaved) {
             allTrips.add(config);
@@ -70,7 +72,8 @@ class _FuelAndEmissionsScreenState extends State<FuelAndEmissionsScreen> {
         double traffic = 0;
 
         for (var trip in allTrips) {
-          final tripCost = (trip['est_fuel_cost'] ?? trip['budget'] ?? 0.0).toDouble();
+          final tripCost = (trip['est_fuel_cost'] ?? trip['budget'] ?? 0.0)
+              .toDouble();
           final tripLiters = tripCost > 0 ? (tripCost / 68.0) : 0.0;
           liters += tripLiters;
           cost += tripCost;
@@ -128,11 +131,16 @@ class _FuelAndEmissionsScreenState extends State<FuelAndEmissionsScreen> {
       final apiKey = dotenv.env['GEMINI_API_KEY'];
       if (apiKey == null) return;
 
-      final brand = (vehicle != null && vehicle is Map) ? (vehicle['brand'] ?? 'Vehicle') : 'Vehicle';
-      final model = (vehicle != null && vehicle is Map) ? (vehicle['model'] ?? '') : '';
+      final brand = (vehicle != null && vehicle is Map)
+          ? (vehicle['brand'] ?? 'Vehicle')
+          : 'Vehicle';
+      final model = (vehicle != null && vehicle is Map)
+          ? (vehicle['model'] ?? '')
+          : '';
 
       final gemini = GeminiLLMService(apiKey: apiKey);
-      final prompt = """
+      final prompt =
+          """
       Act as a Professional Eco-Driving Analyst for Haribon app.
       Analyze this history summary: Total ${_totalLiters.toStringAsFixed(1)}L used over multiple trips.
       Latest journey: $origin to $destination in a $brand $model.
@@ -147,8 +155,14 @@ class _FuelAndEmissionsScreenState extends State<FuelAndEmissionsScreen> {
       }
       """;
 
-      final response = await gemini.generateResponse(prompt, systemContext: "Return ONLY pure JSON.");
-      final cleanedResponse = response.replaceAll('```json', '').replaceAll('```', '').trim();
+      final response = await gemini.generateResponse(
+        prompt,
+        systemContext: "Return ONLY pure JSON.",
+      );
+      final cleanedResponse = response
+          .replaceAll('```json', '')
+          .replaceAll('```', '')
+          .trim();
       final decoded = jsonDecode(cleanedResponse);
 
       final insights = List<String>.from(decoded['insights']);
@@ -170,38 +184,61 @@ class _FuelAndEmissionsScreenState extends State<FuelAndEmissionsScreen> {
     return Scaffold(
       backgroundColor: AppColors.surfaceMain,
       appBar: CommonAppBar(),
-      body: _isLoading 
-        ? const Center(child: CircularProgressIndicator())
-        : SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 16.0),
-              child: Column(
-                children: [
-                  TotalFuelCard(liters: _totalLiters),
-                  const SizedBox(height: 16),
-                  FuelConsumptionBreakdownCard(
-                    totalLiters: _totalLiters,
-                    trafficLiters: _trafficLiters,
-                  ),
-                  const SizedBox(height: 16),
-                  Row(  
-                    children: [ 
-                      Expanded(child: TotalFuelCostCard(cost: _totalCost)),
-                      const SizedBox(width: 12),
-                      Expanded(child: TotalCo2Card(co2: _totalCO2)),
-                    ],
-                  ),
-                  const SizedBox(height: 16),
-                  if (_proInsights.isNotEmpty)
-                    EfficiencyLossInsightsCard(insights: _proInsights),
-                  const SizedBox(height: 16),
-                  if (_proTips.isNotEmpty)
-                    OptimizationTipsCard(tips: _proTips),
-                  const SizedBox(height: 40), 
-                ],
+      body: _isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20.0,
+                  vertical: 16.0,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Fuel & Emissions',
+                      style: GoogleFonts.poppins(
+                        fontSize: 28,
+                        fontWeight: FontWeight.w800,
+                        color: AppColors.textPrimary,
+                        letterSpacing: -1,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      'Track your fuel consumption and\nefficiency insights at a glance.',
+                      style: GoogleFonts.poppins(
+                        fontSize: 14,
+                        color: AppColors.textSecondary,
+                        height: 1.5,
+                      ),
+                    ),
+                    const SizedBox(height: 32),
+                    TotalFuelCard(liters: _totalLiters),
+                    const SizedBox(height: 16),
+                    FuelConsumptionBreakdownCard(
+                      totalLiters: _totalLiters,
+                      trafficLiters: _trafficLiters,
+                    ),
+                    const SizedBox(height: 16),
+                    Row(
+                      children: [
+                        Expanded(child: TotalFuelCostCard(cost: _totalCost)),
+                        const SizedBox(width: 12),
+                        Expanded(child: TotalCo2Card(co2: _totalCO2)),
+                      ],
+                    ),
+                    const SizedBox(height: 16),
+                    if (_proInsights.isNotEmpty)
+                      EfficiencyLossInsightsCard(insights: _proInsights),
+                    const SizedBox(height: 16),
+                    if (_proTips.isNotEmpty)
+                      OptimizationTipsCard(tips: _proTips),
+                    const SizedBox(height: 40),
+                  ],
+                ),
               ),
             ),
-          ),
     );
   }
 }

@@ -217,7 +217,7 @@ class _MainSummaryScreenState extends State<MainSummaryScreen> {
 
     if (_summary == null) {
       return Scaffold(
-        appBar: const CommonAppBar(title: 'Trip Summary'),
+        appBar: const CommonAppBar(),
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
