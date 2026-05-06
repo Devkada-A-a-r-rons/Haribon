@@ -44,7 +44,7 @@ class HomeDashboardData {
           iconColor: AppColors.orangeDark,
         ),
       ],
-      efficiencyTrend: [40, 50, 45, 70, 65, 90, 110],
+      efficiencyTrend: [0.0, 0.0, 0.0, 11.2, 11.5, 11.8, 12.4],
       activities: [
         const HomeActivity(
           title: 'Next Refuel: Shell TPLEX',

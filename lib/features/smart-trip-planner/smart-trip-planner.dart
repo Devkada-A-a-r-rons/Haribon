@@ -450,12 +450,6 @@ class _SmartTripPlannerState extends State<SmartTripPlanner> {
       backgroundColor: AppColors.greyLightest,
       appBar: CommonAppBar(
         title: 'Smart Trip Planner',
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.account_circle_outlined, color: AppColors.navyDarker),
-            onPressed: () {},
-          ),
-        ],
       ),
       body: RefreshIndicator(
         onRefresh: _loadData,
@@ -561,8 +555,15 @@ class _SmartTripPlannerState extends State<SmartTripPlanner> {
                 ),
                 const SizedBox(height: 24),
 
-                // AI BUDGET INSIGHTS
-                InsightCard(insights: _aiInsights),
+                // VISUAL BREAKDOWN
+                VisualBreakdownCard(
+                  fuelCost: _estFuelCost,
+                  tollCost: _tollFee,
+                  otherCost: _otherExpenses,
+                  distanceKm: _distanceKm,
+                  kmPerLiter: (_vehicleConfig?['km_per_liter'] as num?)?.toDouble() ?? 12.0,
+                  fuelPrice: _fuelPricePerLiter,
+                ),
                 const SizedBox(height: 16),
 
                 // FUEL READINESS
@@ -593,15 +594,8 @@ class _SmartTripPlannerState extends State<SmartTripPlanner> {
                 ),
                 const SizedBox(height: 16),
 
-                // VISUAL BREAKDOWN
-                VisualBreakdownCard(
-                  fuelCost: _estFuelCost,
-                  tollCost: _tollFee,
-                  otherCost: _otherExpenses,
-                  distanceKm: _distanceKm,
-                  kmPerLiter: (_vehicleConfig?['km_per_liter'] as num?)?.toDouble() ?? 12.0,
-                  fuelPrice: _fuelPricePerLiter,
-                ),
+                // AI BUDGET INSIGHTS
+                InsightCard(insights: _aiInsights),
                 const SizedBox(height: 16),
 
                 // BOTTOM IMAGE CARD

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../theme/app_colors.dart';
+import '../screens/information_screen.dart';
 
 class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String? title;
@@ -8,6 +9,7 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
   final Widget? leading;
   final bool centerTitle;
   final bool showSettings;
+  final bool showInfo;
 
   const CommonAppBar({
     super.key,
@@ -16,6 +18,7 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.leading,
     this.centerTitle = false,
     this.showSettings = true,
+    this.showInfo = true,
   });
 
   @override
@@ -67,6 +70,16 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
       ),
       actions: [
         if (actions != null) ...actions!,
+        if (showInfo)
+          IconButton(
+            icon: Icon(Icons.info_outline, color: AppColors.primaryMain),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const AppInformationScreen()),
+              );
+            },
+          ),
         if (showSettings)
           IconButton(
             icon: Icon(Icons.settings_outlined, color: AppColors.primaryMain),

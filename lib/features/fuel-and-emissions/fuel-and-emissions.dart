@@ -171,12 +171,6 @@ class _FuelAndEmissionsScreenState extends State<FuelAndEmissionsScreen> {
       backgroundColor: AppColors.greyLightest,
       appBar: CommonAppBar(
         title: 'Fuel & Emissions',
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.account_circle_outlined, color: AppColors.navyDarker),
-            onPressed: () {},
-          ),
-        ],
       ),
       body: _isLoading 
         ? const Center(child: CircularProgressIndicator())
