@@ -48,6 +48,7 @@ class _SmartTripPlannerState extends State<SmartTripPlanner> {
   String _destination = 'Baguio City';
   String _origin = 'Pampanga';
   double _distanceKm = 0.0;
+  bool _useHighway = true; // highway = NLEX/expressways; false = service road (toll-free)
   
   @override
   void initState() {
@@ -117,10 +118,15 @@ class _SmartTripPlannerState extends State<SmartTripPlanner> {
       }
 
       _tollFee = await TollService().calculateToll(
-        highway: highway,
+        highway: _useHighway ? highway : 'NONE',
         entryPoint: entry,
         exitPoint: exit,
       );
+      // Service road = toll-free, but distance is ~15% longer
+      if (!_useHighway) {
+        _tollFee = 0.0;
+        _distanceKm = _distanceKm * 1.15;
+      }
 
       // 3. Calculate Fuel Cost
       await _calculateFuelCost();
@@ -460,6 +466,82 @@ class _SmartTripPlannerState extends State<SmartTripPlanner> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                // ROUTE TYPE TOGGLE
+                Container(
+                  padding: const EdgeInsets.all(4),
+                  decoration: BoxDecoration(
+                    color: AppColors.greySoftBg,
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: GestureDetector(
+                          onTap: () {
+                            if (!_useHighway) {
+                              setState(() => _useHighway = true);
+                              _loadData();
+                            }
+                          },
+                          child: AnimatedContainer(
+                            duration: const Duration(milliseconds: 220),
+                            padding: const EdgeInsets.symmetric(vertical: 10),
+                            decoration: BoxDecoration(
+                              color: _useHighway ? AppColors.primaryMain : Colors.transparent,
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(Icons.speed_rounded, size: 14,
+                                    color: _useHighway ? Colors.white : AppColors.textSecondary),
+                                const SizedBox(width: 6),
+                                Text('Highway (NLEX/SLEX)',
+                                    style: TextStyle(
+                                      fontSize: 11, fontWeight: FontWeight.w700,
+                                      color: _useHighway ? Colors.white : AppColors.textSecondary,
+                                    )),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: GestureDetector(
+                          onTap: () {
+                            if (_useHighway) {
+                              setState(() => _useHighway = false);
+                              _loadData();
+                            }
+                          },
+                          child: AnimatedContainer(
+                            duration: const Duration(milliseconds: 220),
+                            padding: const EdgeInsets.symmetric(vertical: 10),
+                            decoration: BoxDecoration(
+                              color: !_useHighway ? const Color(0xFF2ECC71) : Colors.transparent,
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(Icons.park_outlined, size: 14,
+                                    color: !_useHighway ? Colors.white : AppColors.textSecondary),
+                                const SizedBox(width: 6),
+                                Text('Service Road (Free)',
+                                    style: TextStyle(
+                                      fontSize: 11, fontWeight: FontWeight.w700,
+                                      color: !_useHighway ? Colors.white : AppColors.textSecondary,
+                                    )),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 16),
+
                 // BUDGET STATUS SECTION
                 Align(
                   alignment: Alignment.centerLeft,
