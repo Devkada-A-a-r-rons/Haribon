@@ -29,6 +29,7 @@ void main() async {
   runApp(
     DevicePreview(
       enabled: true,
+      isToolbarVisible: true, // Force toolbar to be visible on web release
       defaultDevice: Devices.ios.iPhone13,
       builder: (context) => const MyApp(),
     ),
