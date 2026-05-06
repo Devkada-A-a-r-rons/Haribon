@@ -14,12 +14,8 @@ class AiInsightCard extends StatelessWidget {
       width: double.infinity,
       clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
-        color: AppColors.primaryLight,
+   
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(
-          color: AppColors.primaryMain,
-          width: 1,
-        ),
       ),
       child: Stack(
         children: [
@@ -34,7 +30,7 @@ class AiInsightCard extends StatelessWidget {
           ),
           
           Padding(
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.symmetric(vertical: 16),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

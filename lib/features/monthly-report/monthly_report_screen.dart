@@ -35,12 +35,12 @@ class _MonthlyReportScreenState extends State<MonthlyReportScreen> {
   late MonthlyReport _report;
   bool _isLoading = true;
   String? _errorMessage;
-  int _currentNavIndex = 5; // Analysis tab
+  int _currentNavIndex = 4; // Analysis tab
 
   @override
   void initState() {
     super.initState();
-    _currentNavIndex = widget.selectedNavIndex ?? 5;
+    _currentNavIndex = widget.selectedNavIndex ?? 4;
     _fetchMonthlyReport();
   }
 

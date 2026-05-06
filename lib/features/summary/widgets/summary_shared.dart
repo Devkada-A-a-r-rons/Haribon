@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'summary_header.dart';
 import 'package:haribon/theme/app_colors.dart';
@@ -15,7 +15,7 @@ class SectionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: padding ?? const EdgeInsets.all(20),
+      padding: padding ?? const EdgeInsets.symmetric(vertical: 16),
       decoration: BoxDecoration(
         color: AppColors.containerLowest,
         borderRadius: BorderRadius.circular(20),

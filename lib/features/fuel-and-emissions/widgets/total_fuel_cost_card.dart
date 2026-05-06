@@ -44,7 +44,7 @@ class TotalFuelCostCard extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           Text(
-            '₱${extraCost.toStringAsFixed(0)} extra from road conditions.',
+            '+₱${extraCost.toStringAsFixed(0)} from road conditions.',
             style: textTheme.bodySmall?.copyWith(color: AppColors.textTertiary),
           ),
         ],

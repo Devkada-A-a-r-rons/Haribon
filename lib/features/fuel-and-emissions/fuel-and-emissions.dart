@@ -186,9 +186,13 @@ class _FuelAndEmissionsScreenState extends State<FuelAndEmissionsScreen> {
                     trafficLiters: _trafficLiters,
                   ),
                   const SizedBox(height: 16),
-                  TotalFuelCostCard(cost: _totalCost),
-                  const SizedBox(height: 16),
-                  TotalCo2Card(co2: _totalCO2),
+                  Row(  
+                    children: [ 
+                      Expanded(child: TotalFuelCostCard(cost: _totalCost)),
+                      const SizedBox(width: 12),
+                      Expanded(child: TotalCo2Card(co2: _totalCO2)),
+                    ],
+                  ),
                   const SizedBox(height: 16),
                   if (_proInsights.isNotEmpty)
                     EfficiencyLossInsightsCard(insights: _proInsights),

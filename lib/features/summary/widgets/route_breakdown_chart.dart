@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'summary_header.dart';
 import 'summary_shared.dart';
@@ -49,7 +49,7 @@ class _RouteBreakdownChartState extends State<RouteBreakdownChart>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SectionLabel(label: 'ROUTE BREAKDOWN'),
-          const SizedBox(height: 16),
+          const SizedBox(height: 12),
           AnimatedBuilder(
             animation: _animation,
             builder: (_, __) => Column(

@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../theme/app_colors.dart';
 
@@ -16,7 +16,6 @@ class CommonNavBar extends StatelessWidget {
     _NavTab(icon: Icons.home_rounded, label: 'Home'),
     _NavTab(icon: Icons.map_rounded, label: 'Planner'),
     _NavTab(icon: Icons.alt_route_rounded, label: 'Smart Trip'),
-    _NavTab(icon: Icons.flag_rounded, label: 'Summary'),
     _NavTab(icon: Icons.history_rounded, label: 'History'),
     _NavTab(icon: Icons.analytics_outlined, label: 'Analysis'),
   ];
