@@ -283,7 +283,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 child: ElevatedButton(
                   onPressed: _saveData,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.tealDark,
+                    backgroundColor: AppColors.primaryMain,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),

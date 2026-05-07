@@ -107,6 +107,7 @@ class _NavItem extends StatelessWidget {
                 shape: BoxShape.circle,
               ),
             ),
+            const SizedBox(height: 4),
           ],
         ),
       ),
