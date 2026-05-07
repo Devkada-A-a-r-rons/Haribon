@@ -304,7 +304,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                     const SizedBox(height: 16),
                      Text(
-              'Your Recent Trips',
+              'Trip Stats',
               style: GoogleFonts.poppins(
                 fontSize: 17,
                 fontWeight: FontWeight.w700,
