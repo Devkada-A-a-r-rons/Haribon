@@ -8,6 +8,7 @@ import '../../theme/app_colors.dart';
 import '../common/widgets/app_bar.dart';
 import '../summary/models/trip_summary_model.dart';
 import '../summary/trip_summary_screen.dart';
+import '../summary/main_summary_screen.dart';
 import '../summary/full_route_map_screen.dart';
 import './models/home_data_model.dart';
 import './widgets/home_greeting.dart';
@@ -273,13 +274,14 @@ class _HomeScreenState extends State<HomeScreen> {
                     TripCard(
                       summary: _latestTrip,
                       cost: '₱${_latestTrip.stats.fuelCostPhp.toStringAsFixed(0)}',
-                      buttonText: 'View Full Summary',
+                      buttonText: 'View Trip Details',
                       onActionButton: () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) =>
-                                TripSummaryScreen(summary: _latestTrip),
+                            builder: (_) => MainSummaryScreen(
+                              onPlanNext: () => Navigator.pop(context),
+                            ),
                           ),
                         );
                       },
