@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:haribon/features/summary/widgets/summary_header.dart';
 import '../../theme/app_colors.dart';
@@ -84,6 +84,7 @@ class TripSummaryScreen extends StatelessWidget {
   final VoidCallback? onPlanNext;
   final VoidCallback? onViewAnalysis;
   final ScrollController? scrollController;
+  final Function(double)? onUpdateBudget;
 
   const TripSummaryScreen({
     super.key, 
@@ -92,6 +93,7 @@ class TripSummaryScreen extends StatelessWidget {
     this.onPlanNext,
     this.onViewAnalysis,
     this.scrollController,
+    this.onUpdateBudget,
   });
 
   factory TripSummaryScreen.mock({Key? key}) =>
@@ -150,7 +152,10 @@ class TripSummaryScreen extends StatelessWidget {
                     percentileLabel: summary.efficiencyPercentile,
                   ),
                   const SizedBox(height: 16),
-                  KeyStatsGrid(stats: summary.stats),
+                  KeyStatsGrid(
+                    stats: summary.stats,
+                    onEditBudget: onUpdateBudget,
+                  ),
                   const SizedBox(height: 16),
                   FuelStopLog(stops: summary.fuelStops),
                   const SizedBox(height: 16),

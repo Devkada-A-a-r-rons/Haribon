@@ -40,55 +40,76 @@ class _MainSummaryScreenState extends State<MainSummaryScreen> {
   Future<void> _fetchLatestTripSummary() async {
     setState(() => _isLoading = true);
     try {
-      // 1. Fetch Latest Vehicle & Route Config
-      final configResponse = await Supabase.instance.client
+      // 1. Fetch Active Vehicle & Route Config
+      final activeResponse = await Supabase.instance.client
           .from('vehicle_configurations')
           .select()
           .order('created_at', ascending: false)
-          .limit(1);
+          .limit(1)
+          .maybeSingle();
 
       // 2. Fetch Latest Smart Trip
       final tripResponse = await Supabase.instance.client
           .from('smart_trips')
           .select()
           .order('created_at', ascending: false)
-          .limit(1);
+          .limit(1)
+          .maybeSingle();
 
-      // 3. Get Onboarding Data as a final fallback
-      final onboarding = await DatabaseService().getOnboardingData();
+      // 3. Fetch latest fuel prices for accurate average
+      double avgFuelPrice = 65.0;
+      try {
+        final fuelPrices = await Supabase.instance.client
+            .from('fuel_prices')
+            .select()
+            .order('updated_at', ascending: false)
+            .limit(10);
+        if ((fuelPrices as List).isNotEmpty) {
+          final fuelGrade = (activeResponse?['fuel_type'] ?? 'gasoline').toString().toLowerCase();
+          final fuelKey = fuelGrade.contains('diesel') ? 'diesel' : 'gasoline';
+          
+          double total = 0;
+          int count = 0;
+          for (var p in fuelPrices) {
+            final price = (p[fuelKey] as num?)?.toDouble();
+            if (price != null && price > 0) {
+              total += price;
+              count++;
+            }
+          }
+          if (count > 0) avgFuelPrice = total / count;
+        }
+      } catch (_) {}
 
-      Map<String, dynamic>? config;
-      if (configResponse != null && (configResponse as List).isNotEmpty) {
-        config = configResponse.first;
-      } else if (onboarding != null) {
-        // Create a virtual config from onboarding
-        config = {
-          'brand': onboarding['vehicle_brand'] ?? 'Toyota',
-          'model': onboarding['vehicle_model'] ?? 'Rush',
-          'origin_name': 'Pampanga',
-          'destination_name': 'Baguio City',
-          'route_distance_km': 248.0,
-          'budget': 2500.0,
-          'created_at': DateTime.now().toIso8601String(),
-        };
-      }
-
+      final config = activeResponse;
       if (config != null) {
-        final trip = (tripResponse != null && (tripResponse as List).isNotEmpty) 
-            ? tripResponse.first 
-            : null;
+        final trip = tripResponse;
 
         final distance = (config['route_distance_km'] ?? 0.0).toDouble();
         final budget = (config['budget'] ?? 2500.0).toDouble();
-        final fuelCost = trip != null ? (trip['est_fuel_cost'] ?? 0.0).toDouble() : (distance * 0.08 * 65.0);
-        final tollFee = trip != null ? (trip['toll_fee'] ?? 0.0).toDouble() : 0.0;
+        final kmPerLiter = (config['km_per_liter'] as num?)?.toDouble() ?? 12.0;
+        final co2Factor = (config['fuel_type']?.toString().toLowerCase().contains('diesel') ?? false) ? 2.68 : 2.31;
+
+        // ACCURATE COMPUTATION
+        final totalLiters = distance / kmPerLiter;
+        final fuelCost = totalLiters * avgFuelPrice;
+        final tollFee = (trip != null ? (trip['toll_fee'] ?? 0.0) : (config['toll_fee'] ?? 0.0)).toDouble();
         
         final totalEst = fuelCost + tollFee;
-        final costRatio = budget > 0 ? (totalEst / budget) : 1.0;
-        final score = ((1.0 - costRatio.clamp(0, 1)) * 100).toInt().clamp(60, 98);
         
-        final liters = fuelCost > 0 ? (fuelCost / 68.0) : 0.0;
-        final co2 = liters * 2.31; 
+        // Efficiency Score based on Budget
+        double score;
+        if (budget > 0) {
+          final deviation = (totalEst - budget) / budget;
+          // If totalEst is exactly budget, score is 90. 
+          // If 50% under budget, score is 100.
+          // If 50% over budget, score drops.
+          score = (90 - (deviation * 40)).toDouble().clamp(40.0, 99.0);
+        } else {
+          score = 85.0;
+        }
+        
+        final co2 = totalLiters * co2Factor; 
 
         final insights = trip != null ? trip['ai_insights'] as List? : [];
         final mainInsight = insights != null && insights.isNotEmpty 
@@ -101,8 +122,8 @@ class _MainSummaryScreenState extends State<MainSummaryScreen> {
           return FuelStop(
             stationName: s['title'] ?? 'Station',
             brand: isStation ? 'Gas Station' : 'Point',
-            liters: double.tryParse(s['subtitle']?.split(' ')[1] ?? '0') ?? 0.0,
-            pricePerLiter: 65.0,
+            liters: double.tryParse(s['subtitle']?.split(' ')[1] ?? '0') ?? (totalLiters / 2),
+            pricePerLiter: avgFuelPrice,
             brandColor: s['color'] != null ? Color(s['color']) : AppColors.tealPrimary,
           );
         }).where((s) => s.brand == 'Gas Station').toList() ?? [];
@@ -115,55 +136,55 @@ class _MainSummaryScreenState extends State<MainSummaryScreen> {
         timeline.add(TimelineStop(
           type: TimelineStopType.departure,
           time: DateFormat('hh:mm a').format(startTime),
-          title: config['origin_name'] ?? 'Pampanga',
-          description: 'Trip started with ${_summary?.stats.fuelLiters ?? 15}L fuel.',
+          title: config['origin_name'] ?? 'Origin',
+          description: 'Trip started with estimated ${totalLiters.toStringAsFixed(1)}L fuel requirement.',
         ));
 
         // Refueling Stops
         for (var i = 0; i < fuelStops.length; i++) {
           final stop = fuelStops[i];
-          final eta = startTime.add(Duration(minutes: (distance / (fuelStops.length + 1) * (i + 1) / 65 * 60).toInt()));
+          final eta = startTime.add(Duration(minutes: (distance / (fuelStops.length + 1) * (i + 1) / 60 * 60).toInt()));
           timeline.add(TimelineStop(
             type: TimelineStopType.refuel,
             time: DateFormat('hh:mm a').format(eta),
             title: stop.stationName,
-            description: 'Recommended: Fill ${stop.liters}L ${config['fuel_grade'] ?? 'Gasoline'}.',
+            description: 'Recommended: Fill ${stop.liters.toStringAsFixed(1)}L ${config['fuel_type'] ?? 'Gasoline'}.',
             buttonText: 'LOG FUEL',
           ));
         }
 
         // Arrival
-        final arrivalTime = startTime.add(Duration(minutes: (distance / 65 * 60).toInt()));
+        final arrivalTime = startTime.add(Duration(minutes: (distance / 60 * 60).toInt()));
         timeline.add(TimelineStop(
           type: TimelineStopType.arrival,
           time: DateFormat('hh:mm a').format(arrivalTime),
-          title: config['destination_name'] ?? 'Baguio City',
-          description: 'Expected Arrival at $distance km mark.',
+          title: config['destination_name'] ?? 'Destination',
+          description: 'Arrival at ${distance.toStringAsFixed(0)} km mark.',
         ));
 
         setState(() {
           _timelineStops = timeline;
           _summary = TripSummary(
-            origin: config!['origin_name'] ?? 'Pampanga',
-            destination: config!['destination_name'] ?? 'Baguio City',
-            date: DateFormat('MMM d, yyyy').format(DateTime.parse(config!['created_at'])),
+            origin: config['origin_name'] ?? 'Origin',
+            destination: config['destination_name'] ?? 'Destination',
+            date: DateFormat('MMM d, yyyy').format(DateTime.parse(config['created_at'])),
             duration: Duration(minutes: (distance / 60 * 60).toInt()),
             distanceKm: distance,
-            efficiencyScore: score,
+            efficiencyScore: score.toInt(),
             efficiencyRating: score > 85 ? 'Excellent' : 'Good',
-            efficiencyPercentile: 'Top ${100 - score}% of users',
+            efficiencyPercentile: 'Top ${100 - score.toInt()}% of users',
             stats: TripStats(
-              fuelLiters: double.parse(liters.toStringAsFixed(1)),
+              fuelLiters: totalLiters,
               fuelCostPhp: fuelCost,
               avgSpeedKmh: 65,
-              co2SavedKg: double.parse((co2 * 0.1).toStringAsFixed(1)),
-              costVsEstimatePhp: fuelCost - budget,
+              co2SavedKg: co2,
+              costVsEstimatePhp: totalEst - budget,
             ),
             fuelStops: fuelStops,
             aiInsight: mainInsight,
             routeSegments: [
-              RouteSegment(label: 'Expressways', duration: const Duration(hours: 2), fraction: 0.6, color: SummaryColors.primary),
-              RouteSegment(label: 'City Roads', duration: const Duration(hours: 1), fraction: 0.4, color: SummaryColors.amber),
+              RouteSegment(label: 'Expressways', duration: const Duration(hours: 2), fraction: 0.7, color: SummaryColors.primary),
+              RouteSegment(label: 'Local Roads', duration: const Duration(hours: 1), fraction: 0.3, color: SummaryColors.amber),
             ],
             treesEquivalent: (co2 / 20).ceil(),
           );
@@ -201,6 +222,38 @@ class _MainSummaryScreenState extends State<MainSummaryScreen> {
       }
     } catch (e) {
       debugPrint('Timeline AI Error: $e');
+    }
+  }
+
+  Future<void> _handleBudgetUpdate(double newBudget) async {
+    try {
+      final configResponse = await Supabase.instance.client
+          .from('vehicle_configurations')
+          .select()
+          .order('created_at', ascending: false)
+          .limit(1)
+          .maybeSingle();
+
+      if (configResponse != null) {
+        await Supabase.instance.client
+            .from('vehicle_configurations')
+            .update({'budget': newBudget})
+            .eq('id', configResponse['id']);
+        
+        // Refresh summary to show new "vs. Estimate" and Score
+        _fetchLatestTripSummary();
+        
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Budget updated to \u20B1${newBudget.toStringAsFixed(0)}'),
+              backgroundColor: AppColors.tealPrimary,
+            ),
+          );
+        }
+      }
+    } catch (e) {
+      debugPrint('Error updating budget: $e');
     }
   }
 
@@ -269,6 +322,7 @@ class _MainSummaryScreenState extends State<MainSummaryScreen> {
               onPlanNext: widget.onPlanNext,
               onViewAnalysis: widget.onViewAnalysis,
               scrollController: _summaryScrollController,
+              onUpdateBudget: _handleBudgetUpdate,
             ),
             TimelineScreen(
               onBack: _switchToSummary,

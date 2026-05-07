@@ -9,8 +9,9 @@ import 'package:haribon/theme/app_colors.dart';
 /// MODULE: KEY STATS GRID
 class KeyStatsGrid extends StatelessWidget {
   final TripStats stats;
+  final Function(double)? onEditBudget;
 
-  const KeyStatsGrid({super.key, required this.stats});
+  const KeyStatsGrid({super.key, required this.stats, this.onEditBudget});
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +67,68 @@ class KeyStatsGrid extends StatelessWidget {
               mainAxisSpacing: 10,
               childAspectRatio: 1.45,
             ),
-            itemBuilder: (_, i) => _StatCard(data: cards[i]),
+            itemBuilder: (_, i) {
+              final isBudgetCard = cards[i].label == 'vs. Estimate';
+              return GestureDetector(
+                onTap: isBudgetCard && onEditBudget != null ? () => _showEditBudgetDialog(context) : null,
+                child: _StatCard(
+                  data: cards[i],
+                  isActionable: isBudgetCard && onEditBudget != null,
+                ),
+              );
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showEditBudgetDialog(BuildContext context) {
+    final controller = TextEditingController();
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        backgroundColor: AppColors.surfaceMain,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        title: Text('Edit Trip Budget', style: GoogleFonts.poppins(fontWeight: FontWeight.w700)),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text('Adjust your planned budget for this journey.', 
+              style: GoogleFonts.poppins(fontSize: 13, color: AppColors.textSecondary)),
+            const SizedBox(height: 20),
+            TextField(
+              controller: controller,
+              keyboardType: TextInputType.number,
+              autofocus: true,
+              decoration: InputDecoration(
+                hintText: 'Enter new budget',
+                prefixText: '₱ ',
+                filled: true,
+                fillColor: AppColors.containerLow,
+                border: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide.none),
+              ),
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text('Cancel', style: GoogleFonts.poppins(color: AppColors.textTertiary)),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              final val = double.tryParse(controller.text);
+              if (val != null && val > 0) {
+                onEditBudget!(val);
+                Navigator.pop(context);
+              }
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: AppColors.primaryMain,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+            ),
+            child: Text('Save', style: GoogleFonts.poppins(color: Colors.white, fontWeight: FontWeight.w600)),
           ),
         ],
       ),
@@ -92,8 +154,9 @@ class _StatData {
 
 class _StatCard extends StatelessWidget {
   final _StatData data;
+  final bool isActionable;
 
-  const _StatCard({required this.data});
+  const _StatCard({required this.data, this.isActionable = false});
 
   @override
   Widget build(BuildContext context) {
@@ -107,15 +170,22 @@ class _StatCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(
-            data.label,
-            style: GoogleFonts.poppins(
-              fontSize: 11,
-              fontWeight: FontWeight.w600,
-              color: AppColors.textTertiary,
-              letterSpacing: 0.3,
-            ),
-            overflow: TextOverflow.ellipsis,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                data.label,
+                style: GoogleFonts.poppins(
+                  fontSize: 11,
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.textTertiary,
+                  letterSpacing: 0.3,
+                ),
+                overflow: TextOverflow.ellipsis,
+              ),
+              if (isActionable)
+                const Icon(Icons.edit_outlined, size: 12, color: AppColors.textTertiary),
+            ],
           ),
           const SizedBox(height: 6),
           Text(
