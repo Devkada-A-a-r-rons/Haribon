@@ -30,11 +30,12 @@ Real-time computation of your trip's vital signs.
 - **CO2 Tracking**: Live monitoring of carbon emissions based on fuel grade (Diesel vs. Gasoline).
 - **Market Price Integration**: Fetches real-time fuel prices from Supabase to provide accurate "Est. Fuel Cost" metrics.
 
-### 3. Hybrid RAG AI Assistant
-A sophisticated AI that "remembers" your vehicle and trip history.
-- **Model Integration**: Powered by **Gemini 3.1 Flash Lite Preview** for high-speed cloud reasoning and **Qwen2.5 3B** for native on-device privacy.
-- **Retrieval Augmented Generation (RAG)**: Uses a vector-ready pipeline to retrieve historical trip context before answering user queries.
-- **Natural Language Geocoding**: Search for destinations by name using the integrated **Nominatim** engine.
+### 3. Hybrid RAG AI Assistant (Cloud & Native)
+A sophisticated AI that "remembers" your vehicle and trip history, designed for both connectivity and total privacy.
+- **Offline-First Intelligence**: On mobile devices, Haribon runs a native **Qwen2.5 3B** LLM directly on your hardware using `llama_cpp_dart`. No internet is required for core AI reasoning.
+- **Local Geographic Datasets**: Includes a specialized local dataset of Philippine landmarks and coordinates, ensuring the "Smart Planner" works even in remote areas with zero data coverage.
+- **Cloud Power**: Seamlessly switches to **Gemini 3.1 Flash Lite Preview** when online for enhanced high-speed cloud reasoning.
+- **Retrieval Augmented Generation (RAG)**: Uses a vector-ready pipeline to retrieve historical trip context before answering user queries, making the AI unique to your driving style.
 
 ### 4. Vehicle Intelligence Center
 Manage and compare your fleet's efficiency.
@@ -62,11 +63,10 @@ A comprehensive historical record of your mobility.
 - **Local Cache**: [SQFlite](https://pub.dev/packages/sqflite) - Persistent local storage for offline readiness.
 - **Proxy Layer**: Robust multi-proxy rotation (`allorigins`, `corsproxy`, `codetabs`) for reliable Web API access.
 
-### AI & Mapping
-- **Cloud LLM**: [Google Generative AI](https://ai.google.dev/) (Gemini 3.1 Flash Lite).
-- **Edge LLM**: [llama_cpp_dart](https://pub.dev/packages/llama_cpp_dart) - Native inference.
-- **Maps**: [Flutter Map](https://pub.dev/packages/flutter_map) + [OpenStreetMap Tiles].
-- **Geocoding**: [OSM Nominatim] - Name-to-coordinate translation.
+### Native & Offline Architecture
+- **Edge Inference**: [llama_cpp_dart](https://pub.dev/packages/llama_cpp_dart) - Powering on-device Qwen2.5 3B models.
+- **Offline Persistence**: [SQFlite](https://pub.dev/packages/sqflite) - Full trip planning and history access without server dependency.
+- **Local Geocoding**: Embedded dataset of thousands of points of interest for reliable offline coordinate lookup.
 
 ---
 
