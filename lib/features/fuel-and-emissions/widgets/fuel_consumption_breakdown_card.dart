@@ -4,23 +4,29 @@ import 'package:haribon/theme/app_colors.dart';
 
 class FuelConsumptionBreakdownCard extends StatelessWidget {
   final double totalLiters;
+  final double baseLiters;
   final double trafficLiters;
+  final double terrainLiters;
+  final double idleLiters;
 
   const FuelConsumptionBreakdownCard({
     super.key,
     required this.totalLiters,
-    required this.trafficLiters,
+    this.baseLiters = 0,
+    this.trafficLiters = 0,
+    this.terrainLiters = 0,
+    this.idleLiters = 0,
   });
 
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     
-    // Proportional breakdown logic
-    final base = totalLiters * 0.75;
-    final traffic = trafficLiters;
-    final terrain = totalLiters * 0.08;
-    final idle = totalLiters * 0.02;
+    // Use provided breakdown or fallback to proportional estimates
+    final base = baseLiters > 0 ? baseLiters : totalLiters * 0.75;
+    final traffic = trafficLiters > 0 ? trafficLiters : totalLiters * 0.15;
+    final terrain = terrainLiters > 0 ? terrainLiters : totalLiters * 0.08;
+    final idle = idleLiters > 0 ? idleLiters : totalLiters * 0.02;
 
     return Container(
       width: double.infinity,
@@ -65,13 +71,13 @@ class FuelConsumptionBreakdownCard extends StatelessWidget {
           const SizedBox(height: 24),
           // Grid
           Row(
-  children: [
-    Expanded(child: _buildLegendItem(textTheme, Icons.local_gas_station, AppColors.primaryMain, 'Base', '${base.toStringAsFixed(1)}L')),
-    Expanded(child: _buildLegendItem(textTheme, Icons.directions_car, AppColors.orangePrimary, 'Traffic', '+${traffic.toStringAsFixed(1)}L')),
-    Expanded(child: _buildLegendItem(textTheme, Icons.terrain, AppColors.redDark, 'Terrain', '+${terrain.toStringAsFixed(1)}L')),
-    Expanded(child: _buildLegendItem(textTheme, Icons.timer, AppColors.surfaceDim, 'Idle', '+${idle.toStringAsFixed(1)}L')),
-  ],
-),
+            children: [
+              Expanded(child: _buildLegendItem(textTheme, Icons.local_gas_station, AppColors.primaryMain, 'Base', '${base.toStringAsFixed(1)}L')),
+              Expanded(child: _buildLegendItem(textTheme, Icons.directions_car, AppColors.orangePrimary, 'Traffic', '+${traffic.toStringAsFixed(1)}L')),
+              Expanded(child: _buildLegendItem(textTheme, Icons.terrain, AppColors.redDark, 'Terrain', '+${terrain.toStringAsFixed(1)}L')),
+              Expanded(child: _buildLegendItem(textTheme, Icons.timer, AppColors.surfaceDim, 'Idle', '+${idle.toStringAsFixed(1)}L')),
+            ],
+          ),
         ],
       ),
     );

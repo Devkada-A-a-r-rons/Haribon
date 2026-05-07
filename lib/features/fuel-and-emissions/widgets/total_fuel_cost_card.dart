@@ -4,12 +4,21 @@ import 'package:haribon/theme/app_colors.dart';
 
 class TotalFuelCostCard extends StatelessWidget {
   final double cost;
-  const TotalFuelCostCard({super.key, required this.cost});
+  final double extraCost;
+  final double fuelPricePerLiter;
+
+  const TotalFuelCostCard({
+    super.key,
+    required this.cost,
+    this.extraCost = 0,
+    this.fuelPricePerLiter = 65.0,
+  });
 
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    final extraCost = cost * 0.15;
+    // Use the real extra cost from road conditions, or fallback to 15%
+    final extra = extraCost > 0 ? extraCost : cost * 0.15;
 
     return Container(
       width: double.infinity,
@@ -44,8 +53,12 @@ class TotalFuelCostCard extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           Text(
-            '+₱${extraCost.toStringAsFixed(0)} from road conditions.',
-            style: textTheme.bodySmall?.copyWith(color: AppColors.textTertiary),
+            '+₱${extra.toStringAsFixed(0)} from road\nconditions.',
+            style: textTheme.bodySmall?.copyWith(
+              color: AppColors.textTertiary,
+              fontSize: 11,
+              height: 1.3,
+            ),
           ),
         ],
       ),

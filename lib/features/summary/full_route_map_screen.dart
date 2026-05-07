@@ -80,46 +80,15 @@ class _FullRouteMapScreenState extends State<FullRouteMapScreen>
 
   void _fitMapToBounds(List<LatLng> points) {
     if (points.isEmpty) return;
-
-    double minLat = points.first.latitude;
-    double maxLat = points.first.latitude;
-    double minLng = points.first.longitude;
-    double maxLng = points.first.longitude;
-
-    for (final p in points) {
-      if (p.latitude < minLat) minLat = p.latitude;
-      if (p.latitude > maxLat) maxLat = p.latitude;
-      if (p.longitude < minLng) minLng = p.longitude;
-      if (p.longitude > maxLng) maxLng = p.longitude;
-    }
-
-    final center = LatLng((minLat + maxLat) / 2, (minLng + maxLng) / 2);
-    final latDiff = (maxLat - minLat).abs();
-    final lngDiff = (maxLng - minLng).abs();
-    final maxDiff = latDiff > lngDiff ? latDiff : lngDiff;
-
-    double zoom = 10.0;
-    if (maxDiff < 0.001) {
-      zoom = 15.0;
-    } else if (maxDiff < 0.1) {
-      zoom = 13.0;
-    } else if (maxDiff < 0.5) {
-      zoom = 11.0;
-    } else if (maxDiff < 2.0) {
-      zoom = 9.0;
-    } else if (maxDiff < 5.0) {
-      zoom = 7.5;
-    } else {
-      zoom = 6.5;
-    }
-
-    // Ensure we don't move the map before it's ready or with invalid values
-    if (!center.latitude.isNaN && !center.longitude.isNaN) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (mounted) {
-          _mapController.move(center, zoom);
-        }
-      });
+    try {
+      _mapController.fitCamera(
+        CameraFit.bounds(
+          bounds: LatLngBounds.fromPoints(points),
+          padding: const EdgeInsets.fromLTRB(60, 100, 60, 180),
+        ),
+      );
+    } catch (e) {
+      debugPrint('Error fitting map to bounds: $e');
     }
   }
 
@@ -217,9 +186,12 @@ class _FullRouteMapScreenState extends State<FullRouteMapScreen>
                 markers: [
                   // Origin marker
                   Marker(
-                    point: widget.origin,
-                    width: 160,
-                    height: 52,
+                    point: (_route != null && _route!.polyline.isNotEmpty)
+                        ? _route!.polyline.first
+                        : widget.origin,
+                    width: 150,
+                    height: 70,
+                    alignment: Alignment.bottomCenter,
                     child: _buildMarker(
                       widget.originName,
                       isDestination: false,
@@ -229,9 +201,12 @@ class _FullRouteMapScreenState extends State<FullRouteMapScreen>
                   ),
                   // Destination marker
                   Marker(
-                    point: widget.destination,
-                    width: 160,
-                    height: 52,
+                    point: (_route != null && _route!.polyline.isNotEmpty)
+                        ? _route!.polyline.last
+                        : widget.destination,
+                    width: 150,
+                    height: 70,
+                    alignment: Alignment.bottomCenter,
                     child: _buildMarker(
                       widget.destinationName,
                       isDestination: true,
@@ -243,8 +218,8 @@ class _FullRouteMapScreenState extends State<FullRouteMapScreen>
                   if (_journeyState?.currentPosition != null)
                     Marker(
                       point: _journeyState!.currentPosition!,
-                      width: 36,
-                      height: 36,
+                      width: 40,
+                      height: 40,
                       child: Container(
                         decoration: BoxDecoration(
                           color: AppColors.primaryMain,
@@ -252,14 +227,12 @@ class _FullRouteMapScreenState extends State<FullRouteMapScreen>
                           border: Border.all(color: Colors.white, width: 3),
                           boxShadow: [
                             BoxShadow(
-                              color: AppColors.primaryMain.withOpacity(0.4),
-                              blurRadius: 12,
-                              spreadRadius: 4,
-                            ),
+                                color: Colors.black.withOpacity(0.2),
+                                blurRadius: 6)
                           ],
                         ),
-                        child: const Icon(Icons.navigation_rounded,
-                            color: Colors.white, size: 18),
+                        child: const Icon(Icons.navigation,
+                            color: Colors.white, size: 20),
                       ),
                     ),
                 ],
@@ -334,6 +307,7 @@ class _FullRouteMapScreenState extends State<FullRouteMapScreen>
       backgroundColor: Colors.white.withOpacity(0.95),
       elevation: 0,
       centerTitle: true,
+      automaticallyImplyLeading: false,
       title: Text(
         '${widget.originName} → ${widget.destinationName}',
         style: GoogleFonts.poppins(
@@ -764,16 +738,18 @@ class _FullRouteMapScreenState extends State<FullRouteMapScreen>
       required IconData icon,
       required Color color}) {
     return Column(
-      mainAxisSize: MainAxisSize.min,
+      mainAxisSize: MainAxisSize.max,
+      mainAxisAlignment: MainAxisAlignment.end,
       children: [
+        // Label Box
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
           decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(20),
             boxShadow: [
               BoxShadow(
-                  color: Colors.black.withOpacity(0.18),
+                  color: Colors.black.withOpacity(0.2),
                   blurRadius: 8,
                   offset: const Offset(0, 4)),
             ],
@@ -784,29 +760,42 @@ class _FullRouteMapScreenState extends State<FullRouteMapScreen>
             children: [
               Icon(icon, size: 14, color: color),
               const SizedBox(width: 5),
-              Flexible(
+              ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 95),
                 child: Text(
                   text,
                   overflow: TextOverflow.ellipsis,
                   style: GoogleFonts.poppins(
-                      fontSize: 11,
-                      fontWeight: FontWeight.w700,
+                      fontSize: 10,
+                      fontWeight: FontWeight.w800,
                       color: AppColors.textPrimary),
                 ),
               ),
             ],
           ),
         ),
-        // Pin point
+        // Connector Line
         Container(
-          width: 2,
-          height: 8,
+          width: 2.5,
+          height: 10,
           color: color,
         ),
+        // Pin Tip (The geometric anchor)
         Container(
-          width: 6,
-          height: 6,
-          decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+          width: 10,
+          height: 10,
+          decoration: BoxDecoration(
+            color: color,
+            shape: BoxShape.circle,
+            border: Border.all(color: Colors.white, width: 2.5),
+            boxShadow: [
+              BoxShadow(
+                color: color.withOpacity(0.4),
+                blurRadius: 6,
+                spreadRadius: 2,
+              ),
+            ],
+          ),
         ),
       ],
     );

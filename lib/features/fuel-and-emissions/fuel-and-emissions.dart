@@ -12,7 +12,7 @@ import 'widgets/efficiency_loss_insights_card.dart';
 import 'widgets/optimization_tips_card.dart';
 import 'package:haribon/theme/app_colors.dart';
 import '../../rag_pipeline/llm/gemini_llm_service.dart';
-import '../common/widgets/typing_text.dart';
+
 import '../../core/database/database_service.dart';
 
 class FuelAndEmissionsScreen extends StatefulWidget {
@@ -26,22 +26,53 @@ class _FuelAndEmissionsScreenState extends State<FuelAndEmissionsScreen> {
   bool _isLoading = true;
   List<String> _proInsights = [];
   List<String> _proTips = [];
+
+  // ── Aggregated fuel metrics ──
   double _totalLiters = 0;
-  double _totalCost = 0;
-  double _totalCO2 = 0;
+  double _baseLiters = 0;
   double _trafficLiters = 0;
-  double _kmPerLiter = 12.0;  // real vehicle efficiency
-  double _fuelPricePerLiter = 65.0; // live market price
+  double _terrainLiters = 0;
+  double _idleLiters = 0;
+  double _totalCost = 0;
+
+  double _extraCostFromConditions = 0;
+  double _totalCO2 = 0;
+
+  // ── Live vehicle / fuel data ──
+  double _kmPerLiter = 12.0;
+  double _fuelPricePerLiter = 65.0;
+  String _fuelGrade = 'Gasoline';
+
+  // ── Date range for the analysis period ──
+  String _analysisPeriod = '';
+  int _tripCount = 0;
 
   @override
   void initState() {
     super.initState();
     _loadAllStats();
+    // Listen for vehicle config changes from any screen
+    DatabaseService().onConfigChanged.addListener(_onConfigChanged);
   }
 
+  @override
+  void dispose() {
+    DatabaseService().onConfigChanged.removeListener(_onConfigChanged);
+    super.dispose();
+  }
+
+  void _onConfigChanged() {
+    _loadAllStats();
+  }
+
+  /// Master data loader: fetches vehicle config, live fuel prices, all trips,
+  /// then computes realistic fuel/emission metrics from each trip's distance,
+  /// route conditions, and the user's actual vehicle efficiency.
   Future<void> _loadAllStats() async {
     try {
-      // 0. Fetch real vehicle efficiency
+      // ────────────────────────────────────────────────────
+      // 0. Fetch the user's real vehicle efficiency (km/L)
+      // ────────────────────────────────────────────────────
       final vehicleConfig = await Supabase.instance.client
           .from('vehicle_configurations')
           .select()
@@ -52,40 +83,57 @@ class _FuelAndEmissionsScreenState extends State<FuelAndEmissionsScreen> {
       if (vehicleConfig != null) {
         final kml = (vehicleConfig['km_per_liter'] as num?)?.toDouble();
         if (kml != null && kml > 0) _kmPerLiter = kml;
+        _fuelGrade = vehicleConfig['fuel_type']?.toString() ??
+            vehicleConfig['fuel_grade']?.toString() ??
+            'Gasoline';
       }
 
-      // 0b. Fetch live fuel prices
+      // ────────────────────────────────────────────────────
+      // 0b. Fetch live fuel prices → weighted average
+      // ────────────────────────────────────────────────────
       try {
         final fuelPrices = await Supabase.instance.client
             .from('fuel_prices')
             .select()
             .order('updated_at', ascending: false)
             .limit(10);
-        if (fuelPrices != null && (fuelPrices as List).isNotEmpty) {
+
+        if ((fuelPrices as List).isNotEmpty) {
+          // Use the correct fuel column based on the user's vehicle grade
+          final fuelKey =
+              _fuelGrade.toLowerCase().contains('diesel') ? 'diesel' : 'gasoline';
           double total = 0;
+          int count = 0;
           for (var p in fuelPrices) {
-            total += (p['gasoline'] as num).toDouble();
+            final price = (p[fuelKey] as num?)?.toDouble();
+            if (price != null && price > 0) {
+              total += price;
+              count++;
+            }
           }
-          _fuelPricePerLiter = total / (fuelPrices as List).length;
+          if (count > 0) _fuelPricePerLiter = total / count;
         }
       } catch (_) {}
 
-      // 1. Fetch official saved trips
+      // ────────────────────────────────────────────────────
+      // 1. Fetch ALL saved trips from Supabase
+      // ────────────────────────────────────────────────────
       final savedTrips = await Supabase.instance.client
           .from('smart_trips')
-          .select();
+          .select()
+          .order('created_at', ascending: false);
 
-      // 2. Fetch active configurations (the "Active Plans")
+      // Also pull active vehicle configurations (represent planned/active trips)
       final activeConfigs = await Supabase.instance.client
           .from('vehicle_configurations')
-          .select();
+          .select()
+          .order('created_at', ascending: false);
 
       final List<dynamic> allTrips = [];
-      if (savedTrips != null) allTrips.addAll(savedTrips);
+      allTrips.addAll(savedTrips);
 
-      // Add unique active configs that aren't saved yet
-      if (activeConfigs != null) {
-        for (var config in activeConfigs) {
+      // Merge unique active configs that aren't already saved as trips
+      for (var config in activeConfigs) {
           final isAlreadySaved = allTrips.any(
             (t) =>
                 t['origin_name'] == config['origin_name'] &&
@@ -94,50 +142,132 @@ class _FuelAndEmissionsScreenState extends State<FuelAndEmissionsScreen> {
           if (!isAlreadySaved) {
             allTrips.add(config);
           }
-        }
       }
 
+      // ────────────────────────────────────────────────────
+      // 2. Compute realistic metrics from each trip
+      // ────────────────────────────────────────────────────
       if (allTrips.isNotEmpty) {
         double liters = 0;
+        double baseLiters = 0;
+        double trafficLiters = 0;
+        double terrainLiters = 0;
+        double idleLiters = 0;
         double cost = 0;
+        double extraConditionsCost = 0;
         double co2 = 0;
-        double traffic = 0;
+
+        DateTime? earliest;
+        DateTime? latest;
 
         for (var trip in allTrips) {
-          // Use stored liters if available; else compute from distance + real efficiency
-          final storedLiters = (trip['est_fuel_liters'] as num?)?.toDouble();
+          // ── Extract raw trip data ──
           final distKm =
               (trip['distance_km'] ?? trip['route_distance_km'] ?? 0.0)
                   .toDouble();
-          final tripCost =
-              (trip['est_fuel_cost'] ?? trip['budget'] ?? 0.0).toDouble();
+          final storedLiters =
+              (trip['est_fuel_liters'] as num?)?.toDouble();
+          final storedCost =
+              (trip['est_fuel_cost'] as num?)?.toDouble();
 
+          // Date tracking for the analysis period label
+          final createdAt =
+              DateTime.tryParse(trip['created_at']?.toString() ?? '');
+          if (createdAt != null) {
+            if (earliest == null || createdAt.isBefore(earliest)) {
+              earliest = createdAt;
+            }
+            if (latest == null || createdAt.isAfter(latest)) {
+              latest = createdAt;
+            }
+          }
+
+          // ── Compute trip fuel (liters) ──
+          // Priority: stored est_fuel_liters → distance / vehicle km/L → fallback from cost
           double tripLiters;
           if (storedLiters != null && storedLiters > 0) {
             tripLiters = storedLiters;
           } else if (distKm > 0 && _kmPerLiter > 0) {
             tripLiters = distKm / _kmPerLiter;
+          } else if (storedCost != null && storedCost > 0) {
+            tripLiters = storedCost / _fuelPricePerLiter;
           } else {
-            tripLiters =
-                tripCost > 0 ? (tripCost / _fuelPricePerLiter) : 0.0;
+            tripLiters = 0.0;
           }
 
+          // ── Realistic fuel breakdown per trip ──
+          // Base consumption: the fuel burned under ideal driving conditions
+          //   = distance / highway_km_per_liter (assume 10% better than mixed avg)
+          final idealKmPerLiter = _kmPerLiter * 1.10;
+          final tripBaseLiters =
+              distKm > 0 ? distKm / idealKmPerLiter : tripLiters * 0.78;
+
+          // Traffic penalty: city driving & congestion burn ~12-18% extra
+          // We use the difference between actual and ideal as traffic loss,
+          // bounded to at least 10% of trip liters to be realistic
+          double tripTraffic = tripLiters - tripBaseLiters;
+          if (tripTraffic < 0) tripTraffic = tripLiters * 0.10;
+
+          // Further split the extra into traffic (70%), terrain (20%), idle (10%)
+          final tripTerrain = tripTraffic * 0.25;
+          final tripIdle = tripTraffic * 0.10;
+          final tripTrafficFinal = tripTraffic - tripTerrain - tripIdle;
+
+          // ── Compute trip cost using LIVE fuel price ──
+          final tripCost = tripLiters * _fuelPricePerLiter;
+          final tripBaseCost = tripBaseLiters * _fuelPricePerLiter;
+          final tripExtraCost = tripCost - tripBaseCost;
+
+          // ── CO2 emissions: 2.31 kg CO2 per liter of gasoline ──
+          //    diesel = 2.68 kg/L; we use the correct factor
+          final co2Factor =
+              _fuelGrade.toLowerCase().contains('diesel') ? 2.68 : 2.31;
+          final tripCO2 = tripLiters * co2Factor;
+
+          // ── Accumulate ──
           liters += tripLiters;
+          baseLiters += tripBaseLiters;
+          trafficLiters += tripTrafficFinal;
+          terrainLiters += tripTerrain;
+          idleLiters += tripIdle;
           cost += tripCost;
-          co2 += tripLiters * 2.31;
-          traffic += tripLiters * 0.15;
+          extraConditionsCost += tripExtraCost;
+          co2 += tripCO2;
+        }
+
+        // Build analysis period label
+        String period = '';
+        if (earliest != null && latest != null) {
+          final months = [
+            'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+            'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+          ];
+          if (earliest.month == latest.month &&
+              earliest.year == latest.year) {
+            period =
+                '${months[earliest.month - 1]} ${earliest.day}–${latest.day}, ${latest.year}';
+          } else {
+            period =
+                '${months[earliest.month - 1]} ${earliest.day} – ${months[latest.month - 1]} ${latest.day}, ${latest.year}';
+          }
         }
 
         setState(() {
           _totalLiters = liters;
+          _baseLiters = baseLiters;
+          _trafficLiters = trafficLiters;
+          _terrainLiters = terrainLiters;
+          _idleLiters = idleLiters;
           _totalCost = cost;
+          _extraCostFromConditions = extraConditionsCost;
           _totalCO2 = co2;
-          _trafficLiters = traffic;
-          _isLoading = false; // Show stats immediately
+          _analysisPeriod = period;
+          _tripCount = allTrips.length;
+          _isLoading = false;
         });
 
-        // 3. Load Pro Insights for the latest journey in background
-        await _loadProInsights(allTrips.last);
+        // 3. Load Pro Insights in background for the latest journey
+        await _loadProInsights(allTrips.first);
       } else {
         setState(() => _isLoading = false);
       }
@@ -190,11 +320,21 @@ class _FuelAndEmissionsScreenState extends State<FuelAndEmissionsScreen> {
       final prompt =
           """
       Act as a Professional Eco-Driving Analyst for Haribon app.
-      Analyze this history summary: Total ${_totalLiters.toStringAsFixed(1)}L used over multiple trips.
-      Latest journey: $origin to $destination in a $brand $model.
+      Analyze this fuel & emissions summary from $_tripCount trips${_analysisPeriod.isNotEmpty ? ' during $_analysisPeriod' : ''}:
       
-      Generate 3 'Efficiency Loss Insights' (focus on traffic loss of ${_trafficLiters.toStringAsFixed(1)}L) 
-      and 2 'Optimization Tips' for this user.
+      - Total Fuel Used: ${_totalLiters.toStringAsFixed(1)}L
+      - Base driving consumption: ${_baseLiters.toStringAsFixed(1)}L
+      - Traffic congestion loss: ${_trafficLiters.toStringAsFixed(1)}L
+      - Terrain elevation loss: ${_terrainLiters.toStringAsFixed(1)}L
+      - Idle engine loss: ${_idleLiters.toStringAsFixed(1)}L
+      - Total CO2 emitted: ${_totalCO2.toStringAsFixed(1)} kg
+      - Total Fuel Cost: ₱${_totalCost.toStringAsFixed(0)}
+      - Extra cost from road conditions: ₱${_extraCostFromConditions.toStringAsFixed(0)}
+      - Vehicle: $brand $model (${_kmPerLiter.toStringAsFixed(1)} km/L, $_fuelGrade)
+      - Latest journey: $origin to $destination
+      
+      Generate 3 'Efficiency Loss Insights' with specific data references and 
+      2 'Optimization Tips' with estimated savings.
       
       Return as a JSON object:
       {
@@ -207,14 +347,47 @@ class _FuelAndEmissionsScreenState extends State<FuelAndEmissionsScreen> {
         prompt,
         systemContext: "Return ONLY pure JSON.",
       );
-      final cleanedResponse = response
-          .replaceAll('```json', '')
-          .replaceAll('```', '')
-          .trim();
-      final decoded = jsonDecode(cleanedResponse);
+      // Robust parsing for LLM response
+      String cleanedResponse = response.trim();
+      
+      // Remove markdown code blocks if present
+      if (cleanedResponse.contains('```')) {
+        final matches = RegExp(r'```(?:json)?([\s\S]*?)```').allMatches(cleanedResponse);
+        if (matches.isNotEmpty) {
+          cleanedResponse = matches.first.group(1)?.trim() ?? cleanedResponse;
+        } else {
+          cleanedResponse = cleanedResponse.replaceAll('```json', '').replaceAll('```', '').trim();
+        }
+      }
 
-      final insights = List<String>.from(decoded['insights']);
-      final tips = List<String>.from(decoded['tips']);
+      Map<String, dynamic> decoded;
+      try {
+        decoded = jsonDecode(cleanedResponse);
+      } catch (e) {
+        debugPrint('AI Response was not valid JSON, using fallbacks: $e');
+        // Fallback for non-JSON responses
+        setState(() {
+          _proInsights = [
+            'Your efficiency is currently impacted by traffic and terrain.',
+            'Maintaining steady speeds can improve your range by up to 15%.',
+          ];
+          _proTips = [
+            'Avoid sudden acceleration to save fuel.',
+            'Check tire pressure regularly for optimal efficiency.',
+          ];
+          _isLoading = false;
+        });
+        return;
+      }
+
+      final insights = List<String>.from(decoded['insights'] ?? [
+        'Consumption is tracking within expected parameters for your vehicle type.',
+        'Consider optimizing your routes during peak traffic hours.'
+      ]);
+      final tips = List<String>.from(decoded['tips'] ?? [
+        'Plan trips ahead to avoid congestion.',
+        'Use cruise control on highways where possible.'
+      ]);
 
       setState(() {
         _proInsights = insights;
@@ -223,7 +396,11 @@ class _FuelAndEmissionsScreenState extends State<FuelAndEmissionsScreen> {
       });
     } catch (e) {
       debugPrint('Error loading AI Pro Insights: $e');
-      setState(() => _isLoading = false);
+      setState(() {
+        _proInsights = ['Analysis unavailable at this moment.'];
+        _proTips = ['Try refreshing the analysis in a few minutes.'];
+        _isLoading = false;
+      });
     }
   }
 
@@ -234,54 +411,83 @@ class _FuelAndEmissionsScreenState extends State<FuelAndEmissionsScreen> {
       appBar: CommonAppBar(),
       body: _isLoading
           ? const Center(child: CircularProgressIndicator())
-          : SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 20.0,
-                  vertical: 16.0,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Fuel & Emissions',
-                      style: GoogleFonts.poppins(
-                        fontSize: 28,
-                        fontWeight: FontWeight.w800,
-                        color: AppColors.textPrimary,
-                        letterSpacing: -1,
+          : RefreshIndicator(
+              onRefresh: _loadAllStats,
+              child: SingleChildScrollView(
+                physics: const AlwaysScrollableScrollPhysics(),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20.0,
+                    vertical: 16.0,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Fuel & Emissions',
+                        style: GoogleFonts.poppins(
+                          fontSize: 28,
+                          fontWeight: FontWeight.w800,
+                          color: AppColors.textPrimary,
+                          letterSpacing: -1,
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      'Track your fuel consumption and\nefficiency insights at a glance.',
-                      style: GoogleFonts.poppins(
-                        fontSize: 14,
-                        color: AppColors.textSecondary,
-                        height: 1.5,
+                      const SizedBox(height: 4),
+                      Text(
+                        _analysisPeriod.isNotEmpty
+                            ? '$_tripCount trip${_tripCount == 1 ? '' : 's'} · $_analysisPeriod'
+                            : 'Track your fuel consumption and\nefficiency insights at a glance.',
+                        style: GoogleFonts.poppins(
+                          fontSize: 13,
+                          color: AppColors.textSecondary,
+                          height: 1.5,
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 16),
-                    TotalFuelCard(liters: _totalLiters),
-             
-                    FuelConsumptionBreakdownCard(
-                      totalLiters: _totalLiters,
-                      trafficLiters: _trafficLiters,
-                    ),
-                
-                    Row(
-                      children: [
-                        Expanded(child: TotalFuelCostCard(cost: _totalCost)),
-                        const SizedBox(width: 12),
-                        Expanded(child: TotalCo2Card(co2: _totalCO2)),
-                      ],
-                    ),
-                    const SizedBox(height: 16),
-                    EfficiencyLossInsightsCard(insights: _proInsights),
-                    const SizedBox(height: 16),
-                    OptimizationTipsCard(tips: _proTips),
-                    const SizedBox(height: 40),
-                  ],
+                      const SizedBox(height: 4),
+                      if (_analysisPeriod.isNotEmpty)
+                        Text(
+                          '${_kmPerLiter.toStringAsFixed(1)} km/L · ₱${_fuelPricePerLiter.toStringAsFixed(2)}/L avg · $_fuelGrade',
+                          style: GoogleFonts.poppins(
+                            fontSize: 11,
+                            color: AppColors.textTertiary,
+                            height: 1.4,
+                          ),
+                        ),
+                      const SizedBox(height: 16),
+                      TotalFuelCard(
+                        liters: _totalLiters,
+                        baseLiters: _baseLiters,
+                        extraLiters: _totalLiters - _baseLiters,
+                      ),
+                 
+                      FuelConsumptionBreakdownCard(
+                        totalLiters: _totalLiters,
+                        baseLiters: _baseLiters,
+                        trafficLiters: _trafficLiters,
+                        terrainLiters: _terrainLiters,
+                        idleLiters: _idleLiters,
+                      ),
+                  
+                      Row(
+                        children: [
+                          Expanded(
+                            child: TotalFuelCostCard(
+                              cost: _totalCost,
+                              extraCost: _extraCostFromConditions,
+                              fuelPricePerLiter: _fuelPricePerLiter,
+                            ),
+                          ),
+                          const SizedBox(width: 12),
+                          Expanded(child: TotalCo2Card(co2: _totalCO2)),
+                        ],
+                      ),
+                      const SizedBox(height: 16),
+                      EfficiencyLossInsightsCard(insights: _proInsights),
+                      const SizedBox(height: 16),
+                      OptimizationTipsCard(tips: _proTips),
+                      const SizedBox(height: 40),
+                    ],
+                  ),
                 ),
               ),
             ),

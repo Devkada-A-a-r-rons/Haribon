@@ -53,6 +53,17 @@ class _SmartTripPlannerState extends State<SmartTripPlanner> {
   void initState() {
     super.initState();
     _loadData();
+    DatabaseService().onConfigChanged.addListener(_onConfigChanged);
+  }
+
+  @override
+  void dispose() {
+    DatabaseService().onConfigChanged.removeListener(_onConfigChanged);
+    super.dispose();
+  }
+
+  void _onConfigChanged() {
+    _loadData();
   }
 
   Future<void> _loadData() async {

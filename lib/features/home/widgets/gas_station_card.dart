@@ -7,6 +7,7 @@ class GasStationData {
   final String label;
   final String branch;
   final String price;
+  final String? dieselPrice;
   final Widget brandLogo;
   final List<String> fuelTypes;
   final String hours;
@@ -17,6 +18,7 @@ class GasStationData {
     required this.label,
     required this.branch,
     required this.price,
+    this.dieselPrice,
     required this.brandLogo,
     required this.fuelTypes,
     required this.hours,
@@ -169,6 +171,15 @@ class GasStationCard extends StatelessWidget {
                       color: const Color(0xFF1A1A1A),
                     ),
                   ),
+                  if (station.dieselPrice != null)
+                    Text(
+                      station.dieselPrice!,
+                      style: GoogleFonts.poppins(
+                        fontSize: 13,
+                        fontWeight: FontWeight.w600,
+                        color: const Color(0xFF2A5BAD),
+                      ),
+                    ),
                   Text(
                     'per liter',
                     style: GoogleFonts.poppins(
