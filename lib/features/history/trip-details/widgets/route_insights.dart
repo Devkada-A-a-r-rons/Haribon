@@ -73,12 +73,28 @@ class _RouteInsightsState extends State<RouteInsights> {
 
       final response = await gemini.generateResponse(prompt);
       
+      // Check if response is an error message
+      if (response.startsWith('Error') || response.contains('Error connecting')) {
+        throw Exception(response);
+      }
+      
       // Clean up response if it has markdown code blocks
       String jsonStr = response.trim();
       if (jsonStr.startsWith('```json')) {
         jsonStr = jsonStr.substring(7, jsonStr.length - 3).trim();
       } else if (jsonStr.startsWith('```')) {
         jsonStr = jsonStr.substring(3, jsonStr.length - 3).trim();
+      }
+
+      // Final sanitization: ensure it looks like a JSON array
+      if (!jsonStr.startsWith('[')) {
+        final startIndex = jsonStr.indexOf('[');
+        final endIndex = jsonStr.lastIndexOf(']');
+        if (startIndex != -1 && endIndex != -1) {
+          jsonStr = jsonStr.substring(startIndex, endIndex + 1);
+        } else {
+          throw const FormatException('AI response did not contain a valid JSON array');
+        }
       }
 
       final List<dynamic> decoded = jsonDecode(jsonStr);
