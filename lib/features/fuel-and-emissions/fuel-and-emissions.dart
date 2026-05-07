@@ -237,19 +237,25 @@ class _FuelAndEmissionsScreenState extends State<FuelAndEmissionsScreen> {
 
         // Build analysis period label
         String period = '';
+        final now = DateTime.now();
         if (earliest != null && latest != null) {
           final months = [
             'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
             'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
           ];
-          if (earliest.month == latest.month &&
-              earliest.year == latest.year) {
-            period =
-                '${months[earliest.month - 1]} ${earliest.day}–${latest.day}, ${latest.year}';
+          
+          final isToday = latest.year == now.year && latest.month == now.month && latest.day == now.day;
+          final latestStr = isToday ? 'Today' : '${months[latest.month - 1]} ${latest.day}';
+
+          if (earliest.year == latest.year && earliest.month == latest.month && earliest.day == latest.day) {
+            period = isToday ? 'Today, ${now.year}' : '${months[earliest.month - 1]} ${earliest.day}, ${earliest.year}';
           } else {
-            period =
-                '${months[earliest.month - 1]} ${earliest.day} – ${months[latest.month - 1]} ${latest.day}, ${latest.year}';
+            period = '${months[earliest.month - 1]} ${earliest.day} – $latestStr, ${latest.year}';
           }
+        } else {
+          // Fallback if no trips: Show current month
+          final months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+          period = '${months[now.month - 1]} ${now.year}';
         }
 
         setState(() {

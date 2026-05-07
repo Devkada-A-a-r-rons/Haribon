@@ -21,6 +21,18 @@ Haribon (named after the Great Philippine Eagle) represents strength, precision,
 Orchestrate your route with industrial-grade precision.
 - **On-Road Routing**: Integrated with **OSRM (Open Source Routing Machine)** for high-performance, real-world road pathfinding.
 - **Highway vs. Service Road**: Toggle between fastest routes (expressways) and toll-free service roads.
+
+### 2. Vehicle Intelligence (New)
+Get a bird's-eye view of your vehicle's performance and trip readiness.
+- **Dynamic Insights**: Real-time analysis of trip fuel consumption, estimated range, and drive time.
+- **Market Integration**: Automatic calculation of trip costs based on live average fuel prices in the Philippines.
+- **Hydration & Persistence**: Your latest vehicle configuration and trip planning are automatically synced to the cloud via Supabase.
+
+### 3. Hybrid RAG AI Pipeline (Experimental)
+A sophisticated local-first AI system for personalized travel advice.
+- **Local Memory**: Stores and retrieves trip history using vector embeddings and Cosine Similarity.
+- **Cloud-Local Switching**: Automatically toggles between local Native LLMs (for privacy) and Google Gemini (for performance).
+- **Actionable Tips**: Generates 3 specific, data-driven insights per trip to improve efficiency.
 - **Dynamic Camera Fitting**: Intelligent map viewport adjustment ensuring your entire journey is visible at a glance.
 - **Road-Snapped Markers**: Custom premium pins anchored precisely to road coordinates, avoiding "floating" markers.
 

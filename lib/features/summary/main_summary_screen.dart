@@ -101,10 +101,7 @@ class _MainSummaryScreenState extends State<MainSummaryScreen> {
         double score;
         if (budget > 0) {
           final deviation = (totalEst - budget) / budget;
-          // If totalEst is exactly budget, score is 90. 
-          // If 50% under budget, score is 100.
-          // If 50% over budget, score drops.
-          score = (90 - (deviation * 40)).toDouble().clamp(40.0, 99.0);
+          score = (90.0 - (deviation * 40.0)).clamp(40.0, 99.0);
         } else {
           score = 85.0;
         }
