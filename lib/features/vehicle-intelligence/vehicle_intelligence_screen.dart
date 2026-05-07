@@ -374,7 +374,7 @@ class _VehicleIntelligenceScreenState extends State<VehicleIntelligenceScreen>
 
     return Scaffold(
       backgroundColor: AppColors.surfaceMain,
-      appBar: const CommonAppBar(),
+      appBar: const CommonAppBar(showBackButton: false),
       body: SafeArea(
         child: Column(
           children: [
@@ -857,7 +857,7 @@ class _VehicleIntelligenceScreenState extends State<VehicleIntelligenceScreen>
                         },
               icon: const Icon(Icons.flag_rounded, size: 18),
               label: Text(
-                'VIEW TRIP SUMMARY',
+                'TRIP DETAILS',
                 style: GoogleFonts.poppins(
                   fontSize: 14,
                   fontWeight: FontWeight.w700,

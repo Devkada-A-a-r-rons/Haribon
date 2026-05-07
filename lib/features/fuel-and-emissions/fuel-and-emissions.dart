@@ -408,7 +408,7 @@ class _FuelAndEmissionsScreenState extends State<FuelAndEmissionsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.surfaceMain,
-      appBar: CommonAppBar(),
+      appBar: CommonAppBar(showBackButton: false),
       body: _isLoading
           ? const Center(child: CircularProgressIndicator())
           : RefreshIndicator(

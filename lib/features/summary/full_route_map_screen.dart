@@ -308,6 +308,10 @@ class _FullRouteMapScreenState extends State<FullRouteMapScreen>
       elevation: 0,
       centerTitle: true,
       automaticallyImplyLeading: false,
+      leading: IconButton(
+        icon: const Icon(Icons.arrow_back_rounded, color: AppColors.primaryMain),
+        onPressed: () => Navigator.of(context).maybePop(),
+      ),
       title: Text(
         '${widget.originName} → ${widget.destinationName}',
         style: GoogleFonts.poppins(

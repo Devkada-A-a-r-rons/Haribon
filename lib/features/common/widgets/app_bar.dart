@@ -10,6 +10,7 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
   final bool centerTitle;
   final bool showSettings;
   final bool showInfo;
+  final bool showBackButton;
 
   const CommonAppBar({
     super.key,
@@ -19,16 +20,26 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.centerTitle = false,
     this.showSettings = true,
     this.showInfo = true,
+    this.showBackButton = true,
   });
 
   @override
   Widget build(BuildContext context) {
+    final canPop = Navigator.of(context).canPop();
+    final effectiveLeading = leading ??
+        ((showBackButton && canPop)
+            ? IconButton(
+                icon: const Icon(Icons.arrow_back_rounded, color: AppColors.primaryMain),
+                onPressed: () => Navigator.of(context).maybePop(),
+              )
+            : null);
+
     return AppBar(
       backgroundColor: AppColors.surfaceMain,
       elevation: 0,
       centerTitle: centerTitle,
       automaticallyImplyLeading: false,
-      leading: leading,
+      leading: effectiveLeading,
       title: Row(
         mainAxisSize: MainAxisSize.min,
         children: [

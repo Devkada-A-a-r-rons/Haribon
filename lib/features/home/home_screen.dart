@@ -329,7 +329,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.surfaceMain,
-      appBar: const CommonAppBar(),
+      appBar: const CommonAppBar(showBackButton: false),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Padding(
