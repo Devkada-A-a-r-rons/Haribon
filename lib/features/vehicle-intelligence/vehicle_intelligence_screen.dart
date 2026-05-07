@@ -102,22 +102,62 @@ class _VehicleIntelligenceScreenState extends State<VehicleIntelligenceScreen>
           .maybeSingle();
 
       if (response != null) {
+        final model = response['model'];
+        final type = response['vehicle_type'];
+        final brand = response['brand'];
+
+        // 1. Find the vehicle in our local dataset to get KM/L etc.
+        final vehicle = _vehicles.firstWhere(
+          (v) =>
+              v['vehicle_type'] == type &&
+              v['brand'] == brand &&
+              v['model'] == model,
+          orElse: () => null,
+        );
+
         setState(() {
-          _selectedType = response['vehicle_type'];
-          _selectedBrand = response['brand'];
-          _selectedModel = response['model'];
-          _fuelLevel = (response['fuel_level_pct'] ?? 50) / 100.0;
+          _selectedType = type;
+          _selectedBrand = brand;
+          _selectedModel = model;
+          _selectedVehicle = vehicle;
           
+          // Use values from Supabase specifically
+          _fuelLevel = (response['fuel_level_pct'] ?? 50) / 100.0;
+          _routeDistanceKm = (response['route_distance_km'] as num?)?.toDouble();
+          
+          // Duration fallback if not saved
+          if (_routeDistanceKm != null) {
+            _routeDurationHrs = _routeDistanceKm! / 65.0; // Avg 65km/h fallback
+          }
+
           if (response['origin_name'] != null) {
-             // We don't have the full place object, but we can set a placeholder or just the name
-             _origin = {'display_name': response['origin_name'], 'lat': '14.5995', 'lon': '120.9842'}; // Lat/Lon defaults
+             _origin = {
+               'display_name': response['origin_name'], 
+               'lat': response['origin_lat']?.toString() ?? '14.5995', 
+               'lon': response['origin_lon']?.toString() ?? '120.9842'
+             };
           }
           if (response['destination_name'] != null) {
-             _destination = {'display_name': response['destination_name'], 'lat': '14.5995', 'lon': '120.9842'};
+             _destination = {
+               'display_name': response['destination_name'], 
+               'lat': response['destination_lat']?.toString() ?? '14.5995', 
+               'lon': response['destination_lon']?.toString() ?? '120.9842'
+             };
           }
-          
-          // Re-calculate derived values
-          _onModelSelected(_selectedModel!);
+
+          // Hydrate fuel metrics from the selected vehicle data
+          if (vehicle != null) {
+             _fuelGrade = vehicle['fuel_grade']?.toString();
+             if (_fuelGrade != null) {
+               _isGasoline = _fuelGrade!.toLowerCase() != 'diesel';
+             } else {
+               final m = model.toString().toLowerCase();
+               _isGasoline = !(m.contains('diesel') || m.contains('tdi') ||
+                   m.contains(' crdi') || m.contains(' d '));
+               _fuelGrade = _isGasoline ? 'Gasoline' : 'Diesel';
+             }
+          }
+          _updateFuelMetrics();
         });
       }
     } catch (e) {
@@ -329,7 +369,11 @@ class _VehicleIntelligenceScreenState extends State<VehicleIntelligenceScreen>
       'current_fuel_liters':
           double.parse(_currentLiters.toStringAsFixed(1)),
       'origin_name': _origin?['display_name'],
+      'origin_lat': _origin?['lat'],
+      'origin_lon': _origin?['lon'],
       'destination_name': _destination?['display_name'],
+      'destination_lat': _destination?['lat'],
+      'destination_lon': _destination?['lon'],
       'route_distance_km': _routeDistanceKm != null
           ? double.parse(_routeDistanceKm!.toStringAsFixed(2))
           : null,
