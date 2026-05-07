@@ -3,6 +3,7 @@ import 'widgets/profile_header.dart';
 import 'widgets/setting_section.dart';
 import 'package:haribon/theme/app_colors.dart';
 import '../../core/database/database_service.dart';
+import '../../core/supabase/supabase_service.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -90,6 +91,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
     };
 
     await _dbService.updateLatestOnboardingData(updatedData);
+    
+    // Sync with Supabase
+    try {
+      await SupabaseService().updateLatestOnboardingData(updatedData);
+    } catch (e) {
+      debugPrint('Supabase sync failed: $e');
+    }
     
     if (mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
