@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../theme/app_colors.dart';
 import '../screens/information_screen.dart';
@@ -27,6 +27,7 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
       backgroundColor: AppColors.surfaceMain,
       elevation: 0,
       centerTitle: centerTitle,
+      automaticallyImplyLeading: false,
       leading: leading,
       title: Row(
         mainAxisSize: MainAxisSize.min,

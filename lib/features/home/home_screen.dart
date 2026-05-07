@@ -1,21 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:latlong2/latlong.dart';
-import '../chatbot/chatbot_screen.dart';
 import '../../core/database/database_service.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../theme/app_colors.dart';
 import '../common/widgets/app_bar.dart';
 import '../summary/models/trip_summary_model.dart';
-import '../summary/trip_summary_screen.dart';
 import '../summary/main_summary_screen.dart';
 import '../summary/full_route_map_screen.dart';
 import './models/home_data_model.dart';
 import './widgets/home_greeting.dart';
 import '../common/widgets/trip_card.dart';
 import './widgets/home_stat_grid.dart';
-import '../monthly-report/monthly_report_screen.dart';
-import '../timeline/timeline_screen.dart';
 import './widgets/gas_station_list_widget.dart';
 import './widgets/gas_station_card.dart';
 
@@ -39,6 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     _latestTrip = _buildMockLatestTrip();
     _loadData();
+    // Listen for changes from vehicle intelligence / onboarding
     DatabaseService().onConfigChanged.addListener(_loadData);
   }
 
@@ -49,13 +46,21 @@ class _HomeScreenState extends State<HomeScreen> {
     List<HomeStat> stats = [];
     double avgFuelPrice = 65.0;
     List<double> trend = List.filled(7, 12.0);
-    double totalCO2 = 0;
+    double totalCO2Accumulated = 0;
+    double totalDistance = 0;
+    double totalLiters = 0;
+    double avgSpeedAccumulator = 0;
+    int speedCount = 0;
+    String fuelGrade = 'gasoline';
 
     try {
-      // 1. Fetch ALL trips for aggregation
-      final allTrips = await Supabase.instance.client.from('smart_trips').select();
+      // ── 1. Fetch ALL trips for aggregation ──
+      final allTrips = await Supabase.instance.client
+          .from('smart_trips')
+          .select()
+          .order('created_at', ascending: false);
 
-      // 2. Fetch Active Plan
+      // ── 2. Fetch Active Vehicle Config ──
       final activeResponse = await Supabase.instance.client
           .from('vehicle_configurations')
           .select()
@@ -63,99 +68,150 @@ class _HomeScreenState extends State<HomeScreen> {
           .limit(1)
           .maybeSingle();
 
-      // 2b. Fetch live fuel prices
+      if (activeResponse != null) {
+        fuelGrade = (activeResponse['fuel_type'] ?? 'gasoline').toString().toLowerCase();
+      }
+
+      // ── 3. Fetch live fuel prices (sorted cheapest first for gas stations) ──
       try {
         final fuelPrices = await Supabase.instance.client
             .from('fuel_prices')
             .select()
             .order('updated_at', ascending: false)
-            .limit(10);
-        if (fuelPrices != null && (fuelPrices as List).isNotEmpty) {
+            .limit(100);
+        if ((fuelPrices as List).isNotEmpty) {
+          final fuelKey = fuelGrade.contains('diesel') ? 'diesel' : 'gasoline';
+          
           double total = 0;
+          int count = 0;
           for (var p in fuelPrices) {
-            total += (p['gasoline'] as num).toDouble();
+            final price = (p[fuelKey] as num?)?.toDouble();
+            if (price != null && price > 0) {
+              total += price;
+              count++;
+            }
           }
-          avgFuelPrice = total / (fuelPrices as List).length;
-          _gasStations = GasStationListWidget.mapFromSupabase(fuelPrices as List);
+          if (count > 0) avgFuelPrice = total / count;
+          
+          // Map to gas station cards (sorted cheap→expensive inside)
+          _gasStations = GasStationListWidget.mapFromSupabase(fuelPrices);
         }
       } catch (_) {}
 
-      double totalDistance = 0;
-      double totalCost = 0;
+      // ── 4. Vehicle efficiency from config ──
+      double kmPerLiter = 12.0;
+      if (activeResponse != null) {
+        final kml = (activeResponse['km_per_liter'] as num?)?.toDouble();
+        if (kml != null && kml > 0) kmPerLiter = kml;
+      }
 
-      // Aggregate from History
-      if (allTrips != null && (allTrips as List).isNotEmpty) {
+      final co2Factor = fuelGrade.contains('diesel') ? 2.68 : 2.31;
+
+      // ── 5. Aggregate real data from trips ──
+      if ((allTrips as List).isNotEmpty) {
         for (var trip in allTrips) {
-          totalDistance += (trip['distance_km'] ?? trip['route_distance_km'] ?? 0.0).toDouble();
-          totalCost += (trip['est_fuel_cost'] ?? 0.0).toDouble();
-          totalCO2 += (trip['est_co2_kg'] ?? ((trip['est_fuel_cost'] ?? 0.0) / 68.0 * 2.3)).toDouble();
+          final distKm = (trip['distance_km'] ?? trip['route_distance_km'] ?? 0.0).toDouble();
+          final storedLiters = (trip['est_fuel_liters'] as num?)?.toDouble();
+          final storedCost = (trip['est_fuel_cost'] as num?)?.toDouble();
+          final travelTimeMin = (trip['est_travel_time_min'] as num?)?.toDouble() ?? 0;
+
+          if (distKm > 0) {
+            totalDistance += distKm;
+            if (travelTimeMin > 0) {
+              avgSpeedAccumulator += (distKm / (travelTimeMin / 60.0));
+              speedCount++;
+            }
+          }
+
+          // Compute liters
+          double tripLiters;
+          if (storedLiters != null && storedLiters > 0) {
+            tripLiters = storedLiters;
+          } else if (distKm > 0 && kmPerLiter > 0) {
+            tripLiters = distKm / kmPerLiter;
+          } else if (storedCost != null && storedCost > 0) {
+            tripLiters = storedCost / avgFuelPrice;
+          } else {
+            tripLiters = 0.0;
+          }
+
+          totalLiters += tripLiters;
+          totalCO2Accumulated += tripLiters * co2Factor;
         }
       }
 
-      // 3. Prioritize Active Plan for Main Card
+      double globalAvgSpeed = speedCount > 0 ? avgSpeedAccumulator / speedCount : 65.0;
+
+      // ── 6. Prioritize Active Plan for Main Trip Card ──
       if (activeResponse != null) {
         _vehicleConfig = Map<String, dynamic>.from(activeResponse);
-        final activeDist = (activeResponse['route_distance_km'] ?? 99.0).toDouble();
-        final activeCost = (activeResponse['budget'] ?? 0.0).toDouble();
-
-        totalDistance += activeDist;
-        totalCost += activeCost;
-        totalCO2 += (activeCost / 68.0 * 2.3);
+        final activeDist = (activeResponse['route_distance_km'] ?? 0.0).toDouble();
+        final litersPerKm = kmPerLiter > 0 ? 1.0 / kmPerLiter : 0.08;
+        final activeLiters = activeDist * litersPerKm;
+        final activeCost = activeLiters * avgFuelPrice;
+        final activeCO2 = activeLiters * co2Factor;
 
         setState(() {
           _latestTrip = TripSummary(
             origin: activeResponse['origin_name'] ?? 'Current Location',
-            destination: activeResponse['destination_name'] ?? 'Baguio',
+            destination: activeResponse['destination_name'] ?? 'Destination',
             date: 'Active Journey',
-            duration: const Duration(hours: 4, minutes: 30),
+            duration: Duration(minutes: (activeDist / 60.0 * 60).toInt()),
             distanceKm: activeDist,
             efficiencyScore: 92,
             efficiencyRating: 'Active Plan',
             efficiencyPercentile: 'Top 5%',
             stats: TripStats(
-              fuelLiters: (activeCost / 68.0),
+              fuelLiters: activeLiters,
               fuelCostPhp: activeCost,
-              avgSpeedKmh: 65,
-              co2SavedKg: (activeCost / 68.0 * 2.3),
+              avgSpeedKmh: globalAvgSpeed,
+              co2SavedKg: activeCO2,
               costVsEstimatePhp: 0,
             ),
             fuelStops: [],
             aiInsight: '',
             routeSegments: [],
-            treesEquivalent: (activeCost / 68.0 * 2.3 / 20.0).ceil(),
+            treesEquivalent: (activeCO2 / 20.0).ceil(),
           );
         });
-      } else if (allTrips != null && (allTrips as List).isNotEmpty) {
-        final latest = (allTrips as List).last;
+      } else if ((allTrips as List).isNotEmpty) {
+        final latest = (allTrips as List).first;
+        final latestDist = (latest['distance_km'] ?? 0.0).toDouble();
+        final latestLiters = (latest['est_fuel_liters'] as num?)?.toDouble() ?? (latestDist / kmPerLiter);
+        final latestCost = latestLiters * avgFuelPrice;
+        final latestCO2 = latestLiters * co2Factor;
+        final latestTime = (latest['est_travel_time_min'] as num?)?.toDouble() ?? 0;
+        final latestSpeed = latestTime > 0 ? (latestDist / (latestTime / 60.0)) : globalAvgSpeed;
+        
         setState(() {
           _latestTrip = TripSummary(
             origin: latest['origin_name'] ?? 'Unknown',
             destination: latest['destination_name'] ?? 'Unknown',
             date: 'Last Trip',
-            duration: Duration(minutes: (latest['est_travel_time_min'] ?? 0)),
-            distanceKm: (latest['distance_km'] ?? 0.0).toDouble(),
+            duration: Duration(minutes: latestTime.toInt()),
+            distanceKm: latestDist,
             efficiencyScore: (latest['efficiency_score'] ?? 85).toInt(),
             efficiencyRating: 'Good',
             efficiencyPercentile: 'Top 15%',
             stats: TripStats(
-              fuelLiters: (latest['est_fuel_liters'] ?? 0.0).toDouble(),
-              fuelCostPhp: (latest['est_fuel_cost'] ?? 0.0).toDouble(),
-              avgSpeedKmh: 65,
-              co2SavedKg: (latest['est_co2_kg'] ?? 0.0).toDouble(),
+              fuelLiters: latestLiters,
+              fuelCostPhp: latestCost,
+              avgSpeedKmh: latestSpeed,
+              co2SavedKg: latestCO2,
               costVsEstimatePhp: 0,
             ),
             fuelStops: [],
             aiInsight: '',
             routeSegments: [],
-            treesEquivalent: ((latest['est_co2_kg'] ?? 0.0) / 20.0).ceil(),
+            treesEquivalent: (latestCO2 / 20.0).ceil(),
           );
         });
       }
 
-      // 4. Calculate Efficiency Trend (last 7 days)
+      // ── 7. Calculate Efficiency Trend (last 7 days) ──
       final now = DateTime.now();
 
-      if (allTrips != null && (allTrips as List).isNotEmpty) {
+      if ((allTrips as List).isNotEmpty) {
         for (int i = 0; i < 7; i++) {
           final targetDate = now.subtract(Duration(days: 6 - i));
           double dailyDist = 0;
@@ -175,19 +231,20 @@ class _HomeScreenState extends State<HomeScreen> {
             }
           }
 
-          trend[i] = dailyLiters > 0 ? dailyDist / dailyLiters : 12.0;
+          trend[i] = dailyLiters > 0 ? dailyDist / dailyLiters : kmPerLiter;
         }
       }
 
-      // 5. Update Stats
+      // ── 8. Build Dynamic Stats ──
       String driveTime = '-- hrs';
       String fuelReq = '-- L';
       
       if (activeResponse != null) {
         final dist = (activeResponse['route_distance_km'] ?? 0.0).toDouble();
-        final litersPerKm = (activeResponse['liters_per_km'] ?? 0.08).toDouble();
-        driveTime = '${(dist / 60.0).toStringAsFixed(1)} hrs'; // Assuming 60km/h avg
-        fuelReq = '${(dist * litersPerKm).toStringAsFixed(1)} Liters';
+        final litersPerKm = kmPerLiter > 0 ? 1.0 / kmPerLiter : 0.08;
+        final hrs = dist / 60.0;
+        driveTime = hrs < 1 ? '${(hrs * 60).toInt()} min' : '${hrs.toStringAsFixed(1)} hrs';
+        fuelReq = '${(dist * litersPerKm).toStringAsFixed(1)} L';
       }
 
       stats = [
@@ -228,7 +285,7 @@ class _HomeScreenState extends State<HomeScreen> {
         _fuelPricePerLiter = avgFuelPrice;
         _dashboardData = HomeDashboardData(
           userName: userName,
-          weeklyCo2Saved: totalCO2,
+          weeklyCo2Saved: totalCO2Accumulated,
           stats: stats,
           efficiencyTrend: trend,
           activities: mockData.activities,

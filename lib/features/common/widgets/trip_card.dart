@@ -153,6 +153,8 @@ class TripCard extends StatelessWidget {
                     children: [
                       Text(
                         _route,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
                         style: GoogleFonts.poppins(
                           fontSize: 14,
                           fontWeight: FontWeight.w800,
@@ -175,19 +177,20 @@ class TripCard extends StatelessWidget {
                       ),
                       const SizedBox(height: 10),
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          _TripStat(label: 'DISTANCE', value: _distance),
-                          const SizedBox(width: 20),
+                          Expanded(child: _TripStat(label: 'DISTANCE', value: _distance)),
+                          const SizedBox(width: 10),
                           if (_efficiency != null) ...[
-                            _TripStat(
-                              label: 'EFFICIENCY',
-                              value: _efficiency!,
-                              valueColor: _efficiencyColor,
+                            Expanded(
+                              child: _TripStat(
+                                label: 'EFFICIENCY',
+                                value: _efficiency!,
+                                valueColor: _efficiencyColor,
+                              ),
                             ),
-                            const SizedBox(width: 20),
+                            const SizedBox(width: 10),
                           ],
-                          _TripStat(label: 'COST', value: cost),
+                          Expanded(child: _TripStat(label: 'COST', value: cost)),
                         ],
                       ),
                       const SizedBox(height: 10),
@@ -247,6 +250,8 @@ class _TripStat extends StatelessWidget {
         const SizedBox(height: 1),
         Text(
           value,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
           style: GoogleFonts.poppins(
             fontSize: 14,
             fontWeight: FontWeight.w800,

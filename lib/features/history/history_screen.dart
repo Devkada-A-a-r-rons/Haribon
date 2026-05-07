@@ -10,6 +10,7 @@ import '../common/widgets/trip_card.dart';
 import 'widgets/history_images.dart';
 import 'trip-details/trip_details_screen.dart';
 import '../summary/full_route_map_screen.dart';
+import '../../core/database/database_service.dart';
 
 class HistoryScreen extends StatefulWidget {
   const HistoryScreen({super.key});
@@ -25,6 +26,17 @@ class _HistoryScreenState extends State<HistoryScreen> {
   @override
   void initState() {
     super.initState();
+    _fetchHistory();
+    DatabaseService().onConfigChanged.addListener(_onConfigChanged);
+  }
+
+  @override
+  void dispose() {
+    DatabaseService().onConfigChanged.removeListener(_onConfigChanged);
+    super.dispose();
+  }
+
+  void _onConfigChanged() {
     _fetchHistory();
   }
 
@@ -174,7 +186,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                       route: '$originName → $destName',
                       badgeTextOverride: isActive
                           ? 'ACTIVE PLAN'
-                          : '$score ${score > 85 ? 'EXCELLENT' : 'GOOD'}',
+                          : 'PAST PLAN',
                       date: DateFormat("MMM d, yyyy \u2022 hh:mm a").format(
                           DateTime.parse(trip['created_at'])),
                       distance: '$distanceKm km',

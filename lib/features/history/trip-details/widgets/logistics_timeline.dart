@@ -179,7 +179,7 @@ class _LogisticsTimelineState extends State<LogisticsTimeline> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Flexible(
+                      Expanded(
                         child: Text(
                           '$time \u2022 $location',
                           style: GoogleFonts.poppins(
@@ -188,9 +188,10 @@ class _LogisticsTimelineState extends State<LogisticsTimeline> {
                             color: AppColors.textPrimary,
                             letterSpacing: 1,
                           ),
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ),
-                      const SizedBox(height: 8),
+                      const SizedBox(width: 8),
                       Text(
                         trailingText,
                         style: GoogleFonts.poppins(

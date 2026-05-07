@@ -4,13 +4,22 @@ import 'package:haribon/theme/app_colors.dart';
 
 class TotalFuelCard extends StatelessWidget {
   final double liters;
-  const TotalFuelCard({super.key, required this.liters});
+  final double baseLiters;
+  final double extraLiters;
+
+  const TotalFuelCard({
+    super.key,
+    required this.liters,
+    this.baseLiters = 0,
+    this.extraLiters = 0,
+  });
 
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    final baseLiters = liters * 0.85;
-    final extraLiters = liters * 0.15;
+    // Use provided values or fallback to proportional split
+    final base = baseLiters > 0 ? baseLiters : liters * 0.85;
+    final extra = extraLiters > 0 ? extraLiters : liters * 0.15;
 
     return Container(
       width: double.infinity,
@@ -49,9 +58,9 @@ class TotalFuelCard extends StatelessWidget {
               style: textTheme.bodySmall?.copyWith(color: AppColors.textTertiary),
               children: [
                 const TextSpan(text: 'Base Fuel '),
-                TextSpan(text: '${baseLiters.toStringAsFixed(1)}L', style: textTheme.bodySmall?.copyWith(color: AppColors.primaryMain, fontWeight: FontWeight.bold)),
+                TextSpan(text: '${base.toStringAsFixed(1)}L', style: textTheme.bodySmall?.copyWith(color: AppColors.primaryMain, fontWeight: FontWeight.bold)),
                 const TextSpan(text: ' | Extra Fuel '),
-                TextSpan(text: '+${extraLiters.toStringAsFixed(1)}L', style: textTheme.bodySmall?.copyWith(color: AppColors.redDark, fontWeight: FontWeight.bold)),
+                TextSpan(text: '+${extra.toStringAsFixed(1)}L', style: textTheme.bodySmall?.copyWith(color: AppColors.redDark, fontWeight: FontWeight.bold)),
               ],
             ),
           ),
