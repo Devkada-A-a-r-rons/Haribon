@@ -175,6 +175,7 @@ class TripCard extends StatelessWidget {
                       ),
                       const SizedBox(height: 10),
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           _TripStat(label: 'DISTANCE', value: _distance),
                           const SizedBox(width: 20),
