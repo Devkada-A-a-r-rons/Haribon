@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -78,8 +79,9 @@ class _VehicleIntelligenceScreenState extends State<VehicleIntelligenceScreen>
   // ─── Data Loading ──────────────────────────────────────────────
   Future<void> _loadVehicles() async {
     try {
-      final jsonStr = await rootBundle
-          .loadString('assets/Data/smartgas_vehicles_cleaned.json');
+      final jsonStr = await rootBundle.loadString(
+        'assets/Data/smartgas_vehicles_cleaned.json',
+      );
       setState(() {
         _vehicles = jsonDecode(jsonStr);
       });
@@ -120,35 +122,39 @@ class _VehicleIntelligenceScreenState extends State<VehicleIntelligenceScreen>
           _selectedBrand = brand;
           _selectedModel = model;
           _selectedVehicle = vehicle;
-          
+
           _fuelLevel = (response['fuel_level_pct'] ?? 50) / 100.0;
-          _routeDistanceKm = (response['route_distance_km'] as num?)?.toDouble();
-          
+          _routeDistanceKm = (response['route_distance_km'] as num?)
+              ?.toDouble();
+
           if (response['origin_name'] != null) {
-             _origin = {
-               'display_name': response['origin_name'], 
-               'lat': response['origin_lat']?.toString() ?? '14.5995', 
-               'lon': response['origin_lon']?.toString() ?? '120.9842'
-             };
+            _origin = {
+              'display_name': response['origin_name'],
+              'lat': response['origin_lat']?.toString() ?? '14.5995',
+              'lon': response['origin_lon']?.toString() ?? '120.9842',
+            };
           }
           if (response['destination_name'] != null) {
-             _destination = {
-               'display_name': response['destination_name'], 
-               'lat': response['destination_lat']?.toString() ?? '14.5995', 
-               'lon': response['destination_lon']?.toString() ?? '120.9842'
-             };
+            _destination = {
+              'display_name': response['destination_name'],
+              'lat': response['destination_lat']?.toString() ?? '14.5995',
+              'lon': response['destination_lon']?.toString() ?? '120.9842',
+            };
           }
 
           if (vehicle != null) {
-             _fuelGrade = vehicle['fuel_grade']?.toString();
-             if (_fuelGrade != null) {
-               _isGasoline = _fuelGrade!.toLowerCase() != 'diesel';
-             } else {
-               final m = model.toString().toLowerCase();
-               _isGasoline = !(m.contains('diesel') || m.contains('tdi') ||
-                   m.contains(' crdi') || m.contains(' d '));
-               _fuelGrade = _isGasoline ? 'Gasoline' : 'Diesel';
-             }
+            _fuelGrade = vehicle['fuel_grade']?.toString();
+            if (_fuelGrade != null) {
+              _isGasoline = _fuelGrade!.toLowerCase() != 'diesel';
+            } else {
+              final m = model.toString().toLowerCase();
+              _isGasoline =
+                  !(m.contains('diesel') ||
+                      m.contains('tdi') ||
+                      m.contains(' crdi') ||
+                      m.contains(' d '));
+              _fuelGrade = _isGasoline ? 'Gasoline' : 'Diesel';
+            }
           }
           _updateFuelMetrics();
         });
@@ -156,7 +162,7 @@ class _VehicleIntelligenceScreenState extends State<VehicleIntelligenceScreen>
         // Trigger route calculation if coordinates are just defaults but names are different
         if (_origin != null && _destination != null) {
           if (_routeDistanceKm == null || _routeDistanceKm! < 0.1) {
-             _calculateRoute();
+            _calculateRoute();
           }
         }
       }
@@ -167,7 +173,10 @@ class _VehicleIntelligenceScreenState extends State<VehicleIntelligenceScreen>
 
   // ─── Cascading Dropdown Helpers ────────────────────────────────
   List<String> get _types {
-    final set = _vehicles.map((v) => v['vehicle_type'].toString()).toSet().toList();
+    final set = _vehicles
+        .map((v) => v['vehicle_type'].toString())
+        .toSet()
+        .toList();
     set.sort();
     return set;
   }
@@ -186,8 +195,11 @@ class _VehicleIntelligenceScreenState extends State<VehicleIntelligenceScreen>
   List<String> get _models {
     if (_selectedType == null || _selectedBrand == null) return [];
     final set = _vehicles
-        .where((v) =>
-            v['vehicle_type'] == _selectedType && v['brand'] == _selectedBrand)
+        .where(
+          (v) =>
+              v['vehicle_type'] == _selectedType &&
+              v['brand'] == _selectedBrand,
+        )
         .map((v) => v['model'].toString())
         .toSet()
         .toList();
@@ -212,8 +224,11 @@ class _VehicleIntelligenceScreenState extends State<VehicleIntelligenceScreen>
         _isGasoline = _fuelGrade!.toLowerCase() != 'diesel';
       } else {
         final m = model.toLowerCase();
-        _isGasoline = !(m.contains('diesel') || m.contains('tdi') ||
-            m.contains(' crdi') || m.contains(' d '));
+        _isGasoline =
+            !(m.contains('diesel') ||
+                m.contains('tdi') ||
+                m.contains(' crdi') ||
+                m.contains(' d '));
         _fuelGrade = _isGasoline ? 'Gasoline' : 'Diesel';
       }
       _updateFuelMetrics();
@@ -230,8 +245,9 @@ class _VehicleIntelligenceScreenState extends State<VehicleIntelligenceScreen>
 
       if (response != null && (response as List).isNotEmpty) {
         final List prices = response as List;
-        final fuelKey =
-            (_fuelGrade?.toLowerCase() == 'diesel') ? 'diesel' : 'gasoline';
+        final fuelKey = (_fuelGrade?.toLowerCase() == 'diesel')
+            ? 'diesel'
+            : 'gasoline';
         double total = 0;
         double min = double.infinity;
         double max = 0;
@@ -239,8 +255,14 @@ class _VehicleIntelligenceScreenState extends State<VehicleIntelligenceScreen>
         for (var p in prices) {
           final val = (p[fuelKey] as num).toDouble();
           total += val;
-          if (val < min) { min = val; minB = p['brand']; }
-          if (val > max) { max = val; maxB = p['brand']; }
+          if (val < min) {
+            min = val;
+            minB = p['brand'];
+          }
+          if (val > max) {
+            max = val;
+            maxB = p['brand'];
+          }
         }
         setState(() {
           _fuelPricePerLiter = total / prices.length;
@@ -270,7 +292,8 @@ class _VehicleIntelligenceScreenState extends State<VehicleIntelligenceScreen>
   double get _highwayLitersPerKm =>
       (_selectedVehicle?['highway_liters_per_km'] as num?)?.toDouble() ?? 0;
   double get _fullTankRange =>
-      (_selectedVehicle?['estimated_full_tank_range_km'] as num?)?.toDouble() ?? 0;
+      (_selectedVehicle?['estimated_full_tank_range_km'] as num?)?.toDouble() ??
+      0;
   String get _efficiencyCategory =>
       _selectedVehicle?['fuel_efficiency_category'] ?? '--';
   double get _currentRange =>
@@ -282,8 +305,13 @@ class _VehicleIntelligenceScreenState extends State<VehicleIntelligenceScreen>
 
   Future<Map<String, dynamic>?> _geocode(String query) async {
     try {
-      final url = Uri.parse('https://nominatim.openstreetmap.org/search?q=${Uri.encodeComponent(query)}&format=json&limit=1');
-      final res = await http.get(url, headers: {'User-Agent': 'HaribonApp/1.0'});
+      final url = Uri.parse(
+        'https://nominatim.openstreetmap.org/search?q=${Uri.encodeComponent(query)}&format=json&limit=1',
+      );
+      final res = await http.get(
+        url,
+        headers: {'User-Agent': 'HaribonApp/1.0'},
+      );
       if (res.statusCode == 200) {
         final List data = jsonDecode(res.body);
         if (data.isNotEmpty) {
@@ -306,12 +334,10 @@ class _VehicleIntelligenceScreenState extends State<VehicleIntelligenceScreen>
     setState(() => _isCalculatingRoute = true);
     try {
       // 1. Check if we need to geocode names (if coordinates are the same/default)
-      if (_origin!['lat'] == _destination!['lat'] && _origin!['lon'] == _destination!['lon']) {
-        // Try to geocode origin
+      if (_origin!['lat'] == _destination!['lat'] &&
+          _origin!['lon'] == _destination!['lon']) {
         final oRes = await _geocode(_origin!['display_name']);
         if (oRes != null) _origin = oRes;
-        
-        // Try to geocode destination
         final dRes = await _geocode(_destination!['display_name']);
         if (dRes != null) _destination = dRes;
       }
@@ -336,8 +362,9 @@ class _VehicleIntelligenceScreenState extends State<VehicleIntelligenceScreen>
             final proxyUrl = proxy == 'https://corsproxy.io/?'
                 ? Uri.parse('$proxy$targetUrl')
                 : Uri.parse('$proxy${Uri.encodeComponent(targetUrl)}');
-            final res =
-                await http.get(proxyUrl).timeout(const Duration(seconds: 15));
+            final res = await http
+                .get(proxyUrl)
+                .timeout(const Duration(seconds: 15));
             if (res.statusCode == 200) {
               if (proxy.contains('allorigins')) {
                 final wrapper = jsonDecode(res.body);
@@ -345,7 +372,8 @@ class _VehicleIntelligenceScreenState extends State<VehicleIntelligenceScreen>
               } else {
                 bodyString = res.body;
               }
-              if (bodyString != null && bodyString.trim().startsWith('{')) break;
+              if (bodyString != null && bodyString.trim().startsWith('{'))
+                break;
             }
           } catch (e) {
             debugPrint('Proxy $proxy failed or timed out: $e');
@@ -353,21 +381,40 @@ class _VehicleIntelligenceScreenState extends State<VehicleIntelligenceScreen>
           }
         }
       } else {
-        final res = await http.get(Uri.parse(targetUrl)).timeout(const Duration(seconds: 10));
+        final res = await http
+            .get(Uri.parse(targetUrl))
+            .timeout(const Duration(seconds: 10));
         if (res.statusCode == 200) bodyString = res.body;
       }
+      
       if (bodyString != null && bodyString.trim().startsWith('{')) {
         final data = jsonDecode(bodyString);
         if (data['routes'] != null && data['routes'].isNotEmpty) {
           final route = data['routes'][0];
           setState(() {
-            _routeDistanceKm =
-                (route['distance'] as num).toDouble() / 1000.0;
-            _routeDurationHrs =
-                (route['duration'] as num).toDouble() / 3600.0;
+            _routeDistanceKm = (route['distance'] as num).toDouble() / 1000.0;
+            _routeDurationHrs = (route['duration'] as num).toDouble() / 3600.0;
           });
+          return;
         }
       }
+
+      // ── Fallback: Straight-line distance if OSRM fails ──
+      final lat1Val = double.parse(_origin!['lat']);
+      final lon1Val = double.parse(_origin!['lon']);
+      final lat2Val = double.parse(_destination!['lat']);
+      final lon2Val = double.parse(_destination!['lon']);
+      
+      const double p = 0.017453292519943295; // Math.PI / 180
+      final a = 0.5 - cos((lat2Val - lat1Val) * p) / 2 + 
+                cos(lat1Val * p) * cos(lat2Val * p) * 
+                (1 - cos((lon2Val - lon1Val) * p)) / 2;
+      final straightLineKm = 12742 * asin(sqrt(a)); // 2 * R; R = 6371 km
+      
+      setState(() {
+        _routeDistanceKm = straightLineKm * 1.25; // 1.25x winding factor
+        _routeDurationHrs = _routeDistanceKm! / 50.0; 
+      });
     } catch (e) {
       debugPrint('OSRM error: $e');
     } finally {
@@ -400,8 +447,7 @@ class _VehicleIntelligenceScreenState extends State<VehicleIntelligenceScreen>
       'tank_size_liters': _tankSize,
       'km_per_liter': _kmPerLiter,
       'fuel_level_pct': (_fuelLevel * 100).round(),
-      'current_fuel_liters':
-          double.parse(_currentLiters.toStringAsFixed(1)),
+      'current_fuel_liters': double.parse(_currentLiters.toStringAsFixed(1)),
       'origin_name': _origin?['display_name'],
       'origin_lat': _origin?['lat'],
       'origin_lon': _origin?['lon'],
@@ -411,8 +457,7 @@ class _VehicleIntelligenceScreenState extends State<VehicleIntelligenceScreen>
       'route_distance_km': _routeDistanceKm != null
           ? double.parse(_routeDistanceKm!.toStringAsFixed(2))
           : null,
-      'estimated_range_km':
-          double.parse(_currentRange.toStringAsFixed(1)),
+      'estimated_range_km': double.parse(_currentRange.toStringAsFixed(1)),
       'created_at': DateTime.now().toIso8601String(),
     };
     await DatabaseService().saveOnboardingData({
@@ -435,7 +480,8 @@ class _VehicleIntelligenceScreenState extends State<VehicleIntelligenceScreen>
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-              content: Text('✅ Saved locally (Supabase sync pending).')),
+            content: Text('✅ Saved locally (Supabase sync pending).'),
+          ),
         );
       }
     }
@@ -445,9 +491,7 @@ class _VehicleIntelligenceScreenState extends State<VehicleIntelligenceScreen>
   @override
   Widget build(BuildContext context) {
     if (_isLoadingVehicles) {
-      return const Scaffold(
-        body: Center(child: CircularProgressIndicator()),
-      );
+      return const Scaffold(body: Center(child: CircularProgressIndicator()));
     }
 
     return Scaffold(
@@ -465,18 +509,18 @@ class _VehicleIntelligenceScreenState extends State<VehicleIntelligenceScreen>
                   Text(
                     'Vehicle Intelligence',
                     style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                          color: Colors.black,
-                          fontWeight: FontWeight.w900,
-                          fontSize: 20,
-                          height: 1.1,
-                        ),
+                      color: Colors.black,
+                      fontWeight: FontWeight.w900,
+                      fontSize: 20,
+                      height: 1.1,
+                    ),
                   ),
                   const SizedBox(height: 4),
                   Text(
                     'Configure your vehicle and view trip insights.',
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          fontSize: 11,
-                        ),
+                    style: Theme.of(
+                      context,
+                    ).textTheme.bodyMedium?.copyWith(fontSize: 11),
                   ),
                   const SizedBox(height: 14),
 
@@ -504,10 +548,7 @@ class _VehicleIntelligenceScreenState extends State<VehicleIntelligenceScreen>
             Expanded(
               child: TabBarView(
                 controller: _tabController,
-                children: [
-                  _buildSetupTab(),
-                  _buildInsightsTab(),
-                ],
+                children: [_buildSetupTab(), _buildInsightsTab()],
               ),
             ),
           ],
@@ -518,42 +559,42 @@ class _VehicleIntelligenceScreenState extends State<VehicleIntelligenceScreen>
 
   // ─── Pill Tab Builder ──────────────────────────────────────────
   Widget _buildTabPill(int index, IconData icon, String label) {
-  final isSelected = _selectedTab == index;
-  return Expanded(
-    child: GestureDetector(
-      onTap: () => _tabController.animateTo(index),
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 200),
-        curve: Curves.easeInOut,
-        height: double.infinity,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: isSelected ? AppColors.primaryMain : Colors.transparent,
-          borderRadius: BorderRadius.circular(26),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              icon,
-              size: 15,
-              color: isSelected ? Colors.white : Colors.black45,
-            ),
-            const SizedBox(width: 6),
-            Text(
-              label,
-              style: TextStyle(
-                fontSize: 13,
-                fontWeight: FontWeight.w600,
+    final isSelected = _selectedTab == index;
+    return Expanded(
+      child: GestureDetector(
+        onTap: () => _tabController.animateTo(index),
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 200),
+          curve: Curves.easeInOut,
+          height: double.infinity,
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            color: isSelected ? AppColors.primaryMain : Colors.transparent,
+            borderRadius: BorderRadius.circular(26),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                icon,
+                size: 15,
                 color: isSelected ? Colors.white : Colors.black45,
               ),
-            ),
-          ],
+              const SizedBox(width: 6),
+              Text(
+                label,
+                style: TextStyle(
+                  fontSize: 13,
+                  fontWeight: FontWeight.w600,
+                  color: isSelected ? Colors.white : Colors.black45,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
-    ),
-  );
-}
+    );
+  }
 
   // ─── Setup Tab ────────────────────────────────────────────────
   Widget _buildSetupTab() {
@@ -582,19 +623,24 @@ class _VehicleIntelligenceScreenState extends State<VehicleIntelligenceScreen>
               child: Row(
                 children: [
                   Container(
-                      width: 1,
-                      height: 20,
-                      color: Colors.grey.withOpacity(0.3)),
+                    width: 1,
+                    height: 20,
+                    color: Colors.grey.withOpacity(0.3),
+                  ),
                   const SizedBox(width: 12),
-                  const Icon(Icons.route,
-                      size: 14, color: AppColors.primaryMain),
+                  const Icon(
+                    Icons.route,
+                    size: 14,
+                    color: AppColors.primaryMain,
+                  ),
                   const SizedBox(width: 6),
                   Text(
                     '${_routeDistanceKm!.toStringAsFixed(1)} km · ${_routeDurationHrs! < 1 ? '${(_routeDurationHrs! * 60).toInt()} min' : '${_routeDurationHrs!.toStringAsFixed(1)} hrs'}',
                     style: const TextStyle(
-                        fontSize: 10,
-                        fontWeight: FontWeight.w600,
-                        color: AppColors.primaryMain),
+                      fontSize: 10,
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.primaryMain,
+                    ),
                   ),
                 ],
               ),
@@ -636,7 +682,9 @@ class _VehicleIntelligenceScreenState extends State<VehicleIntelligenceScreen>
             label: 'Brand',
             value: _selectedBrand,
             items: _brands,
-            hintText: _selectedType == null ? 'Select type first' : 'Select brand',
+            hintText: _selectedType == null
+                ? 'Select type first'
+                : 'Select brand',
             onChanged: _selectedType == null
                 ? null
                 : (val) {
@@ -652,8 +700,9 @@ class _VehicleIntelligenceScreenState extends State<VehicleIntelligenceScreen>
             label: 'Model',
             value: _selectedModel,
             items: _models,
-            hintText:
-                _selectedBrand == null ? 'Select brand first' : 'Select model',
+            hintText: _selectedBrand == null
+                ? 'Select brand first'
+                : 'Select model',
             onChanged: _selectedBrand == null
                 ? null
                 : (val) {
@@ -670,8 +719,10 @@ class _VehicleIntelligenceScreenState extends State<VehicleIntelligenceScreen>
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text('Current Fuel Level',
-                      style: TextStyle(fontSize: 10)),
+                  const Text(
+                    'Current Fuel Level',
+                    style: TextStyle(fontSize: 10),
+                  ),
                   Text(
                     '${(_fuelLevel * 100).toInt()}%',
                     style: const TextStyle(
@@ -702,15 +753,19 @@ class _VehicleIntelligenceScreenState extends State<VehicleIntelligenceScreen>
                 behavior: HitTestBehavior.opaque,
                 onPanUpdate: (details) {
                   setState(() {
-                    double left = (details.localPosition.dx - 8)
-                        .clamp(0.0, constraints.maxWidth - 16.0);
+                    double left = (details.localPosition.dx - 8).clamp(
+                      0.0,
+                      constraints.maxWidth - 16.0,
+                    );
                     _fuelLevel = left / (constraints.maxWidth - 16.0);
                   });
                 },
                 onTapDown: (details) {
                   setState(() {
-                    double left = (details.localPosition.dx - 8)
-                        .clamp(0.0, constraints.maxWidth - 16.0);
+                    double left = (details.localPosition.dx - 8).clamp(
+                      0.0,
+                      constraints.maxWidth - 16.0,
+                    );
                     _fuelLevel = left / (constraints.maxWidth - 16.0);
                   });
                 },
@@ -748,7 +803,9 @@ class _VehicleIntelligenceScreenState extends State<VehicleIntelligenceScreen>
                             color: Colors.white,
                             shape: BoxShape.circle,
                             border: Border.all(
-                                color: AppColors.success, width: 2.5),
+                              color: AppColors.success,
+                              width: 2.5,
+                            ),
                             boxShadow: [
                               BoxShadow(
                                 color: Colors.black.withValues(alpha: 0.15),
@@ -768,16 +825,22 @@ class _VehicleIntelligenceScreenState extends State<VehicleIntelligenceScreen>
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: const [
-              Text('E',
-                  style: TextStyle(
-                      fontSize: 10,
-                      color: Colors.black54,
-                      fontWeight: FontWeight.bold)),
-              Text('F',
-                  style: TextStyle(
-                      fontSize: 10,
-                      color: Colors.black54,
-                      fontWeight: FontWeight.bold)),
+              Text(
+                'E',
+                style: TextStyle(
+                  fontSize: 10,
+                  color: Colors.black54,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Text(
+                'F',
+                style: TextStyle(
+                  fontSize: 10,
+                  color: Colors.black54,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ],
           ),
           const SizedBox(height: 20),
@@ -795,9 +858,10 @@ class _VehicleIntelligenceScreenState extends State<VehicleIntelligenceScreen>
                 ),
               ),
               icon: const Icon(Icons.auto_awesome, size: 16),
-              label: const Text('Save',
-                  style:
-                      TextStyle(fontSize: 13, fontWeight: FontWeight.w600)),
+              label: const Text(
+                'Save',
+                style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600),
+              ),
             ),
           ),
           const SizedBox(height: 24),
@@ -836,7 +900,9 @@ class _VehicleIntelligenceScreenState extends State<VehicleIntelligenceScreen>
                     Text(
                       '${(_fuelLevel * 100).toInt()}%',
                       style: const TextStyle(
-                          fontSize: 24, fontWeight: FontWeight.bold),
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     const SizedBox(width: 4),
                     Text(
@@ -869,20 +935,23 @@ class _VehicleIntelligenceScreenState extends State<VehicleIntelligenceScreen>
                       ? '${_currentRange.toStringAsFixed(0)} km'
                       : '-- km',
                   style: const TextStyle(
-                      fontSize: 24, fontWeight: FontWeight.bold),
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 const SizedBox(height: 6),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text('City Range',
-                        style: TextStyle(fontSize: 11)),
+                    const Text('City Range', style: TextStyle(fontSize: 11)),
                     Text(
                       _selectedVehicle != null
                           ? '${_cityRange.toStringAsFixed(0)} km'
                           : '-- km',
                       style: const TextStyle(
-                          fontSize: 11, fontWeight: FontWeight.bold),
+                        fontSize: 11,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ],
                 ),
@@ -890,14 +959,15 @@ class _VehicleIntelligenceScreenState extends State<VehicleIntelligenceScreen>
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text('Highway Range',
-                        style: TextStyle(fontSize: 11)),
+                    const Text('Highway Range', style: TextStyle(fontSize: 11)),
                     Text(
                       _selectedVehicle != null
                           ? '${_highwayRange.toStringAsFixed(0)} km'
                           : '-- km',
                       style: const TextStyle(
-                          fontSize: 11, fontWeight: FontWeight.bold),
+                        fontSize: 11,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ],
                 ),
@@ -920,25 +990,24 @@ class _VehicleIntelligenceScreenState extends State<VehicleIntelligenceScreen>
             width: double.infinity,
             height: 48,
             child: ElevatedButton.icon(
-              onPressed:
-                  (_routeDistanceKm == null || _selectedVehicle == null)
-                      ? null
-                      : () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (_) => MainSummaryScreen(
-                                onPlanNext: () {
-                                  Navigator.pushReplacementNamed(
-                                    context,
-                                    '/home',
-                                    arguments: 1,
-                                  );
-                                },
-                              ),
-                            ),
-                          );
-                        },
+              onPressed: (_routeDistanceKm == null || _selectedVehicle == null)
+                  ? null
+                  : () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => MainSummaryScreen(
+                            onPlanNext: () {
+                              Navigator.pushReplacementNamed(
+                                context,
+                                '/home',
+                                arguments: 1,
+                              );
+                            },
+                          ),
+                        ),
+                      );
+                    },
               icon: const Icon(Icons.flag_rounded, size: 18),
               label: Text(
                 'TRIP DETAILS',
@@ -973,7 +1042,9 @@ class _VehicleIntelligenceScreenState extends State<VehicleIntelligenceScreen>
         padding: EdgeInsets.symmetric(vertical: 20),
         child: Center(
           child: CircularProgressIndicator(
-              strokeWidth: 2, color: AppColors.primaryMain),
+            strokeWidth: 2,
+            color: AppColors.primaryMain,
+          ),
         ),
       );
     }
@@ -998,141 +1069,159 @@ class _VehicleIntelligenceScreenState extends State<VehicleIntelligenceScreen>
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-          const Text('Trip Fuel Consumption',
-              style: TextStyle(fontSize: 12)),
-          const SizedBox(height: 8),
-          Stack(
-            children: [
-              Container(
+        const Text('Trip Fuel Consumption', style: TextStyle(fontSize: 12)),
+        const SizedBox(height: 8),
+        Stack(
+          children: [
+            Container(
+              height: 8,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: Colors.grey.shade100,
+                borderRadius: BorderRadius.circular(4),
+              ),
+            ),
+            FractionallySizedBox(
+              widthFactor: fuelUsageRatio,
+              child: Container(
                 height: 8,
-                width: double.infinity,
                 decoration: BoxDecoration(
-                  color: Colors.grey.shade100,
+                  gradient: LinearGradient(
+                    colors: canComplete
+                        ? [AppColors.primaryMain, AppColors.primaryMain]
+                        : [Colors.orange, Colors.red],
+                  ),
                   borderRadius: BorderRadius.circular(4),
                 ),
               ),
-              FractionallySizedBox(
-                widthFactor: fuelUsageRatio,
-                child: Container(
-                  height: 8,
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: canComplete
-                          ? [AppColors.primaryMain, AppColors.primaryMain]
-                          : [Colors.orange, Colors.red],
-                    ),
-                    borderRadius: BorderRadius.circular(4),
-                  ),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 6),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text('${(fuelUsageRatio * 100).toInt()}% of current fuel',
-                  style: const TextStyle(fontSize: 12)),
-              Text('${_currentLiters.toStringAsFixed(1)}L available',
-                  style: const TextStyle(fontSize: 12)),
-            ],
-          ),
-          const Padding(
-            padding: EdgeInsets.symmetric(vertical: 12),
-            child: Divider(height: 1),
-          ),
-          _readinessRow(
-              'Fuel Grade', _fuelGrade ?? (_isGasoline ? 'Gasoline' : 'Diesel')),
-          _readinessRow('Total Distance',
-              '${_routeDistanceKm!.toStringAsFixed(1)} km'),
-          _readinessRow(
-              'Est. Drive Time',
-              _routeDurationHrs! < 1
-                  ? '${(_routeDurationHrs! * 60).toInt()} mins'
-                  : '${_routeDurationHrs!.toStringAsFixed(1)} hrs'),
-          _readinessRow(
-              'Fuel Required', '${fuelNeeded.toStringAsFixed(1)} Liters'),
-          _readinessRow('Market Average',
-              '₱${_fuelPricePerLiter.toStringAsFixed(2)}/L'),
-          _readinessRow('Estimated Cost',
-              '₱${totalTripCost.toStringAsFixed(2)}',
-              isBold: true),
-          if (_isGasoline) ...[
-            const SizedBox(height: 12),
-            Container(
-              padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                color: AppColors.primaryMain.withOpacity(0.05),
-                borderRadius: BorderRadius.circular(8),
-                border:
-                    Border.all(color: AppColors.primaryMain.withOpacity(0.1)),
-              ),
-              child: Row(
-                children: [
-                  const Icon(Icons.tips_and_updates_outlined,
-                      size: 14, color: AppColors.primaryMain),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: Text(
-                      'Gasoline Insight: High-quality fuels can improve your ${(_kmPerLiter).toStringAsFixed(1)} km/L efficiency for this journey.',
-                      style: const TextStyle(
-                          fontSize: 9,
-                          color: AppColors.primaryMain,
-                          height: 1.3),
-                    ),
-                  ),
-                ],
-              ),
             ),
           ],
-          if (_lowestBrand != null) ...[
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: 8),
-              child: Divider(height: 1, indent: 4, endIndent: 4),
+        ),
+        const SizedBox(height: 6),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              '${(fuelUsageRatio * 100).toInt()}% of current fuel',
+              style: const TextStyle(fontSize: 12),
             ),
-            Row(
+            Text(
+              '${_currentLiters.toStringAsFixed(1)}L available',
+              style: const TextStyle(fontSize: 12),
+            ),
+          ],
+        ),
+        const Padding(
+          padding: EdgeInsets.symmetric(vertical: 12),
+          child: Divider(height: 1),
+        ),
+        _readinessRow(
+          'Fuel Grade',
+          _fuelGrade ?? (_isGasoline ? 'Gasoline' : 'Diesel'),
+        ),
+        _readinessRow(
+          'Total Distance',
+          '${_routeDistanceKm!.toStringAsFixed(1)} km',
+        ),
+        _readinessRow(
+          'Est. Drive Time',
+          _routeDurationHrs! < 1
+              ? '${(_routeDurationHrs! * 60).toInt()} mins'
+              : '${_routeDurationHrs!.toStringAsFixed(1)} hrs',
+        ),
+        _readinessRow(
+          'Fuel Required',
+          '${fuelNeeded.toStringAsFixed(1)} Liters',
+        ),
+        _readinessRow(
+          'Market Average',
+          '₱${_fuelPricePerLiter.toStringAsFixed(2)}/L',
+        ),
+        _readinessRow(
+          'Estimated Cost',
+          '₱${totalTripCost.toStringAsFixed(2)}',
+          isBold: true,
+        ),
+        if (_isGasoline) ...[
+          const SizedBox(height: 12),
+          Container(
+            padding: const EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              color: AppColors.primaryMain.withOpacity(0.05),
+              borderRadius: BorderRadius.circular(8),
+              border: Border.all(color: AppColors.primaryMain.withOpacity(0.1)),
+            ),
+            child: Row(
               children: [
-                const Icon(Icons.stars, size: 12, color: Colors.amber),
-                const SizedBox(width: 4),
-                Text(
-                  'Best Price: $_lowestBrand (₱${_lowestPrice?.toStringAsFixed(2)})',
-                  style: const TextStyle(
+                const Icon(
+                  Icons.tips_and_updates_outlined,
+                  size: 14,
+                  color: AppColors.primaryMain,
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Text(
+                    'Gasoline Insight: High-quality fuels can improve your ${(_kmPerLiter).toStringAsFixed(1)} km/L efficiency for this journey.',
+                    style: const TextStyle(
                       fontSize: 9,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black87),
+                      color: AppColors.primaryMain,
+                      height: 1.3,
+                    ),
+                  ),
                 ),
               ],
             ),
-            Row(
-              children: [
-                const Icon(Icons.info_outline,
-                    size: 12, color: Colors.grey),
-                const SizedBox(width: 4),
-                Text(
-                  'Highest: $_highestBrand (₱${_highestPrice?.toStringAsFixed(2)})',
-                  style: const TextStyle(fontSize: 9, color: Colors.black45),
+          ),
+        ],
+        if (_lowestBrand != null) ...[
+          const Padding(
+            padding: EdgeInsets.symmetric(vertical: 8),
+            child: Divider(height: 1, indent: 4, endIndent: 4),
+          ),
+          Row(
+            children: [
+              const Icon(Icons.stars, size: 12, color: Colors.amber),
+              const SizedBox(width: 4),
+              Text(
+                'Best Price: $_lowestBrand (₱${_lowestPrice?.toStringAsFixed(2)})',
+                style: const TextStyle(
+                  fontSize: 9,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black87,
                 ),
-              ],
-            ),
-          ],
-          if (!canComplete) ...[
-            const SizedBox(height: 12),
-            Container(
-              padding: const EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                color: Colors.red.shade50,
-                borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: Colors.red.shade100),
               ),
-              child: Text(
-                'Critical: You are short by ${deficit.toStringAsFixed(1)}L. Refuel at least ₱${(deficit * _fuelPricePerLiter).toStringAsFixed(0)} to complete this trip safely.',
-                style: TextStyle(
-                    fontSize: 10,
-                    color: Colors.red.shade900,
-                    height: 1.3),
+            ],
+          ),
+          Row(
+            children: [
+              const Icon(Icons.info_outline, size: 12, color: Colors.grey),
+              const SizedBox(width: 4),
+              Text(
+                'Highest: $_highestBrand (₱${_highestPrice?.toStringAsFixed(2)})',
+                style: const TextStyle(fontSize: 9, color: Colors.black45),
+              ),
+            ],
+          ),
+        ],
+        if (!canComplete) ...[
+          const SizedBox(height: 12),
+          Container(
+            padding: const EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              color: Colors.red.shade50,
+              borderRadius: BorderRadius.circular(8),
+              border: Border.all(color: Colors.red.shade100),
+            ),
+            child: Text(
+              'Critical: You are short by ${deficit.toStringAsFixed(1)}L. Refuel at least ₱${(deficit * _fuelPricePerLiter).toStringAsFixed(0)} to complete this trip safely.',
+              style: TextStyle(
+                fontSize: 10,
+                color: Colors.red.shade900,
+                height: 1.3,
               ),
             ),
-          ],
+          ),
+        ],
       ],
     );
   }
@@ -1143,15 +1232,12 @@ class _VehicleIntelligenceScreenState extends State<VehicleIntelligenceScreen>
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(label,
-              style:
-                  const TextStyle(fontSize: 12)),
+          Text(label, style: const TextStyle(fontSize: 12)),
           Text(
             value,
             style: TextStyle(
               fontSize: 12,
-              fontWeight:
-                  isBold ? FontWeight.w900 : FontWeight.w600,
+              fontWeight: isBold ? FontWeight.w900 : FontWeight.w600,
               color: Colors.black87,
             ),
           ),
@@ -1159,6 +1245,7 @@ class _VehicleIntelligenceScreenState extends State<VehicleIntelligenceScreen>
       ),
     );
   }
+
   Widget _buildReadinessBadge() {
     if (_routeDistanceKm == null || _selectedVehicle == null) {
       return const SizedBox.shrink();
@@ -1187,7 +1274,9 @@ class _VehicleIntelligenceScreenState extends State<VehicleIntelligenceScreen>
             style: TextStyle(
               fontSize: 10,
               fontWeight: FontWeight.w700,
-              color: canComplete ? Colors.green.shade700 : Colors.orange.shade700,
+              color: canComplete
+                  ? Colors.green.shade700
+                  : Colors.orange.shade700,
             ),
           ),
         ],
