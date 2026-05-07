@@ -6,7 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
 import '../../theme/app_colors.dart';
 import '../common/widgets/app_bar.dart';
-import 'widgets/trip_card.dart';
+import '../common/widgets/trip_card.dart';
 import 'widgets/history_images.dart';
 import 'trip-details/trip_details_screen.dart';
 import '../summary/full_route_map_screen.dart';
@@ -30,19 +30,16 @@ class _HistoryScreenState extends State<HistoryScreen> {
 
   Future<void> _fetchHistory() async {
     try {
-      // 1. Fetch official saved trips
       final tripResponse = await Supabase.instance.client
           .from('smart_trips')
           .select()
           .order('created_at', ascending: false);
 
-      // 2. Fetch trip insights
       final insightsResponse = await Supabase.instance.client
           .from('trip_insights')
           .select()
           .order('created_at', ascending: false);
 
-      // 3. Fetch active vehicle configuration as fallback
       final configResponse = await Supabase.instance.client
           .from('vehicle_configurations')
           .select()
@@ -50,32 +47,38 @@ class _HistoryScreenState extends State<HistoryScreen> {
           .limit(5);
 
       final List<Map<String, dynamic>> combinedTrips = [];
-      
+
       if (tripResponse != null) {
         combinedTrips.addAll(List<Map<String, dynamic>>.from(tripResponse));
       }
 
       if (configResponse != null) {
         for (var config in configResponse) {
-          final exists = combinedTrips.any((t) => 
-            t['origin_name'] == config['origin_name'] && 
-            t['destination_name'] == config['destination_name']
-          );
-          
+          final exists = combinedTrips.any((t) =>
+              t['origin_name'] == config['origin_name'] &&
+              t['destination_name'] == config['destination_name']);
+
           if (!exists) {
             final vehicleModel = '${config['brand']} ${config['model']}';
-            final matchingInsight = (insightsResponse as List?)?.where(
-              (i) => i['origin'] == config['origin_name'] && 
-                     i['destination'] == config['destination_name'] &&
-                     i['vehicle_model'] == vehicleModel,
-            ).firstOrNull;
+            final matchingInsight = (insightsResponse as List?)
+                ?.where(
+                  (i) =>
+                      i['origin'] == config['origin_name'] &&
+                      i['destination'] == config['destination_name'] &&
+                      i['vehicle_model'] == vehicleModel,
+                )
+                .firstOrNull;
 
             combinedTrips.add({
               ...config,
               'is_active_plan': true,
-              'budget': (matchingInsight != null ? matchingInsight['budget'] : config['budget']) ?? 0.0,
-              'ai_insights': (matchingInsight != null && matchingInsight['insights'] != null) 
-                  ? jsonDecode(matchingInsight['insights']) 
+              'budget': (matchingInsight != null
+                      ? matchingInsight['budget']
+                      : config['budget']) ??
+                  0.0,
+              'ai_insights': (matchingInsight != null &&
+                      matchingInsight['insights'] != null)
+                  ? jsonDecode(matchingInsight['insights'])
                   : [],
             });
           }
@@ -124,7 +127,6 @@ class _HistoryScreenState extends State<HistoryScreen> {
                 ),
               ),
               const SizedBox(height: 32),
-              
               if (_isLoading)
                 const Center(child: CircularProgressIndicator())
               else if (_trips.isEmpty)
@@ -132,37 +134,64 @@ class _HistoryScreenState extends State<HistoryScreen> {
                   child: Column(
                     children: [
                       const SizedBox(height: 40),
-                      Icon(Icons.history_outlined, size: 64, color: AppColors.textTertiary.withValues(alpha: 0.3)),
+                      Icon(Icons.history_outlined,
+                          size: 64,
+                          color: AppColors.textTertiary.withValues(alpha: 0.3)),
                       const SizedBox(height: 16),
-                      Text('No trips found yet.', style: GoogleFonts.poppins(color: AppColors.textSecondary)),
+                      Text('No trips found yet.',
+                          style: GoogleFonts.poppins(
+                              color: AppColors.textSecondary)),
                     ],
                   ),
                 )
               else
-                  ..._trips.map((trip) {
-                  final fuelCost = (trip['est_fuel_cost'] ?? trip['budget'] ?? 0.0).toDouble();
-                  final budget = (trip['total_budget'] ?? trip['budget'] ?? 1.0).toDouble();
+                ..._trips.map((trip) {
+                  final fuelCost =
+                      (trip['est_fuel_cost'] ?? trip['budget'] ?? 0.0)
+                          .toDouble();
+                  final budget =
+                      (trip['total_budget'] ?? trip['budget'] ?? 1.0)
+                          .toDouble();
                   final toll = (trip['toll_fee'] ?? 0.0).toDouble();
                   final isActive = trip['is_active_plan'] == true;
-                  final score = ((1.0 - ((fuelCost + toll) / budget).clamp(0, 1)) * 100).toInt().clamp(60, 98);
-                  final fuelLiters = (trip['est_fuel_liters'] as num?)?.toDouble() ?? (fuelCost / 65.0);
+                  final score =
+                      ((1.0 - ((fuelCost + toll) / budget).clamp(0, 1)) * 100)
+                          .toInt()
+                          .clamp(60, 98);
+                  final fuelLiters =
+                      (trip['est_fuel_liters'] as num?)?.toDouble() ??
+                          (fuelCost / 65.0);
                   final originName = trip['origin_name'] ?? 'Origin';
                   final destName = trip['destination_name'] ?? 'Destination';
+                  final distanceKm =
+                      (trip['distance_km'] ?? trip['route_distance_km'] ?? 0)
+                          .toStringAsFixed(0);
 
                   return Padding(
                     padding: const EdgeInsets.only(bottom: 24.0),
+                    // ── Unified TripCard (history variant) ──────────────
                     child: TripCard(
                       route: '$originName → $destName',
-                      badgeText: isActive ? 'ACTIVE PLAN' : '$score ${score > 85 ? 'EXCELLENT' : 'GOOD'}',
-                      date: DateFormat("MMM d, yyyy \u2022 hh:mm a").format(DateTime.parse(trip['created_at'])),
-                      distance: '${(trip['distance_km'] ?? trip['route_distance_km'] ?? 0).toStringAsFixed(0)} km',
-                      fuelUsed: '${fuelLiters.toStringAsFixed(1)} L',
-                      cost: '\u20b1${fuelCost.toStringAsFixed(0)}',
-                      imageWidget: _getRandomImage(trip['id']?.hashCode ?? trip['created_at'].hashCode),
-                      onTap: () {
+                      badgeTextOverride: isActive
+                          ? 'ACTIVE PLAN'
+                          : '$score ${score > 85 ? 'EXCELLENT' : 'GOOD'}',
+                      date: DateFormat("MMM d, yyyy \u2022 hh:mm a").format(
+                          DateTime.parse(trip['created_at'])),
+                      distance: '$distanceKm km',
+                      efficiency: '$score/100',
+                      efficiencyColor: score > 85
+                          ? AppColors.success
+                          : AppColors.orangeDark,
+                      cost: '₱${fuelCost.toStringAsFixed(0)}',
+                      buttonText: 'View Trip Details',
+                      imageWidget: _getRandomImage(
+                          trip['id']?.hashCode ?? trip['created_at'].hashCode),
+                      onActionButton: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => TripDetailsScreen(tripData: trip)),
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  TripDetailsScreen(tripData: trip)),
                         );
                       },
                       onViewMap: () {

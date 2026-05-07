@@ -59,8 +59,8 @@ class _LogisticsTimelineState extends State<LogisticsTimeline> {
                       _buildTimelineItem(
                         time: '08:15',
                         location: 'ANGELES',
-                        title: 'Shell Angeles â€¢ 12L',
-                        trailingText: 'â‚±756',
+                        title: 'Shell Angeles \u2022 12L',
+                        trailingText: 'Stopped By',
                         trailingColor: AppColors.success,
                         isFirst: true,
                         isLast: false,
@@ -149,7 +149,7 @@ class _LogisticsTimelineState extends State<LogisticsTimeline> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        '$time â€¢ $location',
+                        '$time \u2022 $location',
                         style: GoogleFonts.poppins(
                           fontSize: 9,
                           fontWeight: FontWeight.w800,
