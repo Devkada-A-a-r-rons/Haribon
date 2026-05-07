@@ -61,12 +61,12 @@ class _Step2PlanningState extends State<Step2Planning> {
                   ),
                   SelectionCard(
                     icon: Icons.explore_outlined,
-                    title: 'Haribon decides along the way',
+                    title: 'Haribon AI decides along the way',
                     subtitle:
                         'Pure discovery. Let the Haribon AI find hidden gems live.',
-                    isSelected: _selectedOption == 'I decide along the way',
+                    isSelected: _selectedOption == 'Haribon AI decides along the way',
                     onTap: () => setState(
-                      () => _selectedOption = 'I decide along the way',
+                      () => _selectedOption = 'Haribon AI decides along the way',
                     ),
                   ),
                 ],
