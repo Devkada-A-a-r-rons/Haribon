@@ -11,7 +11,7 @@ import '../summary/trip_summary_screen.dart';
 import '../summary/full_route_map_screen.dart';
 import './models/home_data_model.dart';
 import './widgets/home_greeting.dart';
-import './widgets/home_latest_trip_card.dart';
+import '../common/widgets/trip_card.dart';
 import './widgets/efficiency_trend_chart.dart';
 import '../monthly-report/monthly_report_screen.dart';
 import '../timeline/timeline_screen.dart';
@@ -40,7 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future<void> _loadData() async {
     final onboardingData = await DatabaseService().getOnboardingData();
-    
+
     String userName = 'Driver';
     List<HomeStat> stats = [];
     double avgFuelPrice = 65.0;
@@ -48,10 +48,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
     try {
       // 1. Fetch ALL trips for aggregation
-      final allTrips = await Supabase.instance.client
-          .from('smart_trips')
-          .select();
-      
+      final allTrips = await Supabase.instance.client.from('smart_trips').select();
+
       // 2. Fetch Active Plan
       final activeResponse = await Supabase.instance.client
           .from('vehicle_configurations')
@@ -94,8 +92,7 @@ class _HomeScreenState extends State<HomeScreen> {
         _vehicleConfig = Map<String, dynamic>.from(activeResponse);
         final activeDist = (activeResponse['route_distance_km'] ?? 99.0).toDouble();
         final activeCost = (activeResponse['budget'] ?? 0.0).toDouble();
-        
-        // Add Active Plan to totals for immediate feedback
+
         totalDistance += activeDist;
         totalCost += activeCost;
         totalCO2 += (activeCost / 68.0 * 2.3);
@@ -152,39 +149,32 @@ class _HomeScreenState extends State<HomeScreen> {
 
       // 4. Calculate Efficiency Trend (last 7 days)
       final now = DateTime.now();
-      
+
       if (allTrips != null && (allTrips as List).isNotEmpty) {
         for (int i = 0; i < 7; i++) {
           final targetDate = now.subtract(Duration(days: 6 - i));
           double dailyDist = 0;
           double dailyLiters = 0;
-          
+
           for (var trip in allTrips) {
             final tripDate = DateTime.tryParse(trip['created_at'] ?? '') ?? now;
-            if (tripDate.year == targetDate.year && 
-                tripDate.month == targetDate.month && 
+            if (tripDate.year == targetDate.year &&
+                tripDate.month == targetDate.month &&
                 tripDate.day == targetDate.day) {
-              
               final dist = (trip['distance_km'] ?? 0.0).toDouble();
               final liters = (trip['est_fuel_liters'] ?? 0.0).toDouble();
-              
               if (dist > 0 && liters > 0) {
                 dailyDist += dist;
                 dailyLiters += liters;
               }
             }
           }
-          
-          if (dailyLiters > 0) {
-            trend[i] = dailyDist / dailyLiters;
-          } else {
-            // Fallback to vehicle's base efficiency if no trips that day
-            trend[i] = 12.0; 
-          }
+
+          trend[i] = dailyLiters > 0 ? dailyDist / dailyLiters : 12.0;
         }
       }
 
-      // 5. Update Stats with Real Lifetime Totals
+      // 5. Update Stats
       stats = [
         HomeStat(
           label: 'Total Distance',
@@ -266,56 +256,59 @@ class _HomeScreenState extends State<HomeScreen> {
         physics: const BouncingScrollPhysics(),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: _isLoading 
-            ? const Center(child: CircularProgressIndicator())
-            : Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-              const SizedBox(height: 24),
-              HomeGreeting(
-                userName: _dashboardData.userName,
-                weeklyCo2Saved: _dashboardData.weeklyCo2Saved,
-              ),
-
-            
-              const SizedBox(height: 16),
-              HomeLatestTripCard(
-                summary: _latestTrip,
-                onViewSummary: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => TripSummaryScreen(summary: _latestTrip),
+          child: _isLoading
+              ? const Center(child: CircularProgressIndicator())
+              : Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(height: 24),
+                    HomeGreeting(
+                      userName: _dashboardData.userName,
+                      weeklyCo2Saved: _dashboardData.weeklyCo2Saved,
                     ),
-                  );
-                },
-                onViewMap: () {
-                  final originCoords = _getCoords(_latestTrip.origin);
-                  final destCoords = _getCoords(_latestTrip.destination);
+                    const SizedBox(height: 16),
 
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => FullRouteMapScreen(
-                        origin: originCoords,
-                        destination: destCoords,
-                        originName: _latestTrip.origin,
-                        destinationName: _latestTrip.destination,
-                        vehicleConfig: _vehicleConfig,
-                        fuelPricePerLiter: _fuelPricePerLiter,
-                      ),
+                    // ── Unified TripCard (home variant) ──────────────────
+                    TripCard(
+                      summary: _latestTrip,
+                      cost: '₱${_latestTrip.stats.fuelCostPhp.toStringAsFixed(0)}',
+                      buttonText: 'View Full Summary',
+                      onActionButton: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                TripSummaryScreen(summary: _latestTrip),
+                          ),
+                        );
+                      },
+                      onViewMap: () {
+                        final originCoords = _getCoords(_latestTrip.origin);
+                        final destCoords = _getCoords(_latestTrip.destination);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => FullRouteMapScreen(
+                              origin: originCoords,
+                              destination: destCoords,
+                              originName: _latestTrip.origin,
+                              destinationName: _latestTrip.destination,
+                              vehicleConfig: _vehicleConfig,
+                              fuelPricePerLiter: _fuelPricePerLiter,
+                            ),
+                          ),
+                        );
+                      },
                     ),
-                  );
-                },
-              ),
-              const SizedBox(height: 16),
-              EfficiencyTrendChart(
-                data: _dashboardData.efficiencyTrend,
-                stats: _dashboardData.stats,
-              ),
-              const SizedBox(height: 10),
-            ],
-          ),
+
+                    const SizedBox(height: 16),
+                    EfficiencyTrendChart(
+                      data: _dashboardData.efficiencyTrend,
+                      stats: _dashboardData.stats,
+                    ),
+                    const SizedBox(height: 10),
+                  ],
+                ),
         ),
       ),
     );
@@ -323,7 +316,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   LatLng _getCoords(String location) {
     final lower = location.toLowerCase();
-    // NCR
     if (lower.contains('mall of asia') || lower.contains('moa')) return const LatLng(14.5352, 120.9822);
     if (lower.contains('makati')) return const LatLng(14.5547, 121.0244);
     if (lower.contains('bgc') || lower.contains('bonifacio')) return const LatLng(14.5500, 121.0494);
@@ -337,18 +329,14 @@ class _HomeScreenState extends State<HomeScreen> {
     if (lower.contains('caloocan')) return const LatLng(14.6574, 120.9673);
     if (lower.contains('malabon')) return const LatLng(14.6617, 120.9568);
     if (lower.contains('valenzuela')) return const LatLng(14.7011, 120.9830);
-    // Luzon
     if (lower.contains('clark')) return const LatLng(15.1789, 120.5323);
     if (lower.contains('angeles') || lower.contains('pampanga')) return const LatLng(15.1450, 120.5887);
     if (lower.contains('baguio')) return const LatLng(16.4124, 120.5999);
     if (lower.contains('dagupan')) return const LatLng(16.0433, 120.3337);
-    if (lower.contains('san fernando') && lower.contains('pampanga')) return const LatLng(15.0289, 120.6892);
-    if (lower.contains('san fernando') && lower.contains('la union')) return const LatLng(16.6159, 120.3168);
     if (lower.contains('olongapo') || lower.contains('subic')) return const LatLng(14.8292, 120.2828);
     if (lower.contains('bataan')) return const LatLng(14.6416, 120.4818);
     if (lower.contains('tarlac')) return const LatLng(15.4755, 120.5960);
     if (lower.contains('cabanatuan')) return const LatLng(15.4886, 120.9741);
-    if (lower.contains('nueva ecija')) return const LatLng(15.5784, 121.0675);
     if (lower.contains('bulacan') || lower.contains('malolos')) return const LatLng(14.8527, 120.8144);
     if (lower.contains('cavite') || lower.contains('bacoor')) return const LatLng(14.4625, 120.9642);
     if (lower.contains('tagaytay')) return const LatLng(14.1153, 120.9621);
@@ -356,16 +344,14 @@ class _HomeScreenState extends State<HomeScreen> {
     if (lower.contains('laguna') || lower.contains('santa rosa')) return const LatLng(14.3122, 121.1114);
     if (lower.contains('antipolo')) return const LatLng(14.5863, 121.1760);
     if (lower.contains('rizal')) return const LatLng(14.6037, 121.3084);
-    // Visayas
     if (lower.contains('cebu')) return const LatLng(10.3157, 123.8854);
     if (lower.contains('iloilo')) return const LatLng(10.7202, 122.5621);
     if (lower.contains('bacolod')) return const LatLng(10.6407, 122.9457);
     if (lower.contains('tacloban')) return const LatLng(11.2543, 125.0000);
-    // Mindanao
     if (lower.contains('davao')) return const LatLng(7.1907, 125.4553);
     if (lower.contains('cagayan de oro') || lower.contains('cdo')) return const LatLng(8.4542, 124.6319);
     if (lower.contains('zamboanga')) return const LatLng(6.9214, 122.0790);
     if (lower.contains('general santos') || lower.contains('gensan')) return const LatLng(6.1164, 125.1716);
-    return const LatLng(14.5995, 120.9842); // Default Manila
+    return const LatLng(14.5995, 120.9842);
   }
 }
