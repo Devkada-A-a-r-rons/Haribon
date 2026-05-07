@@ -8,7 +8,6 @@ import 'widgets/expandable_card.dart';
 import 'widgets/refueling_planner_content.dart';
 import 'widgets/expense_planner_content.dart';
 import 'widgets/visual_breakdown_card.dart';
-import 'widgets/bottom_action_card.dart';
 import 'widgets/fuel_readiness_card.dart';
 import 'package:haribon/theme/app_colors.dart';
 import '../../core/database/database_service.dart';
@@ -678,10 +677,7 @@ class _SmartTripPlannerState extends State<SmartTripPlanner> {
 
                 // AI BUDGET INSIGHTS
                 InsightCard(insights: _aiInsights),
-                const SizedBox(height: 16),
-
-                // BOTTOM IMAGE CARD
-                const BottomActionCard(),
+             
                 const SizedBox(height: 32),
               ],
             ),
