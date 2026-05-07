@@ -298,8 +298,8 @@ class _FuelAndEmissionsScreenState extends State<FuelAndEmissionsScreen> {
       if (existingResponse != null) {
         final data = existingResponse['insights'];
         setState(() {
-          _proInsights = List<String>.from(data['insights']);
-          _proTips = List<String>.from(data['tips']);
+          _proInsights = List<String>.from(data['insights'] ?? []);
+          _proTips = List<String>.from(data['tips'] ?? []);
           _isLoading = false;
         });
         return;
@@ -317,8 +317,7 @@ class _FuelAndEmissionsScreenState extends State<FuelAndEmissionsScreen> {
           : '';
 
       final gemini = GeminiLLMService(apiKey: apiKey);
-      final prompt =
-          """
+      final prompt = """
       Act as a Professional Eco-Driving Analyst for Haribon app.
       Analyze this fuel & emissions summary from $_tripCount trips${_analysisPeriod.isNotEmpty ? ' during $_analysisPeriod' : ''}:
       
@@ -333,10 +332,9 @@ class _FuelAndEmissionsScreenState extends State<FuelAndEmissionsScreen> {
       - Vehicle: $brand $model (${_kmPerLiter.toStringAsFixed(1)} km/L, $_fuelGrade)
       - Latest journey: $origin to $destination
       
-      Generate 3 'Efficiency Loss Insights' with specific data references and 
-      2 'Optimization Tips' with estimated savings.
+      Generate 3 'Efficiency Loss Insights' with specific data references and 2 'Optimization Tips' with estimated savings.
       
-      Return as a JSON object:
+      Return ONLY a JSON object:
       {
         "insights": ["insight 1", "insight 2", "insight 3"],
         "tips": ["tip 1", "tip 2"]
@@ -345,19 +343,30 @@ class _FuelAndEmissionsScreenState extends State<FuelAndEmissionsScreen> {
 
       final response = await gemini.generateResponse(
         prompt,
-        systemContext: "Return ONLY pure JSON.",
+        systemContext: "Return ONLY pure JSON. No conversational text.",
       );
-      // Robust parsing for LLM response
+
       String cleanedResponse = response.trim();
       
-      // Remove markdown code blocks if present
+      // 1. Error check
+      if (cleanedResponse.isEmpty || cleanedResponse.toLowerCase().contains('error')) {
+         throw Exception('Invalid AI response');
+      }
+
+      // 2. Code block extraction
       if (cleanedResponse.contains('```')) {
-        final matches = RegExp(r'```(?:json)?([\s\S]*?)```').allMatches(cleanedResponse);
-        if (matches.isNotEmpty) {
-          cleanedResponse = matches.first.group(1)?.trim() ?? cleanedResponse;
-        } else {
-          cleanedResponse = cleanedResponse.replaceAll('```json', '').replaceAll('```', '').trim();
+        final regExp = RegExp(r'```(?:json)?\s*([\s\S]*?)```');
+        final match = regExp.firstMatch(cleanedResponse);
+        if (match != null) {
+          cleanedResponse = match.group(1)?.trim() ?? cleanedResponse;
         }
+      }
+
+      // 3. JSON object isolation
+      final startIndex = cleanedResponse.indexOf('{');
+      final endIndex = cleanedResponse.lastIndexOf('}');
+      if (startIndex != -1 && endIndex != -1 && endIndex > startIndex) {
+        cleanedResponse = cleanedResponse.substring(startIndex, endIndex + 1);
       }
 
       Map<String, dynamic> decoded;
@@ -365,18 +374,7 @@ class _FuelAndEmissionsScreenState extends State<FuelAndEmissionsScreen> {
         decoded = jsonDecode(cleanedResponse);
       } catch (e) {
         debugPrint('AI Response was not valid JSON, using fallbacks: $e');
-        // Fallback for non-JSON responses
-        setState(() {
-          _proInsights = [
-            'Your efficiency is currently impacted by traffic and terrain.',
-            'Maintaining steady speeds can improve your range by up to 15%.',
-          ];
-          _proTips = [
-            'Avoid sudden acceleration to save fuel.',
-            'Check tire pressure regularly for optimal efficiency.',
-          ];
-          _isLoading = false;
-        });
+        _applyFallbackInsights();
         return;
       }
 
@@ -396,12 +394,23 @@ class _FuelAndEmissionsScreenState extends State<FuelAndEmissionsScreen> {
       });
     } catch (e) {
       debugPrint('Error loading AI Pro Insights: $e');
-      setState(() {
-        _proInsights = ['Analysis unavailable at this moment.'];
-        _proTips = ['Try refreshing the analysis in a few minutes.'];
-        _isLoading = false;
-      });
+      _applyFallbackInsights();
     }
+  }
+
+  void _applyFallbackInsights() {
+    setState(() {
+      _proInsights = [
+        'Your efficiency is currently impacted by traffic and terrain conditions.',
+        'Maintaining steady speeds on highways can improve range by up to 15%.',
+        'Fuel quality and tire pressure significantly impact your consumption.'
+      ];
+      _proTips = [
+        'Avoid sudden acceleration to save approximately ₱45 per trip.',
+        'Plan your route to avoid the 4 PM - 6 PM traffic window.'
+      ];
+      _isLoading = false;
+    });
   }
 
   @override

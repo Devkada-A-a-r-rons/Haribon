@@ -73,28 +73,30 @@ class _RouteInsightsState extends State<RouteInsights> {
 
       final response = await gemini.generateResponse(prompt);
       
-      // Check if response is an error message
-      if (response.startsWith('Error') || response.contains('Error connecting')) {
-        throw Exception(response);
+      // 1. Check for obvious errors or empty responses
+      if (response.isEmpty || response.toLowerCase().contains('error')) {
+        final preview = response.length > 50 ? response.substring(0, 50) : response;
+        throw Exception('Invalid or error response from AI: $preview');
       }
       
-      // Clean up response if it has markdown code blocks
+      // 2. Clean up response if it has markdown code blocks
       String jsonStr = response.trim();
-      if (jsonStr.startsWith('```json')) {
-        jsonStr = jsonStr.substring(7, jsonStr.length - 3).trim();
-      } else if (jsonStr.startsWith('```')) {
-        jsonStr = jsonStr.substring(3, jsonStr.length - 3).trim();
+      if (jsonStr.contains('```')) {
+        final regExp = RegExp(r'```(?:json)?\s*([\s\S]*?)```');
+        final match = regExp.firstMatch(jsonStr);
+        if (match != null) {
+          jsonStr = match.group(1)?.trim() ?? jsonStr;
+        }
       }
 
-      // Final sanitization: ensure it looks like a JSON array
-      if (!jsonStr.startsWith('[')) {
-        final startIndex = jsonStr.indexOf('[');
-        final endIndex = jsonStr.lastIndexOf(']');
-        if (startIndex != -1 && endIndex != -1) {
-          jsonStr = jsonStr.substring(startIndex, endIndex + 1);
-        } else {
-          throw const FormatException('AI response did not contain a valid JSON array');
-        }
+      // 3. Final sanitization: ensure it looks like a JSON array
+      final startIndex = jsonStr.indexOf('[');
+      final endIndex = jsonStr.lastIndexOf(']');
+      
+      if (startIndex != -1 && endIndex != -1 && endIndex > startIndex) {
+        jsonStr = jsonStr.substring(startIndex, endIndex + 1);
+      } else {
+        throw const FormatException('AI response did not contain a valid JSON array');
       }
 
       final List<dynamic> decoded = jsonDecode(jsonStr);

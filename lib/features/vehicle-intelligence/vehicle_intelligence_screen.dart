@@ -121,15 +121,9 @@ class _VehicleIntelligenceScreenState extends State<VehicleIntelligenceScreen>
           _selectedModel = model;
           _selectedVehicle = vehicle;
           
-          // Use values from Supabase specifically
           _fuelLevel = (response['fuel_level_pct'] ?? 50) / 100.0;
           _routeDistanceKm = (response['route_distance_km'] as num?)?.toDouble();
           
-          // Duration fallback if not saved
-          if (_routeDistanceKm != null) {
-            _routeDurationHrs = _routeDistanceKm! / 65.0; // Avg 65km/h fallback
-          }
-
           if (response['origin_name'] != null) {
              _origin = {
                'display_name': response['origin_name'], 
@@ -145,7 +139,6 @@ class _VehicleIntelligenceScreenState extends State<VehicleIntelligenceScreen>
              };
           }
 
-          // Hydrate fuel metrics from the selected vehicle data
           if (vehicle != null) {
              _fuelGrade = vehicle['fuel_grade']?.toString();
              if (_fuelGrade != null) {
@@ -159,6 +152,13 @@ class _VehicleIntelligenceScreenState extends State<VehicleIntelligenceScreen>
           }
           _updateFuelMetrics();
         });
+
+        // Trigger route calculation if coordinates are just defaults but names are different
+        if (_origin != null && _destination != null) {
+          if (_routeDistanceKm == null || _routeDistanceKm! < 0.1) {
+             _calculateRoute();
+          }
+        }
       }
     } catch (e) {
       debugPrint('Error fetching latest config: $e');
@@ -280,11 +280,42 @@ class _VehicleIntelligenceScreenState extends State<VehicleIntelligenceScreen>
   double get _highwayRange =>
       _highwayLitersPerKm > 0 ? _currentLiters / _highwayLitersPerKm : 0;
 
+  Future<Map<String, dynamic>?> _geocode(String query) async {
+    try {
+      final url = Uri.parse('https://nominatim.openstreetmap.org/search?q=${Uri.encodeComponent(query)}&format=json&limit=1');
+      final res = await http.get(url, headers: {'User-Agent': 'HaribonApp/1.0'});
+      if (res.statusCode == 200) {
+        final List data = jsonDecode(res.body);
+        if (data.isNotEmpty) {
+          return {
+            'display_name': data[0]['display_name'],
+            'lat': data[0]['lat'],
+            'lon': data[0]['lon'],
+          };
+        }
+      }
+    } catch (e) {
+      debugPrint('Geocode error: $e');
+    }
+    return null;
+  }
+
   // ─── OSRM Route Calculation ────────────────────────────────────
   Future<void> _calculateRoute() async {
     if (_origin == null || _destination == null) return;
     setState(() => _isCalculatingRoute = true);
     try {
+      // 1. Check if we need to geocode names (if coordinates are the same/default)
+      if (_origin!['lat'] == _destination!['lat'] && _origin!['lon'] == _destination!['lon']) {
+        // Try to geocode origin
+        final oRes = await _geocode(_origin!['display_name']);
+        if (oRes != null) _origin = oRes;
+        
+        // Try to geocode destination
+        final dRes = await _geocode(_destination!['display_name']);
+        if (dRes != null) _destination = dRes;
+      }
+
       final lon1 = double.parse(_origin!['lon']);
       final lat1 = double.parse(_origin!['lat']);
       final lon2 = double.parse(_destination!['lon']);
@@ -295,6 +326,8 @@ class _VehicleIntelligenceScreenState extends State<VehicleIntelligenceScreen>
         'https://api.allorigins.win/get?url=',
         'https://corsproxy.io/?',
         'https://api.codetabs.com/v1/proxy?url=',
+        'https://thingproxy.freeboard.io/fetch/',
+        'https://proxy.cors.sh/',
       ];
       String? bodyString;
       if (kIsWeb) {
@@ -304,7 +337,7 @@ class _VehicleIntelligenceScreenState extends State<VehicleIntelligenceScreen>
                 ? Uri.parse('$proxy$targetUrl')
                 : Uri.parse('$proxy${Uri.encodeComponent(targetUrl)}');
             final res =
-                await http.get(proxyUrl).timeout(const Duration(seconds: 5));
+                await http.get(proxyUrl).timeout(const Duration(seconds: 15));
             if (res.statusCode == 200) {
               if (proxy.contains('allorigins')) {
                 final wrapper = jsonDecode(res.body);
@@ -315,11 +348,12 @@ class _VehicleIntelligenceScreenState extends State<VehicleIntelligenceScreen>
               if (bodyString != null && bodyString.trim().startsWith('{')) break;
             }
           } catch (e) {
+            debugPrint('Proxy $proxy failed or timed out: $e');
             continue;
           }
         }
       } else {
-        final res = await http.get(Uri.parse(targetUrl));
+        final res = await http.get(Uri.parse(targetUrl)).timeout(const Duration(seconds: 10));
         if (res.statusCode == 200) bodyString = res.body;
       }
       if (bodyString != null && bodyString.trim().startsWith('{')) {
