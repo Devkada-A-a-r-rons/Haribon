@@ -15,13 +15,13 @@ class _LogisticsTimelineState extends State<LogisticsTimeline> {
 
   List<Map<String, dynamic>> _getTimelineItems() {
     if (widget.tripData == null) return [];
-    
+
     // If we have a refueling_plan (list of objects)
     final plan = widget.tripData!['refueling_plan'];
     if (plan != null && plan is List) {
-       return plan.map((e) => Map<String, dynamic>.from(e)).toList();
+      return plan.map((e) => Map<String, dynamic>.from(e)).toList();
     }
-    
+
     // Fallback/Default items if no plan exists
     return [
       {
@@ -37,7 +37,7 @@ class _LogisticsTimelineState extends State<LogisticsTimeline> {
         'title': 'Arrival at Destination',
         'status': 'Completed',
         'isPassed': true,
-      }
+      },
     ];
   }
 
@@ -69,7 +69,10 @@ class _LogisticsTimelineState extends State<LogisticsTimeline> {
                 AnimatedRotation(
                   turns: _isExpanded ? 0 : -0.5,
                   duration: const Duration(milliseconds: 200),
-                  child: Icon(Icons.keyboard_arrow_down, color: AppColors.textPrimary),
+                  child: Icon(
+                    Icons.keyboard_arrow_down,
+                    color: AppColors.textPrimary,
+                  ),
                 ),
               ],
             ),
@@ -94,7 +97,9 @@ class _LogisticsTimelineState extends State<LogisticsTimeline> {
                           location: item['location'] ?? 'Unknown',
                           title: item['title'] ?? 'Stopped By',
                           trailingText: item['status'] ?? 'Completed',
-                          trailingColor: item['status'] == 'Skipped' ? AppColors.textTertiary : AppColors.success,
+                          trailingColor: item['status'] == 'Skipped'
+                              ? AppColors.textTertiary
+                              : AppColors.success,
                           isFirst: i == 0,
                           isLast: i == items.length - 1,
                           isPassed: item['isPassed'] ?? true,
@@ -120,7 +125,9 @@ class _LogisticsTimelineState extends State<LogisticsTimeline> {
     required bool isPassed,
   }) {
     final dotColor = isPassed ? AppColors.textSecondary : AppColors.surfaceDim;
-    final lineColor = isPassed ? AppColors.textSecondary.withOpacity(0.5) : AppColors.surfaceDim;
+    final lineColor = isPassed
+        ? AppColors.textSecondary.withOpacity(0.5)
+        : AppColors.surfaceDim;
 
     return IntrinsicHeight(
       child: Row(
@@ -191,7 +198,9 @@ class _LogisticsTimelineState extends State<LogisticsTimeline> {
                           fontSize: 10,
                           fontWeight: FontWeight.w700,
                           color: trailingColor,
-                          fontStyle: trailingText == 'Skipped' ? FontStyle.italic : FontStyle.normal,
+                          fontStyle: trailingText == 'Skipped'
+                              ? FontStyle.italic
+                              : FontStyle.normal,
                         ),
                       ),
                     ],
@@ -202,7 +211,9 @@ class _LogisticsTimelineState extends State<LogisticsTimeline> {
                     style: GoogleFonts.poppins(
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
-                      color: isPassed ? AppColors.textPrimary : AppColors.textSecondary,
+                      color: isPassed
+                          ? AppColors.textPrimary
+                          : AppColors.textSecondary,
                     ),
                   ),
                 ],
@@ -214,4 +225,3 @@ class _LogisticsTimelineState extends State<LogisticsTimeline> {
     );
   }
 }
-
