@@ -1,6 +1,6 @@
+import 'dart:math'; // Required for pi and angles
 import 'package:flutter/material.dart';
 import 'package:haribon/theme/app_colors.dart';
-
 
 class VisualBreakdownCard extends StatefulWidget {
   final double fuelCost;
@@ -31,17 +31,24 @@ class _VisualBreakdownCardState extends State<VisualBreakdownCard> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final total = widget.fuelCost + widget.tollCost + widget.otherCost;
-    
+
     if (total == 0) return const SizedBox.shrink();
 
     final fuelPct = widget.fuelCost / total;
     final tollPct = widget.tollCost / total;
     final otherPct = widget.otherCost / total;
 
+    // Determine largest for the center label
     String largestCategory = 'Fuel';
     double largestPct = fuelPct;
-    if (tollPct > largestPct) { largestCategory = 'Tolls'; largestPct = tollPct; }
-    if (otherPct > largestPct) { largestCategory = 'Food/Misc'; largestPct = otherPct; }
+    if (tollPct > largestPct) {
+      largestCategory = 'Tolls';
+      largestPct = tollPct;
+    }
+    if (otherPct > largestPct) {
+      largestCategory = 'Food/Misc';
+      largestPct = otherPct;
+    }
 
     return Container(
       width: double.infinity,
@@ -50,41 +57,58 @@ class _VisualBreakdownCardState extends State<VisualBreakdownCard> {
         color: AppColors.containerLowest,
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
-          BoxShadow(color: Colors.black.withOpacity(0.03), blurRadius: 10, offset: const Offset(0, 4)),
+          BoxShadow(
+              color: Colors.black.withOpacity(0.03),
+              blurRadius: 10,
+              offset: const Offset(0, 4)),
         ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           const SizedBox(height: 16),
+          // --- UPDATED CHART SECTION ---
           SizedBox(
-            height: 120,
-            width: 120,
+            height: 140,
+            width: 140,
             child: Stack(
               alignment: Alignment.center,
               children: [
                 SizedBox(
                   height: 120,
                   width: 120,
-                  child: CircularProgressIndicator(
-                    value: largestPct,
-                    backgroundColor: AppColors.greySoftBg,
-                    color: AppColors.primaryMain,
-                    strokeWidth: 16,
-                    strokeCap: StrokeCap.round,
+                  child: CustomPaint(
+                    painter: PieChartPainter(
+                      fuelPct: fuelPct,
+                      tollPct: tollPct,
+                      otherPct: otherPct,
+                      // Using your existing theme colors
+                      fuelColor: AppColors.primaryMain,
+                      tollColor: AppColors.bluePale,
+                      otherColor: Colors.orangeAccent, // Added distinct color for misc
+                    ),
                   ),
                 ),
                 Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text('Largest', style: theme.textTheme.labelSmall?.copyWith(color: AppColors.greyLightAccent, fontSize: 8)),
-                    Text(largestCategory, style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold, color: AppColors.textPrimary, fontSize: 14)),
-                    Text('${(largestPct * 100).toStringAsFixed(0)}%', style: theme.textTheme.labelSmall?.copyWith(color: AppColors.greyLightAccent, fontSize: 10)),
+                    Text('Largest',
+                        style: theme.textTheme.labelSmall?.copyWith(
+                            color: AppColors.greyLightAccent, fontSize: 8)),
+                    Text(largestCategory,
+                        style: theme.textTheme.titleMedium?.copyWith(
+                            fontWeight: FontWeight.bold,
+                            color: AppColors.textPrimary,
+                            fontSize: 14)),
+                    Text('${(largestPct * 100).toStringAsFixed(0)}%',
+                        style: theme.textTheme.labelSmall?.copyWith(
+                            color: AppColors.greyLightAccent, fontSize: 10)),
                   ],
                 ),
               ],
             ),
           ),
+          // --- END CHART SECTION ---
           const SizedBox(height: 32),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -98,30 +122,43 @@ class _VisualBreakdownCardState extends State<VisualBreakdownCard> {
               ),
               TextButton.icon(
                 onPressed: () => setState(() => _showDetails = !_showDetails),
-                icon: Icon(_showDetails ? Icons.visibility_off_outlined : Icons.calculate_outlined, size: 14),
-                label: Text(_showDetails ? 'Hide Detail' : 'Show Math', style: const TextStyle(fontSize: 10)),
-                style: TextButton.styleFrom(foregroundColor: AppColors.primaryMain),
+                icon: Icon(
+                    _showDetails
+                        ? Icons.visibility_off_outlined
+                        : Icons.calculate_outlined,
+                    size: 14),
+                label: Text(_showDetails ? 'Hide Detail' : 'Show Math',
+                    style: const TextStyle(fontSize: 10)),
+                style: TextButton.styleFrom(
+                    foregroundColor: AppColors.primaryMain),
               ),
             ],
           ),
           const SizedBox(height: 8),
-          _buildLegendRow(theme, AppColors.primaryMain, 'Fuel', '₱${widget.fuelCost.toStringAsFixed(0)} (${(fuelPct * 100).toStringAsFixed(0)}%)'),
+          _buildLegendRow(theme, AppColors.primaryMain, 'Fuel',
+              '₱${widget.fuelCost.toStringAsFixed(0)} (${(fuelPct * 100).toStringAsFixed(0)}%)'),
           const SizedBox(height: 12),
-          _buildLegendRow(theme, AppColors.bluePale, 'Tolls', '₱${widget.tollCost.toStringAsFixed(0)} (${(tollPct * 100).toStringAsFixed(0)}%)'),
+          _buildLegendRow(theme, AppColors.bluePale, 'Tolls',
+              '₱${widget.tollCost.toStringAsFixed(0)} (${(tollPct * 100).toStringAsFixed(0)}%)'),
           const SizedBox(height: 12),
-          _buildLegendRow(theme, AppColors.primaryMain, 'Food/Misc', '₱${widget.otherCost.toStringAsFixed(0)} (${(otherPct * 100).toStringAsFixed(0)}%)'),
-          
+          _buildLegendRow(theme, Colors.orangeAccent, 'Food/Misc',
+              '₱${widget.otherCost.toStringAsFixed(0)} (${(otherPct * 100).toStringAsFixed(0)}%)'),
           if (_showDetails) ...[
             const SizedBox(height: 20),
             const Divider(),
             const SizedBox(height: 12),
             Align(
               alignment: Alignment.centerLeft,
-              child: Text('Computation Breakdown', style: theme.textTheme.labelMedium?.copyWith(fontWeight: FontWeight.bold, color: AppColors.textPrimary)),
+              child: Text('Computation Breakdown',
+                  style: theme.textTheme.labelMedium?.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.textPrimary)),
             ),
             const SizedBox(height: 8),
-            _buildMathRow(theme, 'Fuel', '(${widget.distanceKm?.toStringAsFixed(0)}km ÷ ${widget.kmPerLiter?.toStringAsFixed(1)}km/L) × ₱${widget.fuelPrice?.toStringAsFixed(1)}'),
-            _buildMathRow(theme, 'Tolls', 'NLEX/TPLEX standard rates for Class 1 vehicle'),
+            _buildMathRow(theme, 'Fuel',
+                '(${widget.distanceKm?.toStringAsFixed(0)}km ÷ ${widget.kmPerLiter?.toStringAsFixed(1)}km/L) × ₱${widget.fuelPrice?.toStringAsFixed(1)}'),
+            _buildMathRow(theme, 'Tolls',
+                'NLEX/TPLEX standard rates for Class 1 vehicle'),
             _buildMathRow(theme, 'Misc', 'Base food/emergency allocation'),
           ],
         ],
@@ -135,23 +172,96 @@ class _VisualBreakdownCardState extends State<VisualBreakdownCard> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(label, style: const TextStyle(fontSize: 9, fontWeight: FontWeight.bold, color: AppColors.textTertiary)),
-          Text(formula, style: const TextStyle(fontSize: 10, color: AppColors.textPrimary, fontStyle: FontStyle.italic)),
+          Text(label,
+              style: const TextStyle(
+                  fontSize: 9,
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.textTertiary)),
+          Text(formula,
+              style: const TextStyle(
+                  fontSize: 10,
+                  color: AppColors.textPrimary,
+                  fontStyle: FontStyle.italic)),
         ],
       ),
     );
   }
 
-  Widget _buildLegendRow(ThemeData theme, Color dotColor, String label, String amount) {
+  Widget _buildLegendRow(
+      ThemeData theme, Color dotColor, String label, String amount) {
     return Row(
       children: [
-        Container(width: 8, height: 8, decoration: BoxDecoration(color: dotColor, shape: BoxShape.circle)),
+        Container(
+            width: 8,
+            height: 8,
+            decoration: BoxDecoration(color: dotColor, shape: BoxShape.circle)),
         const SizedBox(width: 12),
         Expanded(
-          child: Text(label, style: theme.textTheme.bodySmall?.copyWith(color: AppColors.textTertiary)),
+          child: Text(label,
+              style: theme.textTheme.bodySmall
+                  ?.copyWith(color: AppColors.textTertiary)),
         ),
-        Text(amount, style: theme.textTheme.bodySmall?.copyWith(color: AppColors.textPrimary, fontWeight: FontWeight.bold)),
+        Text(amount,
+            style: theme.textTheme.bodySmall?.copyWith(
+                color: AppColors.textPrimary, fontWeight: FontWeight.bold)),
       ],
     );
   }
+}
+
+class PieChartPainter extends CustomPainter {
+  final double fuelPct;
+  final double tollPct;
+  final double otherPct;
+  final Color fuelColor;
+  final Color tollColor;
+  final Color otherColor;
+
+  PieChartPainter({
+    required this.fuelPct,
+    required this.tollPct,
+    required this.otherPct,
+    required this.fuelColor,
+    required this.tollColor,
+    required this.otherColor,
+  });
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final double strokeWidth = 16;
+    final Rect rect = Offset.zero & size;
+    
+    final Paint paint = Paint()
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = strokeWidth
+      ..strokeCap = StrokeCap.butt; // <--- CHANGE THIS from .round to .butt
+
+    double startAngle = -pi / 2;
+
+    // Fuel Segment
+    if (fuelPct > 0) {
+      paint.color = fuelColor;
+      double sweepAngle = fuelPct * 2 * pi;
+      canvas.drawArc(rect, startAngle, sweepAngle, false, paint);
+      startAngle += sweepAngle;
+    }
+
+    // Toll Segment
+    if (tollPct > 0) {
+      paint.color = tollColor;
+      double sweepAngle = tollPct * 2 * pi;
+      canvas.drawArc(rect, startAngle, sweepAngle, false, paint);
+      startAngle += sweepAngle;
+    }
+
+    // Other Segment
+    if (otherPct > 0) {
+      paint.color = otherColor;
+      double sweepAngle = otherPct * 2 * pi;
+      canvas.drawArc(rect, startAngle, sweepAngle, false, paint);
+    }
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => true;
 }
