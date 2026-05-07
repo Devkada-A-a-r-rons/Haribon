@@ -18,9 +18,9 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  
+
   await dotenv.load(fileName: ".env");
-  
+
   await Supabase.initialize(
     url: dotenv.env['SUPABASE_URL'] ?? '',
     anonKey: dotenv.env['SUPABASE_ANON_KEY'] ?? '',
@@ -29,15 +29,20 @@ void main() async {
   runApp(
     DevicePreview(
       enabled: true,
-      isToolbarVisible: true, // Force toolbar to be visible on web release
+      isToolbarVisible: true, 
       defaultDevice: Devices.ios.iPhone13,
       builder: (context) => const MyApp(),
     ),
   );
+
+  // runApp(const MyApp()); // If not using device preview
 }
 
-final RouteObserver<ModalRoute<void>> routeObserver = RouteObserver<ModalRoute<void>>();
-final ValueNotifier<String?> currentRouteNotifier = ValueNotifier<String?>(null);
+final RouteObserver<ModalRoute<void>> routeObserver =
+    RouteObserver<ModalRoute<void>>();
+final ValueNotifier<String?> currentRouteNotifier = ValueNotifier<String?>(
+  null,
+);
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 class MyApp extends StatelessWidget {
@@ -50,15 +55,9 @@ class MyApp extends StatelessWidget {
       navigatorKey: navigatorKey,
       debugShowCheckedModeBanner: false,
       locale: DevicePreview.locale(context),
-      navigatorObservers: [
-        routeObserver,
-        _RouteNotifierObserver(),
-      ],
+      navigatorObservers: [routeObserver, _RouteNotifierObserver()],
       builder: (context, child) {
-        return DevicePreview.appBuilder(
-          context,
-          GlobalShell(child: child),
-        );
+        return DevicePreview.appBuilder(context, GlobalShell(child: child));
       },
       theme: AppTheme.lightTheme,
       initialRoute: '/',
@@ -137,7 +136,10 @@ class _GlobalShellState extends State<GlobalShell> {
     super.didChangeDependencies();
     final size = MediaQuery.of(context).size;
     if (!_isInit && size.width > 0 && size.height > 0) {
-      _offset = Offset(size.width - _fabSize.width - 20, size.height - _fabSize.height - 110);
+      _offset = Offset(
+        size.width - _fabSize.width - 20,
+        size.height - _fabSize.height - 110,
+      );
       _isInit = true;
     }
   }
@@ -164,7 +166,8 @@ class _GlobalShellState extends State<GlobalShell> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    if (size.width == 0 || size.height == 0) return widget.child ?? const SizedBox.shrink();
+    if (size.width == 0 || size.height == 0)
+      return widget.child ?? const SizedBox.shrink();
 
     final padding = MediaQuery.of(context).padding;
     final safeTop = padding.top + 80.0;
@@ -176,7 +179,8 @@ class _GlobalShellState extends State<GlobalShell> {
       valueListenable: currentRouteNotifier,
       builder: (context, routeName, _) {
         final name = routeName ?? '/';
-        final isExcluded = name == '/' || name == '/onboarding' || name == '/chatbot';
+        final isExcluded =
+            name == '/' || name == '/onboarding' || name == '/chatbot';
 
         return Stack(
           children: [
@@ -209,7 +213,11 @@ class _GlobalShellState extends State<GlobalShell> {
                       backgroundColor: AppColors.primaryMain,
                       elevation: 8,
                       shape: const CircleBorder(),
-                      child: const Icon(Icons.auto_awesome, color: Colors.white, size: 28),
+                      child: const Icon(
+                        Icons.auto_awesome,
+                        color: Colors.white,
+                        size: 28,
+                      ),
                     ),
                   ),
                 ),
@@ -232,21 +240,18 @@ class _MainScreenState extends State<MainScreen> {
   int _currentIndex = 0; // Default to Home
 
   List<Widget> get _screens => [
-    const HomeScreen(),              // 0 - Home
+    const HomeScreen(), // 0 - Home
     const VehicleIntelligenceScreen(), // 1 - Planner
-    const SmartTripPlanner(),        // 2 - Smart Trip
-    const HistoryScreen(),           // 3 - History
-    const FuelAndEmissionsScreen(),  // 4 - Analysis
-    const ChatbotScreen(),           // 5 - Chatbot (hidden)
+    const SmartTripPlanner(), // 2 - Smart Trip
+    const HistoryScreen(), // 3 - History
+    const FuelAndEmissionsScreen(), // 4 - Analysis
+    const ChatbotScreen(), // 5 - Chatbot (hidden)
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: IndexedStack(
-        index: _currentIndex,
-        children: _screens,
-      ),
+      body: IndexedStack(index: _currentIndex, children: _screens),
       bottomNavigationBar: CommonNavBar(
         activeIndex: _currentIndex,
         onTabSelected: (index) {
