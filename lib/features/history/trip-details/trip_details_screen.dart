@@ -78,7 +78,7 @@ class TripDetailsScreen extends StatelessWidget {
             const SizedBox(height: 32),
             
             // Route Insights
-            const RouteInsights(),
+            RouteInsights(tripData: tripData),
             const SizedBox(height: 48),
           ],
         ),

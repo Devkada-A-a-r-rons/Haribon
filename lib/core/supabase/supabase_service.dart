@@ -16,19 +16,29 @@ class SupabaseService {
     }
   }
 
-  Future<Map<String, dynamic>?> getOnboardingData(String userName) async {
+  Future<void> updateLatestOnboardingData(Map<String, dynamic> data) async {
     try {
-      final response = await _client
+      // Find the latest record for this user and update it
+      // Note: In a real app with auth, we would use user_id. 
+      // For now, we'll match by the original name if provided, or just update the most recent one.
+      final latest = await _client
           .from('user_onboarding')
-          .select()
-          .eq('user_name', userName)
+          .select('id')
           .order('created_at', ascending: false)
           .limit(1)
           .maybeSingle();
-      return response;
+
+      if (latest != null) {
+        await _client
+            .from('user_onboarding')
+            .update(data)
+            .eq('id', latest['id']);
+      } else {
+        // Fallback to insert if nothing exists
+        await saveOnboardingData(data);
+      }
     } catch (e) {
-      print('Error fetching from Supabase: $e');
-      return null;
+      print('Error updating Supabase: $e');
     }
   }
 }

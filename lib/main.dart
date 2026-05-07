@@ -71,7 +71,9 @@ class MyApp extends StatelessWidget {
             builder = const OnboardingScreen();
             break;
           case '/home':
-            builder = const MainScreen();
+            final initialIndex =
+                settings.arguments is int ? settings.arguments as int : 0;
+            builder = MainScreen(initialIndex: initialIndex);
             break;
           case '/smart-trip-planner':
             builder = const SmartTripPlanner();
@@ -230,14 +232,15 @@ class _GlobalShellState extends State<GlobalShell> {
 }
 
 class MainScreen extends StatefulWidget {
-  const MainScreen({super.key});
+  final int initialIndex;
+  const MainScreen({super.key, this.initialIndex = 0});
 
   @override
   State<MainScreen> createState() => _MainScreenState();
 }
 
 class _MainScreenState extends State<MainScreen> {
-  int _currentIndex = 0; // Default to Home
+  late int _currentIndex;
 
   List<Widget> get _screens => [
     const HomeScreen(), // 0 - Home
@@ -247,6 +250,12 @@ class _MainScreenState extends State<MainScreen> {
     const FuelAndEmissionsScreen(), // 4 - Analysis
     const ChatbotScreen(), // 5 - Chatbot (hidden)
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    _currentIndex = widget.initialIndex.clamp(0, 4);
+  }
 
   @override
   Widget build(BuildContext context) {
