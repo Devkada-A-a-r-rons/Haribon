@@ -4,101 +4,50 @@ import '../../../theme/app_colors.dart';
 import './gas_station_card.dart';
 
 class GasStationListWidget extends StatelessWidget {
-  const GasStationListWidget({super.key});
+  final List<GasStationData>? stations;
+  const GasStationListWidget({super.key, this.stations});
 
-  List<GasStationData> get _stations => [
-        GasStationData(
-          rank: 1,
-          label: 'Petron — EDSA Magallanes',
-          branch: 'EDSA Magallanes',
-          price: '₱63.50',
-          brandLogo: Text(
-            'PET\nRON',
-            textAlign: TextAlign.center,
-            style: GoogleFonts.poppins(
-              fontSize: 10,
-              fontWeight: FontWeight.w800,
-              color: const Color(0xFFE30613),
-              height: 1.1,
-            ),
+  static List<GasStationData> mapFromSupabase(List<dynamic> data) {
+    return data.asMap().entries.map((entry) {
+      final i = entry.key;
+      final p = entry.value;
+      final brand = (p['brand'] ?? 'Unknown').toString().toUpperCase();
+      final gasoline = (p['gasoline'] ?? 0.0).toDouble();
+      
+      Color brandColor = Colors.grey;
+      String brandText = brand;
+      if (brand.contains('PETRON')) brandColor = const Color(0xFFE30613);
+      if (brand.contains('SHELL')) brandColor = const Color(0xFFE8A800);
+      if (brand.contains('CALTEX')) brandColor = const Color(0xFF0066B2);
+      if (brand.contains('PHOENIX')) brandColor = const Color(0xFFFF6600);
+      if (brand.contains('SEAOIL')) brandColor = const Color(0xFF0D5FA6);
+
+      // Logo text formatting (2-3 chars per line)
+      if (brandText.length > 4) {
+        brandText = '${brandText.substring(0, 3)}\n${brandText.substring(3)}';
+      }
+
+      return GasStationData(
+        rank: i + 1,
+        label: '$brand — ${p['branch'] ?? 'Main'}',
+        branch: p['branch'] ?? 'Main',
+        price: '₱${gasoline.toStringAsFixed(2)}',
+        brandLogo: Text(
+          brandText,
+          textAlign: TextAlign.center,
+          style: GoogleFonts.poppins(
+            fontSize: 10,
+            fontWeight: FontWeight.w800,
+            color: brandColor,
+            height: 1.1,
           ),
-          fuelTypes: const ['Gasoline', 'Diesel', 'Premium'],
-          hours: 'Open 24hrs',
-          isBestDeal: true,
         ),
-        GasStationData(
-          rank: 2,
-          label: 'Shell — Buendia Ave',
-          branch: 'Buendia Ave',
-          price: '₱64.10',
-          brandLogo: Text(
-            'SH\nELL',
-            textAlign: TextAlign.center,
-            style: GoogleFonts.poppins(
-              fontSize: 10,
-              fontWeight: FontWeight.w800,
-              color: const Color(0xFFE8A800),
-              height: 1.1,
-            ),
-          ),
-          fuelTypes: const ['Gasoline', 'V-Power', 'Diesel'],
-          hours: 'Open 24hrs',
-        ),
-        GasStationData(
-          rank: 3,
-          label: 'Caltex — Osmeña Highway',
-          branch: 'Osmeña Highway',
-          price: '₱64.45',
-          brandLogo: Text(
-            'CAL\nTEX',
-            textAlign: TextAlign.center,
-            style: GoogleFonts.poppins(
-              fontSize: 10,
-              fontWeight: FontWeight.w800,
-              color: const Color(0xFF0066B2),
-              height: 1.1,
-            ),
-          ),
-          fuelTypes: const ['Gasoline', 'Diesel'],
-          hours: '6AM – 10PM',
-        ),
-        GasStationData(
-          rank: 4,
-          label: 'Phoenix — South Super Hwy',
-          branch: 'South Super Hwy',
-          price: '₱64.90',
-          brandLogo: Text(
-            'PHO\nENX',
-            textAlign: TextAlign.center,
-            style: GoogleFonts.poppins(
-              fontSize: 10,
-              fontWeight: FontWeight.w800,
-              color: const Color(0xFFFF6600),
-              height: 1.1,
-            ),
-          ),
-          fuelTypes: const ['Gasoline', 'Diesel', 'Flex'],
-          hours: '5AM – 11PM',
-        ),
-        GasStationData(
-          rank: 5,
-          label: 'Seaoil — Roxas Blvd',
-          branch: 'Roxas Blvd',
-          price: '₱65.20',
-          brandLogo: Text(
-            'SEA\nOIL',
-            textAlign: TextAlign.center,
-            style: GoogleFonts.poppins(
-              fontSize: 10,
-              fontWeight: FontWeight.w800,
-              color: const Color(0xFF0D5FA6),
-              height: 1.1,
-            ),
-          ),
-          fuelTypes: const ['Gasoline', 'Diesel'],
-          hours: 'Open 24hrs',
-        ),
-      ];
+        fuelTypes: const ['Gasoline', 'Diesel'],
+        hours: 'Open 24hrs',
+        isBestDeal: i == 0,
+      );
+    }).toList();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -119,7 +68,7 @@ class GasStationListWidget extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 14),
-        ..._stations.map((s) => GasStationCard(station: s)),
+        ...(stations ?? []).map((s) => GasStationCard(station: s)),
         const SizedBox(height: 4),
       ],
     );

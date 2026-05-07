@@ -14,6 +14,7 @@ class FullRouteMapScreen extends StatefulWidget {
   final String destinationName;
   final Map<String, dynamic>? vehicleConfig;
   final double fuelPricePerLiter;
+  final bool isHistory;
 
   const FullRouteMapScreen({
     super.key,
@@ -23,6 +24,7 @@ class FullRouteMapScreen extends StatefulWidget {
     required this.destinationName,
     this.vehicleConfig,
     this.fuelPricePerLiter = 65.0,
+    this.isHistory = false,
   });
 
   @override
@@ -698,16 +700,16 @@ class _FullRouteMapScreenState extends State<FullRouteMapScreen>
                             ),
                           )
                         : ElevatedButton.icon(
-                            onPressed: _startJourney,
+                            onPressed: widget.isHistory ? null : _startJourney,
                             icon: const Icon(Icons.navigation_rounded,
                                 size: 20),
                             label: Text(
-                              'Start Journey',
+                              widget.isHistory ? 'Historical Trip' : 'Start Journey',
                               style: GoogleFonts.poppins(
                                   fontSize: 15, fontWeight: FontWeight.w800),
                             ),
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: AppColors.primaryMain,
+                              backgroundColor: widget.isHistory ? Colors.grey : AppColors.primaryMain,
                               foregroundColor: Colors.white,
                               elevation: 0,
                               shape: RoundedRectangleBorder(

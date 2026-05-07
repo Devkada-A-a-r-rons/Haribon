@@ -9,6 +9,7 @@ class CompactTextField extends StatefulWidget {
   final String label;
   final String hintText;
   final IconData prefixIcon;
+  final String? initialValue;
   final Function(Map<String, dynamic>)? onLocationSelected;
 
   const CompactTextField({
@@ -17,6 +18,7 @@ class CompactTextField extends StatefulWidget {
     required this.hintText,
     required this.prefixIcon,
     this.onLocationSelected,
+    this.initialValue,
   });
 
   @override
@@ -270,6 +272,10 @@ class _CompactTextFieldState extends State<CompactTextField> {
   @override
   void initState() {
     super.initState();
+    if (widget.initialValue != null) {
+      _controller.text = widget.initialValue!;
+      _locationSelected = true;
+    }
     _focusNode.addListener(() {
       if (!_focusNode.hasFocus) {
         // slight delay so tap on overlay item registers first
@@ -278,6 +284,15 @@ class _CompactTextFieldState extends State<CompactTextField> {
         });
       }
     });
+  }
+
+  @override
+  void didUpdateWidget(covariant CompactTextField oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.initialValue != null && widget.initialValue != oldWidget.initialValue) {
+      _controller.text = widget.initialValue!;
+      _locationSelected = true;
+    }
   }
 
   @override

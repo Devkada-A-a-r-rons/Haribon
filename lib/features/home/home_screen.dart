@@ -17,6 +17,7 @@ import './widgets/home_stat_grid.dart';
 import '../monthly-report/monthly_report_screen.dart';
 import '../timeline/timeline_screen.dart';
 import './widgets/gas_station_list_widget.dart';
+import './widgets/gas_station_card.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -29,15 +30,16 @@ class _HomeScreenState extends State<HomeScreen> {
   late HomeDashboardData _dashboardData;
   late TripSummary _latestTrip;
   bool _isLoading = true;
-  Map<String, dynamic>? _activePlan;
   Map<String, dynamic>? _vehicleConfig;
   double _fuelPricePerLiter = 65.0;
+  List<GasStationData> _gasStations = [];
 
   @override
   void initState() {
     super.initState();
     _latestTrip = _buildMockLatestTrip();
     _loadData();
+    DatabaseService().onConfigChanged.addListener(_loadData);
   }
 
   Future<void> _loadData() async {
@@ -47,6 +49,7 @@ class _HomeScreenState extends State<HomeScreen> {
     List<HomeStat> stats = [];
     double avgFuelPrice = 65.0;
     List<double> trend = List.filled(7, 12.0);
+    double totalCO2 = 0;
 
     try {
       // 1. Fetch ALL trips for aggregation
@@ -73,12 +76,12 @@ class _HomeScreenState extends State<HomeScreen> {
             total += (p['gasoline'] as num).toDouble();
           }
           avgFuelPrice = total / (fuelPrices as List).length;
+          _gasStations = GasStationListWidget.mapFromSupabase(fuelPrices as List);
         }
       } catch (_) {}
 
       double totalDistance = 0;
       double totalCost = 0;
-      double totalCO2 = 0;
 
       // Aggregate from History
       if (allTrips != null && (allTrips as List).isNotEmpty) {
@@ -177,17 +180,27 @@ class _HomeScreenState extends State<HomeScreen> {
       }
 
       // 5. Update Stats
+      String driveTime = '-- hrs';
+      String fuelReq = '-- L';
+      
+      if (activeResponse != null) {
+        final dist = (activeResponse['route_distance_km'] ?? 0.0).toDouble();
+        final litersPerKm = (activeResponse['liters_per_km'] ?? 0.08).toDouble();
+        driveTime = '${(dist / 60.0).toStringAsFixed(1)} hrs'; // Assuming 60km/h avg
+        fuelReq = '${(dist * litersPerKm).toStringAsFixed(1)} Liters';
+      }
+
       stats = [
         HomeStat(
           label: 'Est. Drive Time',
-          value: '1.3 hrs',
+          value: driveTime,
           icon: Icons.access_time_rounded,
           color: AppColors.blueLighterBg,
           iconColor: AppColors.blueLight,
         ),
         HomeStat(
           label: 'Fuel Required',
-          value: '18.9 Liters',
+          value: fuelReq,
           icon: Icons.local_gas_station_rounded,
           color: AppColors.orangeSoftBg,
           iconColor: AppColors.orangeDark,
@@ -215,7 +228,7 @@ class _HomeScreenState extends State<HomeScreen> {
         _fuelPricePerLiter = avgFuelPrice;
         _dashboardData = HomeDashboardData(
           userName: userName,
-          weeklyCo2Saved: mockData.weeklyCo2Saved,
+          weeklyCo2Saved: totalCO2,
           stats: stats,
           efficiencyTrend: trend,
           activities: mockData.activities,
@@ -223,6 +236,12 @@ class _HomeScreenState extends State<HomeScreen> {
         _isLoading = false;
       });
     }
+  }
+
+  @override
+  void dispose() {
+    DatabaseService().onConfigChanged.removeListener(_loadData);
+    super.dispose();
   }
 
   TripSummary _buildMockLatestTrip() {
@@ -298,6 +317,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               destinationName: _latestTrip.destination,
                               vehicleConfig: _vehicleConfig,
                               fuelPricePerLiter: _fuelPricePerLiter,
+                              isHistory: _latestTrip.date != 'Active Journey',
                             ),
                           ),
                         );
@@ -316,7 +336,7 @@ class _HomeScreenState extends State<HomeScreen> {
                const SizedBox(height: 16),
                     HomeStatGrid(stats: _dashboardData.stats),
                     const SizedBox(height: 16),
-                    const GasStationListWidget(),
+                    GasStationListWidget(stations: _gasStations),
                     const SizedBox(height: 10),
                   ],
                 ),

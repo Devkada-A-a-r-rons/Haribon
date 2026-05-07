@@ -1,9 +1,10 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../../theme/app_colors.dart';
 
 class LogisticsTimeline extends StatefulWidget {
-  const LogisticsTimeline({super.key});
+  final Map<String, dynamic>? tripData;
+  const LogisticsTimeline({super.key, this.tripData});
 
   @override
   State<LogisticsTimeline> createState() => _LogisticsTimelineState();
@@ -11,6 +12,34 @@ class LogisticsTimeline extends StatefulWidget {
 
 class _LogisticsTimelineState extends State<LogisticsTimeline> {
   bool _isExpanded = true;
+
+  List<Map<String, dynamic>> _getTimelineItems() {
+    if (widget.tripData == null) return [];
+    
+    // If we have a refueling_plan (list of objects)
+    final plan = widget.tripData!['refueling_plan'];
+    if (plan != null && plan is List) {
+       return plan.map((e) => Map<String, dynamic>.from(e)).toList();
+    }
+    
+    // Fallback/Default items if no plan exists
+    return [
+      {
+        'time': 'Start',
+        'location': widget.tripData!['origin_name'] ?? 'Origin',
+        'title': 'Journey Commenced',
+        'status': 'Completed',
+        'isPassed': true,
+      },
+      {
+        'time': 'End',
+        'location': widget.tripData!['destination_name'] ?? 'Destination',
+        'title': 'Arrival at Destination',
+        'status': 'Completed',
+        'isPassed': true,
+      }
+    ];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,26 +85,21 @@ class _LogisticsTimelineState extends State<LogisticsTimeline> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const SizedBox(height: 8),
-                      _buildTimelineItem(
-                        time: '08:15',
-                        location: 'ANGELES',
-                        title: 'Shell Angeles \u2022 12L',
-                        trailingText: 'Stopped By',
-                        trailingColor: AppColors.success,
-                        isFirst: true,
-                        isLast: false,
-                        isPassed: true,
-                      ),
-                      _buildTimelineItem(
-                        time: '10:30',
-                        location: 'TARLAC',
-                        title: 'Petron Tarlac',
-                        trailingText: 'Skipped',
-                        trailingColor: AppColors.textTertiary,
-                        isFirst: false,
-                        isLast: true,
-                        isPassed: false,
-                      ),
+                      ..._getTimelineItems().asMap().entries.map((entry) {
+                        final i = entry.key;
+                        final item = entry.value;
+                        final items = _getTimelineItems();
+                        return _buildTimelineItem(
+                          time: item['time'] ?? '--:--',
+                          location: item['location'] ?? 'Unknown',
+                          title: item['title'] ?? 'Stopped By',
+                          trailingText: item['status'] ?? 'Completed',
+                          trailingColor: item['status'] == 'Skipped' ? AppColors.textTertiary : AppColors.success,
+                          isFirst: i == 0,
+                          isLast: i == items.length - 1,
+                          isPassed: item['isPassed'] ?? true,
+                        );
+                      }),
                     ],
                   )
                 : const SizedBox.shrink(),

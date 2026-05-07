@@ -84,10 +84,44 @@ class _VehicleIntelligenceScreenState extends State<VehicleIntelligenceScreen>
         _vehicles = jsonDecode(jsonStr);
       });
       await _fetchFuelPrices();
+      await _fetchLatestConfig(); // Hydrate form
       setState(() => _isLoadingVehicles = false);
     } catch (e) {
       debugPrint('Error loading vehicles: $e');
       setState(() => _isLoadingVehicles = false);
+    }
+  }
+
+  Future<void> _fetchLatestConfig() async {
+    try {
+      final response = await Supabase.instance.client
+          .from('vehicle_configurations')
+          .select()
+          .order('created_at', ascending: false)
+          .limit(1)
+          .maybeSingle();
+
+      if (response != null) {
+        setState(() {
+          _selectedType = response['vehicle_type'];
+          _selectedBrand = response['brand'];
+          _selectedModel = response['model'];
+          _fuelLevel = (response['fuel_level_pct'] ?? 50) / 100.0;
+          
+          if (response['origin_name'] != null) {
+             // We don't have the full place object, but we can set a placeholder or just the name
+             _origin = {'display_name': response['origin_name'], 'lat': '14.5995', 'lon': '120.9842'}; // Lat/Lon defaults
+          }
+          if (response['destination_name'] != null) {
+             _destination = {'display_name': response['destination_name'], 'lat': '14.5995', 'lon': '120.9842'};
+          }
+          
+          // Re-calculate derived values
+          _onModelSelected(_selectedModel!);
+        });
+      }
+    } catch (e) {
+      debugPrint('Error fetching latest config: $e');
     }
   }
 
@@ -455,6 +489,7 @@ class _VehicleIntelligenceScreenState extends State<VehicleIntelligenceScreen>
             label: 'Starting Point',
             hintText: 'Enter starting city or address',
             prefixIcon: Icons.location_on_outlined,
+            initialValue: _origin?['display_name'],
             onLocationSelected: (place) {
               setState(() {
                 _origin = (place.isEmpty) ? null : place;
@@ -492,6 +527,7 @@ class _VehicleIntelligenceScreenState extends State<VehicleIntelligenceScreen>
             label: 'Destination',
             hintText: 'Enter destination city or address',
             prefixIcon: Icons.change_history_outlined,
+            initialValue: _destination?['display_name'],
             onLocationSelected: (place) {
               setState(() {
                 _destination = (place.isEmpty) ? null : place;

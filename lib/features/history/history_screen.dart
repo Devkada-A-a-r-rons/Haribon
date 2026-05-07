@@ -71,7 +71,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
 
             combinedTrips.add({
               ...config,
-              'is_active_plan': true,
+              'is_active_plan': combinedTrips.isEmpty, // Only first one is active
               'budget': (matchingInsight != null
                       ? matchingInsight['budget']
                       : config['budget']) ??
@@ -205,6 +205,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                               destination: dest,
                               originName: originName,
                               destinationName: destName,
+                              isHistory: !isActive,
                             ),
                           ),
                         );

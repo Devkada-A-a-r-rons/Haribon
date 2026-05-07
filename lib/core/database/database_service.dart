@@ -8,6 +8,9 @@ class DatabaseService {
   static final DatabaseService _instance = DatabaseService._internal();
   factory DatabaseService() => _instance;
   DatabaseService._internal();
+  
+  /// Notifies listeners when configuration or onboarding data changes.
+  final ChangeNotifier onConfigChanged = ChangeNotifier();
 
   static Database? _database;
 
@@ -69,12 +72,15 @@ class DatabaseService {
       return 1;
     }
     final db = await database;
-    return await db.insert('user_onboarding', data);
+    final result = await db.insert('user_onboarding', data);
+    onConfigChanged.notifyListeners();
+    return result;
   }
 
   Future<void> updateLatestOnboardingData(Map<String, dynamic> data) async {
     if (kIsWeb) {
       await saveOnboardingData(data); // Merge logic is already in saveOnboardingData
+      onConfigChanged.notifyListeners();
       return;
     }
     final db = await database;
@@ -94,6 +100,7 @@ class DatabaseService {
     } else {
       await saveOnboardingData(data);
     }
+    onConfigChanged.notifyListeners();
   }
 
   /// Save a trip record to a separate storage (web: SharedPreferences list, native: SQLite trips table)
@@ -133,12 +140,14 @@ class DatabaseService {
       configs.insert(0, config);
       final trimmed = configs.take(10).toList(); // keep last 10 configs
       await prefs.setString('vehicle_configs_cache', jsonEncode(trimmed));
+      onConfigChanged.notifyListeners();
       return;
     }
     // Native SQLite fallback - just stashing it in user_onboarding for now
     // Future update: CREATE TABLE vehicle_configurations in SQLite
     final db = await database;
     await db.insert('user_onboarding', {'last_trip': jsonEncode({'config': config})});
+    onConfigChanged.notifyListeners();
   }
 
   Future<Map<String, dynamic>?> getOnboardingData() async {
