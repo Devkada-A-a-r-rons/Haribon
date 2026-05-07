@@ -4,12 +4,14 @@ class InfoCard extends StatelessWidget {
   final IconData icon;
   final String title;
   final Widget child;
+  final Widget? trailing;
 
   const InfoCard({
     super.key,
     required this.icon,
     required this.title,
     required this.child,
+    this.trailing,
   });
 
   @override
@@ -33,6 +35,10 @@ class InfoCard extends StatelessWidget {
                   fontSize: 10,
                 ),
               ),
+              if (trailing != null) ...[
+                const Spacer(),
+                trailing!,
+              ],
             ],
           ),
           const SizedBox(height: 12),

@@ -238,7 +238,6 @@ class _MainSummaryScreenState extends State<MainSummaryScreen> {
 
     return Scaffold(
       appBar: CommonAppBar(
-        title: _currentIndex == 0 ? 'Trip Summary' : 'Timeline',
         leading: _currentIndex == 1
             ? IconButton(
                 icon: const Icon(Icons.arrow_back_rounded),

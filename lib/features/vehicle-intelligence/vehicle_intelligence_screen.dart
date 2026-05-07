@@ -703,6 +703,7 @@ class _VehicleIntelligenceScreenState extends State<VehicleIntelligenceScreen>
           InfoCard(
             icon: Icons.route_outlined,
             title: 'Trip Readiness',
+            trailing: _buildReadinessBadge(),
             child: _buildTripReadiness(),
           ),
           const SizedBox(height: 12),
@@ -874,50 +875,9 @@ class _VehicleIntelligenceScreenState extends State<VehicleIntelligenceScreen>
     final fuelUsageRatio = (fuelNeeded / _currentLiters).clamp(0.0, 1.0);
     final totalTripCost = fuelNeeded * _fuelPricePerLiter;
 
-    return Container(
-      width: double.infinity,
-      decoration: BoxDecoration(
-        color: AppColors.containerLowest,
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-            decoration: BoxDecoration(
-              color: canComplete
-                  ? Colors.green.withOpacity(0.1)
-                  : Colors.orange.withOpacity(0.1),
-              borderRadius: BorderRadius.circular(6),
-            ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(
-                  canComplete
-                      ? Icons.check_circle
-                      : Icons.warning_rounded,
-                  size: 16,
-                  color: canComplete
-                      ? Colors.green.shade700
-                      : Colors.orange.shade700,
-                ),
-                const SizedBox(width: 6),
-                Text(
-                  canComplete ? 'Ready for Departure' : 'Refuel Required',
-                  style: TextStyle(
-                    fontSize: 11,
-                    fontWeight: FontWeight.bold,
-                    color: canComplete
-                        ? Colors.green.shade700
-                        : Colors.orange.shade700,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(height: 16),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
           const Text('Trip Fuel Consumption',
               style: TextStyle(fontSize: 12)),
           const SizedBox(height: 8),
@@ -1053,8 +1013,7 @@ class _VehicleIntelligenceScreenState extends State<VehicleIntelligenceScreen>
               ),
             ),
           ],
-        ],
-      ),
+      ],
     );
   }
 
@@ -1066,14 +1025,49 @@ class _VehicleIntelligenceScreenState extends State<VehicleIntelligenceScreen>
         children: [
           Text(label,
               style:
-                  const TextStyle(fontSize: 11, color: Colors.black54)),
+                  const TextStyle(fontSize: 12)),
           Text(
             value,
             style: TextStyle(
-              fontSize: 11,
+              fontSize: 12,
               fontWeight:
                   isBold ? FontWeight.w900 : FontWeight.w600,
               color: Colors.black87,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+  Widget _buildReadinessBadge() {
+    if (_routeDistanceKm == null || _selectedVehicle == null) {
+      return const SizedBox.shrink();
+    }
+    final fuelNeeded = _routeDistanceKm! * _litersPerKm;
+    final canComplete = _currentLiters >= fuelNeeded;
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      decoration: BoxDecoration(
+        color: canComplete
+            ? Colors.green.withOpacity(0.1)
+            : Colors.orange.withOpacity(0.1),
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(
+            canComplete ? Icons.check_circle : Icons.warning_rounded,
+            size: 12,
+            color: canComplete ? Colors.green.shade700 : Colors.orange.shade700,
+          ),
+          const SizedBox(width: 4),
+          Text(
+            canComplete ? 'Ready' : 'Refuel',
+            style: TextStyle(
+              fontSize: 10,
+              fontWeight: FontWeight.w700,
+              color: canComplete ? Colors.green.shade700 : Colors.orange.shade700,
             ),
           ),
         ],
