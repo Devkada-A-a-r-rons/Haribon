@@ -204,7 +204,7 @@ class _MonthlyReportScreenState extends State<MonthlyReportScreen> {
   Widget build(BuildContext context) {
     if (_isLoading) {
       return Scaffold(
-        appBar: const CommonAppBar(title: 'Monthly Report'),
+        appBar: const CommonAppBar(),
         body: const Center(
           child: CircularProgressIndicator(color: AppColors.primaryMain),
         ),
@@ -213,7 +213,7 @@ class _MonthlyReportScreenState extends State<MonthlyReportScreen> {
 
     if (_errorMessage != null) {
       return Scaffold(
-        appBar: const CommonAppBar(title: 'Monthly Report'),
+        appBar: const CommonAppBar(),
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -233,7 +233,7 @@ class _MonthlyReportScreenState extends State<MonthlyReportScreen> {
     }
 
     return Scaffold(
-      appBar: const CommonAppBar(title: 'Monthly Report'),
+      appBar: const CommonAppBar(),
       body: SafeArea(
         bottom: false,
         child: CustomScrollView(
@@ -279,10 +279,6 @@ class _MonthlyReportScreenState extends State<MonthlyReportScreen> {
             ),
           ],
         ),
-      ),
-      bottomNavigationBar: CommonNavBar(
-        activeIndex: _currentNavIndex,
-        onTabSelected: _handleNavChange,
       ),
     );
   }

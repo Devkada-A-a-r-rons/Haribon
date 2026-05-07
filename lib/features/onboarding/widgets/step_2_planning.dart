@@ -61,7 +61,7 @@ class _Step2PlanningState extends State<Step2Planning> {
                   ),
                   SelectionCard(
                     icon: Icons.explore_outlined,
-                    title: 'I decide along the way',
+                    title: 'Haribon decides along the way',
                     subtitle:
                         'Pure discovery. Let the Haribon AI find hidden gems live.',
                     isSelected: _selectedOption == 'I decide along the way',

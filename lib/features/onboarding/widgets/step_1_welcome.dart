@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '../../../theme/app_colors.dart';
 import 'continue_button.dart';
 
@@ -175,6 +176,12 @@ class _Step1WelcomeState extends State<Step1Welcome> {
                       keyboardType: const TextInputType.numberWithOptions(
                         decimal: true,
                       ),
+                      textInputAction: TextInputAction.done,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(
+                          RegExp(r'^\d*\.?\d{0,2}'),
+                        ),
+                      ],
                       decoration: const InputDecoration(
                         fillColor: Colors.white,
                         prefixIcon: Padding(

@@ -111,7 +111,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.surfaceMain,
-      appBar: const CommonAppBar(),
+      appBar: const CommonAppBar(showBackButton: false),
       body: RefreshIndicator(
         onRefresh: _fetchHistory,
         child: SingleChildScrollView(

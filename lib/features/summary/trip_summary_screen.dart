@@ -115,7 +115,7 @@ class TripSummaryScreen extends StatelessWidget {
               sliver: SliverList(
                 delegate: SliverChildListDelegate([
                        Text(
-                  'Trip Summary',
+                  'Trip Details',
                   style: textTheme.headlineMedium?.copyWith(
                     color: Colors.black,
                     fontWeight: FontWeight.w900,
@@ -161,7 +161,7 @@ class TripSummaryScreen extends StatelessWidget {
                       onPressed: onSeeTimeline,
                       icon: const Icon(Icons.timeline_rounded, size: 18),
                       label: Text(
-                        'SEE TRIP TIMELINE',
+                        'TRIP TIMELINE',
                         style: GoogleFonts.poppins(
                           fontSize: 14,
                           fontWeight: FontWeight.w700,
@@ -240,7 +240,7 @@ class _CtaFooter extends StatelessWidget {
             },
             icon: const Icon(Icons.bar_chart_rounded, size: 18),
             label: Text(
-              'View Monthly Report',
+              'Monthly Report',
               style: GoogleFonts.poppins(fontSize: 15, fontWeight: FontWeight.w600),
             ),
             style: OutlinedButton.styleFrom(
