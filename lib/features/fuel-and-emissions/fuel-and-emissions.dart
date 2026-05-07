@@ -261,14 +261,14 @@ class _FuelAndEmissionsScreenState extends State<FuelAndEmissionsScreen> {
                         height: 1.5,
                       ),
                     ),
-                    const SizedBox(height: 32),
-                    TotalFuelCard(liters: _totalLiters),
                     const SizedBox(height: 16),
+                    TotalFuelCard(liters: _totalLiters),
+             
                     FuelConsumptionBreakdownCard(
                       totalLiters: _totalLiters,
                       trafficLiters: _trafficLiters,
                     ),
-                    const SizedBox(height: 16),
+                
                     Row(
                       children: [
                         Expanded(child: TotalFuelCostCard(cost: _totalCost)),
