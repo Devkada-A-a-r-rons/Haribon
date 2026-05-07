@@ -12,9 +12,10 @@ import '../summary/full_route_map_screen.dart';
 import './models/home_data_model.dart';
 import './widgets/home_greeting.dart';
 import '../common/widgets/trip_card.dart';
-import './widgets/efficiency_trend_chart.dart';
+import './widgets/home_stat_grid.dart';
 import '../monthly-report/monthly_report_screen.dart';
 import '../timeline/timeline_screen.dart';
+import './widgets/gas_station_list_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -177,23 +178,23 @@ class _HomeScreenState extends State<HomeScreen> {
       // 5. Update Stats
       stats = [
         HomeStat(
-          label: 'Total Distance',
-          value: '${totalDistance.toStringAsFixed(0)} km',
-          icon: Icons.route_rounded,
+          label: 'Est. Drive Time',
+          value: '1.3 hrs',
+          icon: Icons.access_time_rounded,
           color: AppColors.blueLighterBg,
           iconColor: AppColors.blueLight,
         ),
         HomeStat(
-          label: 'Total Spent',
-          value: '₱${totalCost.toStringAsFixed(0)}',
-          icon: Icons.payments_rounded,
+          label: 'Fuel Required',
+          value: '18.9 Liters',
+          icon: Icons.local_gas_station_rounded,
           color: AppColors.orangeSoftBg,
           iconColor: AppColors.orangeDark,
         ),
         HomeStat(
-          label: 'CO2 Saved',
-          value: '${totalCO2.toStringAsFixed(1)} kg',
-          icon: Icons.park_rounded,
+          label: 'Market Average',
+          value: '₱${avgFuelPrice.toStringAsFixed(2)}/L',
+          icon: Icons.show_chart_rounded,
           color: AppColors.greenSoftBg,
           iconColor: AppColors.greenAccent,
         ),
@@ -302,10 +303,18 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
 
                     const SizedBox(height: 16),
-                    EfficiencyTrendChart(
-                      data: _dashboardData.efficiencyTrend,
-                      stats: _dashboardData.stats,
-                    ),
+                     Text(
+              'Your Recent Trips',
+              style: GoogleFonts.poppins(
+                fontSize: 17,
+                fontWeight: FontWeight.w700,
+                color: const Color(0xFF1A1A1A),
+              ),
+            ),
+               const SizedBox(height: 16),
+                    HomeStatGrid(stats: _dashboardData.stats),
+                    const SizedBox(height: 16),
+                    const GasStationListWidget(),
                     const SizedBox(height: 10),
                   ],
                 ),
