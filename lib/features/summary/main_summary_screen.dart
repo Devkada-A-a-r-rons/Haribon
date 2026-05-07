@@ -227,7 +227,12 @@ class _MainSummaryScreenState extends State<MainSummaryScreen> {
               const Text('No trip plan found yet.', style: TextStyle(color: Colors.grey)),
               const SizedBox(height: 8),
               ElevatedButton(
-                onPressed: widget.onPlanNext ?? () => Navigator.pop(context),
+                onPressed: widget.onPlanNext ??
+                    () => Navigator.pushReplacementNamed(
+                          context,
+                          '/home',
+                          arguments: 1,
+                        ),
                 child: const Text('Plan a Trip'),
               ),
             ],

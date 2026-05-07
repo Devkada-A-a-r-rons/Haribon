@@ -850,7 +850,13 @@ class _VehicleIntelligenceScreenState extends State<VehicleIntelligenceScreen>
                             context,
                             MaterialPageRoute(
                               builder: (_) => MainSummaryScreen(
-                                onPlanNext: () => Navigator.pop(context),
+                                onPlanNext: () {
+                                  Navigator.pushReplacementNamed(
+                                    context,
+                                    '/home',
+                                    arguments: 1,
+                                  );
+                                },
                               ),
                             ),
                           );
